@@ -13,7 +13,7 @@ data class WorkWithAccelerationOptions(val accelerationDuration: Duration) : Wor
 
 data class WorkWithIntervalsOptions(val interval: Duration, val rattle: Duration)
 
-data class Work(val options: WorkOptions) : Exercise()
+data class Work(val name: String, val options: WorkOptions) : Exercise()
 
 abstract class Relaxation(val nameStringId: Int) : Exercise() {
     abstract val duration: Duration
