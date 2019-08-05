@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">ATYBATY</string>
+
+    <string name="exercises_run_up">Подготовка</string>
+    <string name="exercises_rest_between_sets">Отдых между сетами</string>
+    <string name="exercises_calm_down">Успокоиться</string>
 </resources>
