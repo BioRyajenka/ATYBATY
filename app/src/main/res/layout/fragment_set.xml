@@ -1,8 +1,125 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools"
               android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              android:background="@color/colorPrimaryDark">
+              android:background="@color/colorPrimaryDark"
+              android:gravity="center">
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:background="@color/colorPrimary">
+
+        <ImageView
+                android:id="@+id/iv_set_back"
+                android:layout_width="56dp"
+                android:layout_height="match_parent"
+                android:src="@drawable/ic_arrow_back_white"
+                android:padding="12dp"/>
+
+        <TextView
+                android:id="@+id/tv_set_title"
+                android:layout_width="0dp"
+                android:layout_weight="0.8"
+                android:layout_height="match_parent"
+                android:textColor="@color/colorAccent"
+                android:textStyle="bold"
+                android:textSize="26sp"
+                android:gravity="center"
+                tools:text="Сет 1"/>
+
+        <ImageView
+                android:id="@+id/iv_set_save"
+                android:layout_width="56dp"
+                android:layout_height="match_parent"
+                android:src="@drawable/ic_check_white"
+                android:padding="12dp"/>
+
+    </LinearLayout>
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorAccent"
+            android:textSize="20sp"
+            android:text="Подготовка"
+            android:layout_marginTop="8dp"/>
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp">
+
+        <ImageView
+                android:id="@+id/iv_exercise_starttime_minus"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:src="@drawable/ic_chevron_left_white"
+                android:padding="12dp"/>
+
+        <EditText
+                android:id="@+id/et_exercise_starttime_count"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.8"
+                android:gravity="center"
+                android:textSize="20sp"
+                android:textColor="@color/colorAccent"
+                android:text="30"
+                android:inputType="number"
+                android:background="@android:color/transparent"/>
+
+        <ImageView
+                android:id="@+id/iv_exercise_starttime_add"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:src="@drawable/ic_chevron_right_white"
+                android:padding="12dp"/>
+
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_set_exercise"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.8"
+            android:padding="8dp"
+            tools:listitem="@layout/item_exercise"/>
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        <TextView
+                android:id="@+id/tv_exercise_work"
+                android:layout_width="0dp"
+                android:layout_weight="0.5"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="@color/colorAccent"
+                android:text="Добавить работу"
+                android:padding="16dp"
+                android:background="@drawable/rounded_bg"
+                android:layout_margin="8dp"
+                android:gravity="center"/>
+
+        <TextView
+                android:id="@+id/tv_exercise_relax"
+                android:layout_width="0dp"
+                android:layout_weight="0.5"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="@color/colorAccent"
+                android:text="Добавить отдых"
+                android:padding="16dp"
+                android:background="@drawable/rounded_bg"
+                android:layout_margin="8dp"
+                android:gravity="center"/>
+
+    </LinearLayout>
+
 
 </LinearLayout>
