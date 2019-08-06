@@ -5,16 +5,15 @@ import com.atybaty.timer.model.Workout
 interface IWorkoutListContract {
 
     interface Presenter{
-        fun onCreated()
-        fun addWorkout()
-        fun deleteWorkout(workoutId: Long)
-        fun getWorkouts(): ArrayList<Workout>
-        fun playWorkout(workoutId: Long)
-        fun changeWorkout(workoutId: Long)
+        fun activityCreated()
+        fun addButtonClicked()
+        fun deleteButtonClicked(itemPosition: Int)
+        fun playButtonCLicked(itemPosition: Int)
+        fun itemClicked(itemPosition: Int)
     }
 
     interface View{
-        fun showWorkouts()
+        fun showWorkouts(workouts: ArrayList<Workout>)
         fun showEmptyMessage()
         fun showWorkout()
         fun showWorkout(workoutId: Long)

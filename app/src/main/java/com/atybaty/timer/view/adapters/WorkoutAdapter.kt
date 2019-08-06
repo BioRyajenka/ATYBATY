@@ -6,12 +6,17 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.atybaty.timer.R
 import com.atybaty.timer.contract.IWorkoutListContract
+import com.atybaty.timer.model.Workout
 import com.atybaty.timer.view.holders.WorkoutHolder
 import kotlinx.android.synthetic.main.item_train.view.*
 
 class WorkoutAdapter(val context: Context, val presenter: IWorkoutListContract.Presenter): RecyclerView.Adapter<WorkoutHolder>() {
 
-    private val trains = presenter.getWorkouts()
+    private lateinit var trains: ArrayList<Workout>
+
+    fun setWorkouts(workouts: ArrayList<Workout>){
+        trains = workouts
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WorkoutHolder {
         val itemView = LayoutInflater.from(context).inflate(R.layout.item_train, parent, false)
@@ -20,20 +25,20 @@ class WorkoutAdapter(val context: Context, val presenter: IWorkoutListContract.P
             val itemPosition = holder.adapterPosition
             if (itemPosition != RecyclerView.NO_POSITION){
                 trains.removeAt(itemPosition)
-                presenter.deleteWorkout(itemPosition.toLong())
+                presenter.deleteButtonClicked(itemPosition)
                 notifyItemRemoved(itemPosition)
             }
         }
         itemView.iv_train_play.setOnClickListener {
             val itemPosition = holder.adapterPosition
             if (itemPosition != RecyclerView.NO_POSITION){
-                presenter.playWorkout(itemPosition.toLong())
+                presenter.playButtonCLicked(itemPosition)
             }
         }
         itemView.setOnClickListener {
             val itemPosition = holder.adapterPosition
             if (itemPosition != RecyclerView.NO_POSITION){
-                presenter.changeWorkout(itemPosition.toLong())
+                presenter.itemClicked(itemPosition)
             }
         }
         return holder
