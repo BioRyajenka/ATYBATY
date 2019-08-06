@@ -2,12 +2,15 @@ package com.atybaty.timer.view
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.atybaty.timer.DBHandler
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.atybaty.timer.R
 import com.atybaty.timer.contract.IWorkoutListContract
 import com.atybaty.timer.model.Workout
 import com.atybaty.timer.presenter.WorkoutListPresenter
+import kotlinx.android.synthetic.main.activity_workout_list.*
+import kotlinx.android.synthetic.main.item_exercise.*
 import com.atybaty.timer.view.adapters.WorkoutAdapter
 import kotlinx.android.synthetic.main.activity_workout_list.*
 
@@ -19,11 +22,12 @@ class WorkoutListActivity : AppCompatActivity(), IWorkoutListContract.View {
         setContentView(R.layout.activity_workout_list)
 
         //presenter = WorkoutListPresenter(this)
+        presenter.activityCreated(DBHandler.getDBInstance(applicationContext))
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        presenter.activityDestroied()
+        presenter.activityDestroyed()
     }
 
     override fun showWorkoutList(workouts: ArrayList<Workout>) {
