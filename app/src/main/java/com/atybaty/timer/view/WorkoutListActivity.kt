@@ -1,59 +1,75 @@
 package com.atybaty.timer.view
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.atybaty.timer.DBHandler
 import android.view.View
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.atybaty.timer.R
-import com.atybaty.timer.contract.IWorkoutListContract
+import com.atybaty.timer.contract.WorkoutListContract
 import com.atybaty.timer.model.Workout
 import com.atybaty.timer.presenter.WorkoutListPresenter
-import kotlinx.android.synthetic.main.activity_workout_list.*
-import kotlinx.android.synthetic.main.item_exercise.*
 import com.atybaty.timer.view.adapters.WorkoutAdapter
 import kotlinx.android.synthetic.main.activity_workout_list.*
 
-class WorkoutListActivity : AppCompatActivity(), IWorkoutListContract.View {
-    private lateinit var presenter: IWorkoutListContract.Presenter
+class WorkoutListActivity : AppCompatActivity(), WorkoutListContract.View {
+    private lateinit var presenter: WorkoutListContract.Presenter
+    private lateinit var workoutAdapter: WorkoutAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_workout_list)
 
-        //presenter = WorkoutListPresenter(this)
-        presenter.activityCreated(DBHandler.getDBInstance(applicationContext))
+        presenter = WorkoutListPresenter(this)
+        workoutAdapter = WorkoutAdapter(this, presenter)
+
+        iv_main_add.setOnClickListener { presenter.addButtonClicked() }
+
+        presenter.activityCreated()
+//        presenter.activityCreated(DBHandler.getDBInstance(applicationContext))
+
+        /*val nitrite = DBHandler.getDBInstance(applicationContext)
+        val r = nitrite.getRepository<Employee>()
+        r.remove(null as ObjectFilter?)
+        r.insert(Employee(1, B(2)))
+        val e = r.find(Employee::a eq 1).first()
+        println("found $e")
+        e.b.b = 2
+        println("modified: $e")
+
+        val r2 = nitrite.getRepository<B>()
+        println("r2: ${r2.find().joinToString()}")*/
+    }
+
+    override fun showWorkoutsList(workouts: List<Workout>) {
+        tv_main_message.visibility = View.GONE
+        rv_main_trains.visibility = View.VISIBLE
+        workoutAdapter.setWorkouts(workouts)
+        rv_main_trains.layoutManager = LinearLayoutManager(this)
+        rv_main_trains.adapter = workoutAdapter
+        workoutAdapter.notifyDataSetChanged()
+    }
+
+    override fun showEmptyMessage() {
+        println("Showing empty message")
+        rv_main_trains.visibility = View.GONE
+        tv_main_message.visibility = View.VISIBLE
+    }
+
+    override fun showNewWorkout(workout: Workout) {
+        Toast.makeText(applicationContext, "TODO", Toast.LENGTH_SHORT).show()
+    }
+
+    override fun showWorkout(workoutId: Long) {
+        Toast.makeText(applicationContext, "TODO", Toast.LENGTH_SHORT).show()
+    }
+
+    override fun showTimer(workoutId: Long) {
+        Toast.makeText(applicationContext, "TODO", Toast.LENGTH_SHORT).show()
     }
 
     override fun onDestroy() {
         super.onDestroy()
         presenter.activityDestroyed()
-    }
-
-    override fun showWorkoutList(workouts: ArrayList<Workout>) {
-        tv_main_message.visibility = View.GONE
-        rv_main_trains.visibility = View.VISIBLE
-        val adapter = WorkoutAdapter(this, presenter)
-        adapter.setWorkouts(workouts)
-        rv_main_trains.layoutManager = LinearLayoutManager(this)
-        rv_main_trains.adapter = adapter
-        adapter.notifyDataSetChanged()
-    }
-
-    override fun showEmptyMessage() {
-        rv_main_trains.visibility = View.GONE
-        tv_main_message.visibility = View.VISIBLE
-    }
-
-    override fun showEmptyWorkout() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun showWorkout(workoutId: Long) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun showTimer(workoutId: Long) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 }

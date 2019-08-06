@@ -1,12 +1,11 @@
 package com.atybaty.timer.contract
 
 import com.atybaty.timer.model.Workout
-import org.dizitart.no2.Nitrite
 
-interface IWorkoutListContract {
+interface WorkoutListContract {
 
     interface Presenter {
-        fun activityCreated(dbInstance: Nitrite)
+        fun activityCreated()
         fun activityDestroyed()
 
         fun addButtonClicked()
@@ -16,9 +15,9 @@ interface IWorkoutListContract {
     }
 
     interface View {
-        fun showWorkoutList(workouts: ArrayList<Workout>)
+        fun showWorkoutsList(workouts: List<Workout>)
         fun showEmptyMessage()
-        fun showEmptyWorkout()
+        fun showNewWorkout(workout: Workout)
         fun showWorkout(workoutId: Long)
         fun showTimer(workoutId: Long)
     }
