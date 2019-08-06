@@ -1,7 +1,8 @@
-package com.atybaty.timer
+package com.atybaty.timer.view
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.atybaty.timer.R
 import com.atybaty.timer.presenter.WorkoutListPresenter
 
 class WorkoutListActivity : AppCompatActivity() {
