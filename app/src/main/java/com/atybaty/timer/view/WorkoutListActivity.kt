@@ -26,19 +26,6 @@ class WorkoutListActivity : AppCompatActivity(), WorkoutListContract.View {
         iv_main_add.setOnClickListener { presenter.addButtonClicked() }
 
         presenter.activityCreated()
-//        presenter.activityCreated(DBHandler.getDBInstance(applicationContext))
-
-        /*val nitrite = DBHandler.getDBInstance(applicationContext)
-        val r = nitrite.getRepository<Employee>()
-        r.remove(null as ObjectFilter?)
-        r.insert(Employee(1, B(2)))
-        val e = r.find(Employee::a eq 1).first()
-        println("found $e")
-        e.b.b = 2
-        println("modified: $e")
-
-        val r2 = nitrite.getRepository<B>()
-        println("r2: ${r2.find().joinToString()}")*/
     }
 
     override fun showWorkoutsList(workouts: List<Workout>) {
