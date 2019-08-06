@@ -21,7 +21,10 @@ class WorkoutListActivity : AppCompatActivity(), WorkoutListContract.View {
         setContentView(R.layout.activity_workout_list)
 
         presenter = WorkoutListPresenter(this)
+
         workoutAdapter = WorkoutAdapter(this, presenter)
+        rv_main_trains.layoutManager = LinearLayoutManager(this)
+        rv_main_trains.adapter = workoutAdapter
 
         iv_main_add.setOnClickListener { presenter.addButtonClicked() }
 
@@ -32,13 +35,10 @@ class WorkoutListActivity : AppCompatActivity(), WorkoutListContract.View {
         tv_main_message.visibility = View.GONE
         rv_main_trains.visibility = View.VISIBLE
         workoutAdapter.setWorkouts(workouts)
-        rv_main_trains.layoutManager = LinearLayoutManager(this)
-        rv_main_trains.adapter = workoutAdapter
         workoutAdapter.notifyDataSetChanged()
     }
 
     override fun showEmptyMessage() {
-        println("Showing empty message")
         rv_main_trains.visibility = View.GONE
         tv_main_message.visibility = View.VISIBLE
     }
