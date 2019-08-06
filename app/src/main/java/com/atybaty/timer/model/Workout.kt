@@ -1,8 +1,8 @@
 package com.atybaty.timer.model
 
 import com.atybaty.timer.utils.Seconds
-import java.time.Duration
 
-data class Workout(val warmUp: Seconds,
+
+data class Workout(val id: Int, var name: String, var warmUp: Seconds,
                    val exerciseGroups: List<ExerciseGroup>,
-                   val coolDown: Seconds)
+                   var coolDown: Seconds)
