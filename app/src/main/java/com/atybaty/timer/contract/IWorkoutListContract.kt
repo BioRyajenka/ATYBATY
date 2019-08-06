@@ -8,14 +8,15 @@ interface IWorkoutListContract {
         fun activityCreated()
         fun addButtonClicked()
         fun deleteButtonClicked(itemPosition: Int)
-        fun playButtonCLicked(itemPosition: Int)
+        fun playButtonClicked(itemPosition: Int)
         fun itemClicked(itemPosition: Int)
+        fun activityDestroied()
     }
 
     interface View{
-        fun showWorkouts(workouts: ArrayList<Workout>)
+        fun showWorkoutList(workouts: ArrayList<Workout>)
         fun showEmptyMessage()
-        fun showWorkout()
+        fun showEmptyWorkout()
         fun showWorkout(workoutId: Long)
         fun showTimer(workoutId: Long)
     }

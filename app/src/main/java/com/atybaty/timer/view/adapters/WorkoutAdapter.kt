@@ -32,7 +32,7 @@ class WorkoutAdapter(val context: Context, val presenter: IWorkoutListContract.P
         itemView.iv_train_play.setOnClickListener {
             val itemPosition = holder.adapterPosition
             if (itemPosition != RecyclerView.NO_POSITION){
-                presenter.playButtonCLicked(itemPosition)
+                presenter.playButtonClicked(itemPosition)
             }
         }
         itemView.setOnClickListener {
