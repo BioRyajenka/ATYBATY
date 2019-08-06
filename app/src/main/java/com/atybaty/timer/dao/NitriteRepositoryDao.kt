@@ -26,7 +26,7 @@ class NitriteRepository(private val repository: ObjectRepository<Workout>):Repos
     override fun createNewWorkout(): Workout {
         val maxIdWorkout = repository.find().maxBy { it.id }
         val maxId = maxIdWorkout?.id ?: 0
-        val workout = Workout(maxId + 1, "Default name", null, listOf(), null)
+        val workout = Workout(maxId + 1, "Default name", 0, listOf(), 0)
         repository.insert(workout)
         return workout
     }

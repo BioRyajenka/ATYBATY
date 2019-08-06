@@ -8,6 +8,6 @@ import org.dizitart.no2.objects.Indices
 
 
 @Indices(Index(value = "id", type = IndexType.Unique))
-data class Workout(val id: Int, val warmUp: Seconds,
-                   val exerciseGroups: List<ExerciseGroup>
-                   val coolDown: Seconds)
+data class Workout(val id: Int, var name: String, var warmUp: Seconds,
+                   val exerciseGroups: List<ExerciseGroup>,
+                   var coolDown: Seconds)
