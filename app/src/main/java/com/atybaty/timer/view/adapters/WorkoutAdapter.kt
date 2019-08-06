@@ -14,10 +14,10 @@ class WorkoutAdapter(
     private val context: Context,
     private val presenter: WorkoutListContract.Presenter): RecyclerView.Adapter<WorkoutHolder>() {
 
-    private var trains: List<Workout> = emptyList()
+    private var workouts: List<Workout> = emptyList()
 
     fun setWorkouts(workouts: List<Workout>){
-        trains = workouts
+        this.workouts = workouts
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WorkoutHolder {
@@ -45,14 +45,15 @@ class WorkoutAdapter(
     }
 
     override fun getItemCount(): Int {
-        return trains.size
+        return workouts.size
     }
 
     override fun onBindViewHolder(holder: WorkoutHolder, position: Int) {
-        val train = trains[position]
-        holder.setStartTime(train.warmUp)
-        holder.setCountSets(train.exerciseGroups.size)
-        holder.setEndTime(train.coolDown)
+        val workout = workouts[position]
+        holder.setName(workout.name)
+        holder.setStartTime(workout.warmUp)
+        holder.setCountSets(workout.exerciseGroups.size)
+        holder.setEndTime(workout.coolDown)
     }
 
 
