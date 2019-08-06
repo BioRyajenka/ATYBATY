@@ -1,14 +1,13 @@
 package com.atybaty.timer.dao
 
 import com.atybaty.timer.model.Workout
-import org.dizitart.no2.objects.Cursor
 import org.dizitart.no2.objects.ObjectRepository
 import org.dizitart.no2.objects.filters.ObjectFilters.eq
 
-class NitriteRepository(private val repository: ObjectRepository<Workout>):RepositoryDao {
+class NitriteRepository(private val repository: ObjectRepository<Workout>) : RepositoryDao {
 
-    override fun getAllWorkouts(): Cursor<Workout> {
-        return repository.find()
+    override fun getAllWorkouts(): List<Workout> {
+        return repository.find().toList()
     }
 
     override fun getWorkoutById(id: Int): Workout {
