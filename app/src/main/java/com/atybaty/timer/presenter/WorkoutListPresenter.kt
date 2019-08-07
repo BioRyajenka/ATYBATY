@@ -4,7 +4,7 @@ import android.widget.Toast
 import com.atybaty.timer.R
 import com.atybaty.timer.WorkoutRepositoryHolder
 import com.atybaty.timer.contract.WorkoutListContract
-import com.atybaty.timer.view.WorkoutListActivity
+import com.atybaty.timer.view.workoutlist.WorkoutListActivity
 
 class WorkoutListPresenter(private val view: WorkoutListActivity) : WorkoutListContract.Presenter {
     private val workoutRepository = WorkoutRepositoryHolder.getWorkoutRepository(view)

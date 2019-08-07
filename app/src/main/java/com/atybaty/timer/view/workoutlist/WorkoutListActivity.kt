@@ -1,4 +1,4 @@
-package com.atybaty.timer.view
+package com.atybaty.timer.view.workoutlist
 
 import android.os.Bundle
 import android.view.View
@@ -9,7 +9,6 @@ import com.atybaty.timer.R
 import com.atybaty.timer.contract.WorkoutListContract
 import com.atybaty.timer.model.Workout
 import com.atybaty.timer.presenter.WorkoutListPresenter
-import com.atybaty.timer.view.adapters.WorkoutAdapter
 import kotlinx.android.synthetic.main.activity_workout_list.*
 
 class WorkoutListActivity : AppCompatActivity(), WorkoutListContract.View {
@@ -47,11 +46,11 @@ class WorkoutListActivity : AppCompatActivity(), WorkoutListContract.View {
         Toast.makeText(applicationContext, "TODO", Toast.LENGTH_SHORT).show()
     }
 
-    override fun showWorkout(workoutId: Long) {
+    override fun showWorkout(workout: Workout) {
         Toast.makeText(applicationContext, "TODO", Toast.LENGTH_SHORT).show()
     }
 
-    override fun showTimer(workoutId: Long) {
+    override fun showTimer(workout: Workout) {
         Toast.makeText(applicationContext, "TODO", Toast.LENGTH_SHORT).show()
     }
 

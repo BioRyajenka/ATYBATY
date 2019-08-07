@@ -1,4 +1,4 @@
-package com.atybaty.timer.view.holders
+package com.atybaty.timer.view.workoutlist
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView

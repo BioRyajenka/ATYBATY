@@ -58,7 +58,7 @@
                 android:background="@android:color/transparent"/>
 
         <ImageView
-                android:id="@+id/iv_exercise_add"
+                android:id="@+id/iv_exercise_plus"
                 android:layout_width="56dp"
                 android:layout_height="56dp"
                 android:src="@drawable/ic_chevron_right_white"

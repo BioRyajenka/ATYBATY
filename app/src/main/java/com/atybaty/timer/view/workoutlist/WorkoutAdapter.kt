@@ -1,4 +1,4 @@
-package com.atybaty.timer.view.adapters
+package com.atybaty.timer.view.workoutlist
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -7,7 +7,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.atybaty.timer.R
 import com.atybaty.timer.contract.WorkoutListContract
 import com.atybaty.timer.model.Workout
-import com.atybaty.timer.view.holders.WorkoutHolder
 import kotlinx.android.synthetic.main.item_train.view.*
 
 class WorkoutAdapter(
@@ -55,6 +54,4 @@ class WorkoutAdapter(
         holder.setCountSets(workout.exerciseGroups.size)
         holder.setEndTime(workout.coolDown)
     }
-
-
 }
