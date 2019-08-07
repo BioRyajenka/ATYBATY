@@ -2,21 +2,22 @@ package com.atybaty.timer.contract
 
 import com.atybaty.timer.model.Workout
 
-interface IWorkoutListContract {
+interface WorkoutListContract {
 
-    interface Presenter{
+    interface Presenter {
         fun activityCreated()
+        fun activityDestroyed()
+
         fun addButtonClicked()
         fun deleteButtonClicked(itemPosition: Int)
         fun playButtonClicked(itemPosition: Int)
         fun itemClicked(itemPosition: Int)
-        fun activityDestroied()
     }
 
-    interface View{
-        fun showWorkoutList(workouts: ArrayList<Workout>)
+    interface View {
+        fun showWorkoutsList(workouts: List<Workout>)
         fun showEmptyMessage()
-        fun showEmptyWorkout()
+        fun showNewWorkout(workout: Workout)
         fun showWorkout(workoutId: Long)
         fun showTimer(workoutId: Long)
     }

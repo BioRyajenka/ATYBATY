@@ -1,10 +1,14 @@
-package com.atybaty.timer.dao
+package com.atybaty.timer.model.repository
 
+import com.atybaty.timer.model.ExerciseGroup
 import com.atybaty.timer.model.Workout
-import org.dizitart.no2.objects.ObjectRepository
+import com.atybaty.timer.utils.Seconds
+import org.dizitart.kno2.getRepository
+import org.dizitart.no2.Nitrite
 import org.dizitart.no2.objects.filters.ObjectFilters.eq
 
-class NitriteRepository(private val repository: ObjectRepository<Workout>) : RepositoryDao {
+class WorkoutRepository(nitrite: Nitrite) : Repository {
+    private val repository = nitrite.getRepository<Workout>()
 
     override fun getAllWorkouts(): List<Workout> {
         return repository.find().toList()
@@ -22,10 +26,10 @@ class NitriteRepository(private val repository: ObjectRepository<Workout>) : Rep
         repository.update(eq("id", workout.id), workout)
     }
 
-    override fun createNewWorkout(): Workout {
+    override fun createNewWorkout(name: String, warmUp: Seconds, exerciseGroups: List<ExerciseGroup>, coolDown: Seconds): Workout {
         val maxIdWorkout = repository.find().maxBy { it.id }
         val maxId = maxIdWorkout?.id ?: 0
-        val workout = Workout(maxId + 1, "Default name", 0, listOf(), 0)
+        val workout = Workout(maxId + 1, name, warmUp, exerciseGroups, coolDown)
         repository.insert(workout)
         return workout
     }
