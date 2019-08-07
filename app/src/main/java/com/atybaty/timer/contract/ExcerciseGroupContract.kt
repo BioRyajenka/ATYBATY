@@ -1,7 +1,6 @@
 package com.atybaty.timer.contract
 
 import com.atybaty.timer.model.ExerciseGroup
-import com.atybaty.timer.model.Workout
 import com.atybaty.timer.utils.Seconds
 
 interface ExerciseGroupContract {
@@ -10,15 +9,16 @@ interface ExerciseGroupContract {
         fun fragmentViewCreated()
         fun fragmentViewDestroyed()
 
-        fun warmUpDurationSetted(duration: Seconds)
-        fun coolDownDurationSetted(duration: Seconds)
+        fun backButtonClicked()
+        fun saveButtonClicked()
+        fun addExerciseButtonClicked()
+        fun addRestButtonClicked()
 
-        fun exerciseGroupClicked(itemPosition: Int)
-        fun addExerciseGroupButtonClicked()
+        fun exerciseDurationSetted(duration: Seconds)
     }
 
     interface View {
-        fun showWorkout(workout: Workout)
         fun showExerciseGroup(exerciseGroup: ExerciseGroup)
+        fun showExerciseSettings()
     }
 }
