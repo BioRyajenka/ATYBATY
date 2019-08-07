@@ -6,21 +6,21 @@ import org.dizitart.kno2.nitrite
 import org.dizitart.no2.Nitrite
 import java.io.File
 
-private const val DB_FILE_NAME = "app.db"
+private const val DB_FILE_NAME = "atybaty.db"
 
 // see https://www.dizitart.org/nitrite-database/#tips
 class WorkoutRepositoryHolder {
     companion object {
         fun getWorkoutRepository(context: Context): WorkoutRepository {
-            return INSTANCE ?: synchronized(this) {
-                INSTANCE ?: WorkoutRepository(buildNitriteDB(context)).also {
-                    INSTANCE = it
+            return singleton ?: synchronized(this) {
+                singleton ?: WorkoutRepository(buildNitriteDB(context)).also {
+                    singleton = it
                 }
             }
         }
 
         @Volatile
-        private var INSTANCE: WorkoutRepository? = null
+        private var singleton: WorkoutRepository? = null
 
         private fun buildNitriteDB(context: Context): Nitrite {
             return nitrite {
