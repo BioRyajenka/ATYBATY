@@ -5,46 +5,32 @@ import com.atybaty.timer.R
 import com.atybaty.timer.utils.Seconds
 import java.time.Duration
 
-sealed class Exercise {
+sealed class Exercise(var duration: Seconds) {
     abstract fun getName(context: Context): String
 }
 
-data class Work(val name: String, val options: WorkOptions) : Exercise() {
+class Work(val name: String, duration: Seconds, val options: WorkOptions) : Exercise(duration) {
     override fun getName(context: Context) = name
 }
 
-abstract class Relaxation(private val nameStringId: Int) : Exercise() {
-    abstract val duration: Seconds
-
+abstract class Relaxation(private val nameStringId: Int, duration: Seconds) : Exercise(duration) {
     override fun getName(context: Context) = context.getString(nameStringId)
 }
 
 
 
-data class RunUp(override val duration: Seconds) : Relaxation(R.string.exercises_run_up)
+class RunUp(duration: Seconds) : Relaxation(R.string.exercises_run_up, duration)
 
-data class RestBetweenSets(override val duration: Seconds) : Relaxation(R.string.exercises_rest_between_sets)
+class RestBetweenSets(duration: Seconds) : Relaxation(R.string.exercises_rest_between_sets, duration)
 
-data class CalmDown(override val duration: Seconds) : Relaxation(R.string.exercises_calm_down)
+class CalmDown(duration: Seconds) : Relaxation(R.string.exercises_calm_down, duration)
 
 
 
 sealed class WorkOptions
 
-data class SimpleWorkOptions(val duration: Seconds) : WorkOptions()
+class SimpleWorkOptions : WorkOptions()
 
 data class WorkWithAccelerationOptions(val accelerationDuration: Seconds) : WorkOptions()
 
 data class WorkWithIntervalsOptions(val interval: Seconds, val rattle: Seconds)
-
-fun getExerciseDuration(exercise: Exercise): Seconds? {
-    return when (exercise) {
-        is Relaxation -> exercise.duration
-        is Work -> {
-            when (exercise.options) {
-                is SimpleWorkOptions -> exercise.options.duration
-                else -> null
-            }
-        }
-    }
-}

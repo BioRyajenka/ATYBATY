@@ -15,13 +15,24 @@ import kotlinx.android.synthetic.main.fragment_set.*
 import kotlinx.android.synthetic.main.fragment_set.view.*
 
 class ExerciseGroupFragment : Fragment(), ExerciseGroupContract.View {
-    private val presenter = ExerciseGroupPresenter()
+    private lateinit var exerciseGroup: ExerciseGroup
+
+    private val presenter = ExerciseGroupPresenter(this, context!!)
     private val exerciseGroupAdapter = ExerciseGroupAdapter(presenter)
 
+    fun setExerciseGroup(exerciseGroup: ExerciseGroup) {
+        this.exerciseGroup = exerciseGroup
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+        println("fragment:onCreateView")
+
+        exerciseGroupAdapter.setContext(context!!)
         return inflater.inflate(R.layout.fragment_set, container, false).apply {
             rv_set_exercise.adapter = exerciseGroupAdapter
             rv_set_exercise.layoutManager = LinearLayoutManager(context)
+        }.also {
+            presenter.fragmentViewCreated(exerciseGroup)
         }
     }
 
@@ -33,5 +44,15 @@ class ExerciseGroupFragment : Fragment(), ExerciseGroupContract.View {
 
     override fun showExerciseSettings() {
         Toast.makeText(context, "TODO", Toast.LENGTH_SHORT).show()
+    }
+
+    override fun returnToPreviousFragment() {
+        fragmentManager!!.popBackStack()
+    }
+
+    override fun onDestroy() {
+        println("fragment:onDestroy")
+        super.onDestroy()
+        presenter.fragmentDestroyed()
     }
 }

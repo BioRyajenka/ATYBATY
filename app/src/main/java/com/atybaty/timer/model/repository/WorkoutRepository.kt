@@ -29,7 +29,7 @@ class WorkoutRepository(nitrite: Nitrite) : Repository {
     override fun createNewWorkout(name: String, warmUp: Seconds, exerciseGroups: List<ExerciseGroup>, coolDown: Seconds): Workout {
         val maxIdWorkout = repository.find().maxBy { it.id }
         val maxId = maxIdWorkout?.id ?: 0
-        val workout = Workout(maxId + 1, name, warmUp, exerciseGroups, coolDown)
+        val workout = Workout(maxId + 1, name, warmUp, exerciseGroups.toMutableList(), coolDown)
         repository.insert(workout)
         return workout
     }

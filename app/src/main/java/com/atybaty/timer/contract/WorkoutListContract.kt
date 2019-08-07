@@ -17,7 +17,6 @@ interface WorkoutListContract {
     interface View {
         fun showWorkoutsList(workouts: List<Workout>)
         fun showEmptyMessage()
-        fun showNewWorkout(workout: Workout)
         fun showWorkout(workout: Workout)
         fun showTimer(workout: Workout)
     }

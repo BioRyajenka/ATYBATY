@@ -8,7 +8,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.atybaty.timer.R
 import com.atybaty.timer.contract.ExerciseGroupContract
 import com.atybaty.timer.model.Exercise
-import com.atybaty.timer.model.getExerciseDuration
 import com.atybaty.timer.utils.Seconds
 import kotlinx.android.synthetic.main.item_exercise.view.*
 import kotlin.math.max
@@ -39,7 +38,7 @@ class ExerciseGroupAdapter(
         return View.OnClickListener {
             val itemPosition = holder.adapterPosition
             if (itemPosition != RecyclerView.NO_POSITION) {
-                nestedListener(itemPosition, getExerciseDuration(exercises[itemPosition])!!)
+                nestedListener(itemPosition, exercises[itemPosition].duration)
             }
         }
     }
@@ -62,8 +61,7 @@ class ExerciseGroupAdapter(
         val exercise = exercises[position]
         holder.itemView.apply {
             tv_exercise_name.text = exercise.getName(context)
-            // -1 as an stub
-            et_exercise_count.setText((getExerciseDuration(exercise) ?: -1).toString())
+            et_exercise_count.setText(exercise.duration.toString())
         }
     }
 

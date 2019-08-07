@@ -6,12 +6,12 @@ import com.atybaty.timer.utils.Seconds
 interface ExerciseGroupContract {
 
     interface Presenter {
-        fun fragmentViewCreated()
-        fun fragmentViewDestroyed()
+        fun fragmentViewCreated(exerciseGroup: ExerciseGroup)
+        fun fragmentDestroyed()
 
         fun backButtonClicked()
         fun saveButtonClicked()
-        fun addExerciseButtonClicked()
+        fun addWorkButtonClicked()
         fun addRestButtonClicked()
 
 
@@ -21,5 +21,6 @@ interface ExerciseGroupContract {
     interface View {
         fun showExerciseGroup(exerciseGroup: ExerciseGroup)
         fun showExerciseSettings()
+        fun returnToPreviousFragment()
     }
 }

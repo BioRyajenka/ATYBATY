@@ -4,6 +4,7 @@ import android.widget.Toast
 import com.atybaty.timer.R
 import com.atybaty.timer.WorkoutRepositoryHolder
 import com.atybaty.timer.contract.WorkoutListContract
+import com.atybaty.timer.model.ExerciseGroup
 import com.atybaty.timer.view.workoutlist.WorkoutListActivity
 
 class WorkoutListPresenter(private val view: WorkoutListActivity) : WorkoutListContract.Presenter {
@@ -25,15 +26,16 @@ class WorkoutListPresenter(private val view: WorkoutListActivity) : WorkoutListC
     override fun addButtonClicked() {
         val newWorkout = workoutRepository.createNewWorkout(
             name = view.getString(R.string.default_workout_name),
-            warmUp = view.resources.getInteger(R.integer.default_warmup_time_in_seconds),
-            exerciseGroups = emptyList(),
-            coolDown = view.resources.getInteger(R.integer.default_cooldown_time_in_seconds)
+            warmUp = view.resources.getInteger(R.integer.default_warmup_duration_in_seconds),
+            exerciseGroups = listOf(ExerciseGroup("Сет 1", mutableListOf())), // stub. TODO: change to emptyList()
+            coolDown = view.resources.getInteger(R.integer.default_cooldown_duration_in_seconds)
         )
-        view.showNewWorkout(newWorkout)
+
+        view.showWorkout(newWorkout)
 
         // this is stub
-        workouts.add(newWorkout)
-        viewShowWorkouts()
+//        workouts.add(newWorkout)
+//        viewShowWorkouts()
     }
 
     override fun deleteButtonClicked(itemPosition: Int) {
@@ -47,7 +49,7 @@ class WorkoutListPresenter(private val view: WorkoutListActivity) : WorkoutListC
     }
 
     override fun itemClicked(itemPosition: Int) {
-        Toast.makeText(view, "TODO", Toast.LENGTH_SHORT).show()
+        view.showWorkout(workouts[itemPosition])
     }
 
     override fun activityDestroyed() {
