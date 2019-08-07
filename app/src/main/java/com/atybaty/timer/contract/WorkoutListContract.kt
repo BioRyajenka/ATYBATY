@@ -18,7 +18,7 @@ interface WorkoutListContract {
         fun showWorkoutsList(workouts: List<Workout>)
         fun showEmptyMessage()
         fun showNewWorkout(workout: Workout)
-        fun showWorkout(workoutId: Long)
-        fun showTimer(workoutId: Long)
+        fun showWorkout(workout: Workout)
+        fun showTimer(workout: Workout)
     }
 }
