@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools"
+              android:orientation="vertical"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:background="@drawable/dialog_bg"
+              android:padding="16dp"
+              android:gravity="center">
+
+    <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center">
+
+        <ImageView
+                android:id="@+id/iv_settings_ex_back"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:src="@drawable/ic_arrow_back_white"
+                android:padding="12dp"/>
+
+        <EditText
+                android:id="@+id/et_settings_ex_name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.8"
+                android:textColor="@color/colorAccent"
+                android:textSize="20sp"
+                android:text="Работа"
+                android:background="@android:color/transparent"
+                android:gravity="center"
+                android:layout_marginLeft="32dp"
+                android:layout_marginRight="32dp"/>
+
+        <ImageView
+                android:id="@+id/iv_exercise_check"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:src="@drawable/ic_check_white"
+                android:padding="12dp"/>
+
+    </LinearLayout>
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorAccent"
+            android:textSize="20sp"
+            android:text="Длительность"
+            android:background="@android:color/transparent"
+            android:gravity="center"
+            android:layout_marginTop="8dp"/>
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp">
+
+        <ImageView
+                android:id="@+id/iv_settings_ex_duration_minus"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:src="@drawable/ic_chevron_left_white"
+                android:padding="12dp"/>
+
+        <EditText
+                android:id="@+id/et_settings_ex_duration_count"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.8"
+                android:gravity="center"
+                android:textSize="20sp"
+                android:textColor="@color/colorAccent"
+                android:text="30"
+                android:inputType="number"
+                android:background="@android:color/transparent"/>
+
+        <ImageView
+                android:id="@+id/iv_settings_ex_duration_add"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:src="@drawable/ic_chevron_right_white"
+                android:padding="12dp"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:gravity="center"
+                android:orientation="vertical">
+
+            <TextView
+                    android:id="@+id/tv_settings_ex_type_inter_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorSelected"
+                    android:textStyle="bold"
+                    android:textSize="20sp"
+                    android:text="Интервал"/>
+
+            <View
+                    android:id="@+id/v_settings_ex_type_inter_indicator"
+                    android:layout_width="match_parent"
+                    android:layout_height="3dp"
+                    android:background="@color/colorSelected"
+                    android:layout_marginTop="4dp"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:gravity="center"
+                android:orientation="vertical">
+
+            <TextView
+                    android:id="@+id/tv_settings_ex_type_accel_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorUnselected"
+                    android:textStyle="bold"
+                    android:textSize="20sp"
+                    android:text="Ускорение"/>
+
+            <View
+                    android:id="@+id/v_settings_ex_type_accel_indicator"
+                    android:layout_width="match_parent"
+                    android:layout_height="3dp"
+                    android:background="@color/colorSelected"
+                    android:layout_marginTop="4dp"
+                    android:visibility="gone"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+            android:id="@+id/ll_settings_ex_interval_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center">
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorAccent"
+                android:textSize="20sp"
+                android:text="Интервал"
+                android:layout_marginTop="8dp"/>
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp">
+
+            <ImageView
+                    android:id="@+id/iv_settings_ex_interval_minus"
+                    android:layout_width="56dp"
+                    android:layout_height="56dp"
+                    android:src="@drawable/ic_chevron_left_white"
+                    android:padding="12dp"/>
+
+            <EditText
+                    android:id="@+id/et_settings_ex_interval_count"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.8"
+                    android:gravity="center"
+                    android:textSize="20sp"
+                    android:textColor="@color/colorAccent"
+                    android:text="30"
+                    android:inputType="number"
+                    android:background="@android:color/transparent"/>
+
+            <ImageView
+                    android:id="@+id/iv_settings_ex_interval_add"
+                    android:layout_width="56dp"
+                    android:layout_height="56dp"
+                    android:src="@drawable/ic_chevron_right_white"
+                    android:padding="12dp"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+            android:id="@+id/ll_settings_ex_acceleration_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:visibility="gone">
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorAccent"
+                android:textSize="20sp"
+                android:text="Ускорение"
+                android:layout_marginTop="8dp"/>
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp">
+
+            <ImageView
+                    android:id="@+id/iv_settings_ex_acceleration_minus"
+                    android:layout_width="56dp"
+                    android:layout_height="56dp"
+                    android:src="@drawable/ic_chevron_left_white"
+                    android:padding="12dp"/>
+
+            <EditText
+                    android:id="@+id/et_settings_ex_acceleration_count"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.8"
+                    android:gravity="center"
+                    android:textSize="20sp"
+                    android:textColor="@color/colorAccent"
+                    android:text="30"
+                    android:inputType="number"
+                    android:background="@android:color/transparent"/>
+
+            <ImageView
+                    android:id="@+id/iv_settings_ex_acceleration_add"
+                    android:layout_width="56dp"
+                    android:layout_height="56dp"
+                    android:src="@drawable/ic_chevron_right_white"
+                    android:padding="12dp"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>
