@@ -1,7 +1,6 @@
 package com.atybaty.timer.contract
 
 import android.content.Context
-import com.atybaty.timer.model.ExerciseGroup
 import com.atybaty.timer.model.Work
 import com.atybaty.timer.utils.Seconds
 
@@ -21,7 +20,7 @@ interface ExerciseSettingsContract {
 
         fun exerciseDurationSet(newDuration: Seconds)
         fun exerciseIntervalDurationSet(newDuration: Seconds)
-        fun exerciseAccelerationDurationSet(newDuration: Seconds)
+        fun exerciseAccelerationDurationSet( newDuration: Seconds)
     }
 
     interface View {

@@ -12,6 +12,10 @@ sealed class Exercise(var duration: Seconds) {
 
 class Work(val name: String, duration: Seconds, val options: WorkOptions) : Exercise(duration) {
     override fun getName(context: Context) = name
+
+    fun copy(name: String = this.name, duration: Seconds = this.duration, options: WorkOptions = this.options): Work {
+        return Work(name, duration, options)
+    }
 }
 
 abstract class Relaxation(private val nameStringId: Int, duration: Seconds) : Exercise(duration) {
@@ -31,6 +35,6 @@ sealed class WorkOptions
 
 class SimpleWorkOptions : WorkOptions()
 
-data class WorkWithAccelerationOptions(val accelerationDuration: Seconds) : WorkOptions()
+data class WorkWithAccelerationOptions(var accelerationDuration: Seconds) : WorkOptions()
 
-data class WorkWithIntervalsOptions(val interval: Seconds, val rattle: Seconds) : WorkOptions()
+data class WorkWithIntervalsOptions(var interval: Seconds, var rattle: Seconds) : WorkOptions()
