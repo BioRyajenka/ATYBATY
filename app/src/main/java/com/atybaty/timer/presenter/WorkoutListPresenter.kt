@@ -1,14 +1,14 @@
 package com.atybaty.timer.presenter
 
+import android.content.Context
 import android.widget.Toast
 import com.atybaty.timer.R
-import com.atybaty.timer.WorkoutRepositoryHolder
+import com.atybaty.timer.dataholders.WorkoutRepositoryHolder
 import com.atybaty.timer.contract.WorkoutListContract
 import com.atybaty.timer.model.ExerciseGroup
-import com.atybaty.timer.view.workoutlist.WorkoutListActivity
 
-class WorkoutListPresenter(private val view: WorkoutListActivity) : WorkoutListContract.Presenter {
-    private val workoutRepository = WorkoutRepositoryHolder.getWorkoutRepository(view)
+class WorkoutListPresenter(private val view: WorkoutListContract.View, private val context: Context) : WorkoutListContract.Presenter {
+    private val workoutRepository = WorkoutRepositoryHolder.getWorkoutRepository(context)
     private val workouts = workoutRepository.getAllWorkouts().toMutableList()
 
     private fun viewShowWorkouts() {
@@ -25,10 +25,10 @@ class WorkoutListPresenter(private val view: WorkoutListActivity) : WorkoutListC
 
     override fun addButtonClicked() {
         val newWorkout = workoutRepository.createNewWorkout(
-            name = view.getString(R.string.default_workout_name),
-            warmUp = view.resources.getInteger(R.integer.default_warmup_duration_in_seconds),
+            name = context.getString(R.string.default_workout_name),
+            warmUp = context.resources.getInteger(R.integer.default_warmup_duration_in_seconds),
             exerciseGroups = listOf(ExerciseGroup("Сет 1", mutableListOf())), // stub. TODO: change to emptyList()
-            coolDown = view.resources.getInteger(R.integer.default_cooldown_duration_in_seconds)
+            coolDown = context.resources.getInteger(R.integer.default_cooldown_duration_in_seconds)
         )
 
         view.showWorkout(newWorkout)
@@ -45,7 +45,7 @@ class WorkoutListPresenter(private val view: WorkoutListActivity) : WorkoutListC
     }
 
     override fun playButtonClicked(itemPosition: Int) {
-        Toast.makeText(view, "TODO", Toast.LENGTH_SHORT).show()
+        Toast.makeText(context, "TODO", Toast.LENGTH_SHORT).show()
     }
 
     override fun itemClicked(itemPosition: Int) {

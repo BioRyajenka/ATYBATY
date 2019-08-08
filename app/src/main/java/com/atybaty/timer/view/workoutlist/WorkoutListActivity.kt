@@ -6,7 +6,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.atybaty.timer.CurrentWorkoutHolder
+import com.atybaty.timer.dataholders.CurrentWorkoutHolder
 import com.atybaty.timer.R
 import com.atybaty.timer.contract.WorkoutListContract
 import com.atybaty.timer.model.Workout
@@ -22,7 +22,7 @@ class WorkoutListActivity : AppCompatActivity(), WorkoutListContract.View {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_workout_list)
 
-        presenter = WorkoutListPresenter(this)
+        presenter = WorkoutListPresenter(this, this)
 
         workoutAdapter = WorkoutAdapter(this, presenter)
         rv_main_trains.layoutManager = LinearLayoutManager(this)

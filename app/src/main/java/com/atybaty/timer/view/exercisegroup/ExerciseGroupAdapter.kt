@@ -6,16 +6,21 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.atybaty.timer.R
 import com.atybaty.timer.contract.ExerciseGroupContract
-import com.atybaty.timer.model.Exercise
+import com.atybaty.timer.model.*
 import com.atybaty.timer.utils.Seconds
-import kotlinx.android.synthetic.main.item_exercise.view.*
 import kotlin.math.max
 import kotlin.math.min
 
 private const val MAX_DURATION: Seconds = 24 * 60 * 60
+
+private const val VIEWTYPE_WORK = 0
+private const val VIEWTYPE_REST = 1
 
 class ExerciseGroupAdapter(
     private val presenter: ExerciseGroupContract.Presenter
@@ -46,15 +51,22 @@ class ExerciseGroupAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ExerciseGroupHolder {
-        val itemView = LayoutInflater.from(context).inflate(R.layout.item_exercise, parent, false)
+        val layoutId = if (viewType == VIEWTYPE_WORK) {
+            R.layout.item_exercise_work
+        } else {
+            R.layout.item_exercise_rest
+        }
+        val itemView = LayoutInflater.from(context).inflate(layoutId, parent, false)
         val holder = ExerciseGroupHolder(itemView)
-        itemView.iv_exercise_minus.setOnClickListener(durationChangeOnClickListener(holder) { itemPosition, oldDuration ->
+
+        itemView.findViewById<ImageView>(R.id.iv_exercise_minus)
+            .setOnClickListener(durationChangeOnClickListener(holder) { itemPosition, oldDuration ->
             presenter.exerciseDurationSet(itemPosition, max(1, oldDuration - 1))
         })
-        itemView.iv_exercise_plus.setOnClickListener(durationChangeOnClickListener(holder) { itemPosition, oldDuration ->
+        itemView.findViewById<ImageView>(R.id.iv_exercise_plus).setOnClickListener(durationChangeOnClickListener(holder) { itemPosition, oldDuration ->
             presenter.exerciseDurationSet(itemPosition, min(MAX_DURATION, oldDuration + 1))
         })
-        itemView.et_exercise_count.addTextChangedListener(object : TextWatcher {
+        itemView.findViewById<EditText>(R.id.et_exercise_duration).addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable) {}
 
             override fun beforeTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
@@ -71,28 +83,37 @@ class ExerciseGroupAdapter(
             }
         })
 
+        if (viewType == VIEWTYPE_WORK) {
+            itemView.findViewById<TextView>(R.id.tv_setup_exercise).setOnClickListener {
+                presenter.setUpExerciseButtonClicked(holder.adapterPosition)
+            }
+        }
+
         return holder
     }
 
     override fun getItemCount() = exercises.size
 
+    override fun getItemViewType(position: Int): Int {
+        return when (exercises[position]) {
+            is Work -> VIEWTYPE_WORK
+            else -> VIEWTYPE_REST
+        }
+    }
+
     override fun onBindViewHolder(holder: ExerciseGroupHolder, position: Int) {
         val exercise = exercises[position]
         holder.itemView.apply {
-            tv_exercise_name.text = exercise.getName(context)
-            et_exercise_count.setText(exercise.duration.toString())
-        }
-
-/*        holder.itemView.et_exercise_count.setOnFocusChangeListener { view, hasFocus ->
-            if (!hasFocus) {
-                val newDuration = try {
-                    (view as EditText).text.toString().toInt()
-                } catch (_: Exception) {
-                    0
+            if (exercise is Work) {
+                findViewById<TextView>(R.id.tv_exercise_options_desc).text = when (val options = exercise.options) {
+                    is SimpleWorkOptions -> ""
+                    is WorkWithIntervalsOptions -> "Интервалы: ${options.interval}"
+                    is WorkWithAccelerationOptions -> "Ускорение: ${options.accelerationDuration}"
                 }
-                presenter.exerciseDurationSet(position, min(MAX_DURATION, max(0, newDuration)))
             }
-        }*/
+            findViewById<TextView>(R.id.tv_exercise_name).text = exercise.getName(context)
+            findViewById<EditText>(R.id.et_exercise_duration).setText(exercise.duration.toString())
+        }
     }
 
 }

@@ -1,9 +1,8 @@
 package com.atybaty.timer.view
 
 import android.os.Bundle
-import android.os.PersistableBundle
 import androidx.appcompat.app.AppCompatActivity
-import com.atybaty.timer.CurrentWorkoutHolder
+import com.atybaty.timer.dataholders.CurrentWorkoutHolder
 import com.atybaty.timer.R
 import com.atybaty.timer.view.exercisegroup.ExerciseGroupFragment
 

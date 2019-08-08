@@ -33,4 +33,4 @@ class SimpleWorkOptions : WorkOptions()
 
 data class WorkWithAccelerationOptions(val accelerationDuration: Seconds) : WorkOptions()
 
-data class WorkWithIntervalsOptions(val interval: Seconds, val rattle: Seconds)
+data class WorkWithIntervalsOptions(val interval: Seconds, val rattle: Seconds) : WorkOptions()
