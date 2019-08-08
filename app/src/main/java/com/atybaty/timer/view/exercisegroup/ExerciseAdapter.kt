@@ -24,7 +24,7 @@ private const val VIEWTYPE_REST = 1
 
 class ExerciseGroupAdapter(
     private val presenter: ExerciseGroupContract.Presenter
-) : RecyclerView.Adapter<ExerciseGroupHolder>() {
+) : RecyclerView.Adapter<ExerciseHolder>() {
 
     private lateinit var context: Context
 
@@ -39,7 +39,7 @@ class ExerciseGroupAdapter(
     }
 
     private fun durationChangeOnClickListener(
-        holder: ExerciseGroupHolder,
+        holder: ExerciseHolder,
         nestedListener: (exerciseItemPosition: Int, oldDuration: Seconds) -> Unit
     ): View.OnClickListener {
         return View.OnClickListener {
@@ -50,14 +50,14 @@ class ExerciseGroupAdapter(
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ExerciseGroupHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ExerciseHolder {
         val layoutId = if (viewType == VIEWTYPE_WORK) {
             R.layout.item_exercise_work
         } else {
             R.layout.item_exercise_rest
         }
         val itemView = LayoutInflater.from(context).inflate(layoutId, parent, false)
-        val holder = ExerciseGroupHolder(itemView)
+        val holder = ExerciseHolder(itemView)
 
         itemView.findViewById<ImageView>(R.id.iv_exercise_minus)
             .setOnClickListener(durationChangeOnClickListener(holder) { itemPosition, oldDuration ->
@@ -101,7 +101,7 @@ class ExerciseGroupAdapter(
         }
     }
 
-    override fun onBindViewHolder(holder: ExerciseGroupHolder, position: Int) {
+    override fun onBindViewHolder(holder: ExerciseHolder, position: Int) {
         val exercise = exercises[position]
         holder.itemView.apply {
             if (exercise is Work) {
