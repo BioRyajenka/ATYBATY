@@ -12,16 +12,16 @@ interface ExerciseSettingsContract {
             INTERVAL, ACCELERATION
         }
 
-        fun dialogViewCreated(exerciseGroup: ExerciseGroup, context: Context)
+        fun dialogViewCreated(context: Context)
         fun dialogDestroyed()
 
         fun backButtonClicked()
         fun saveButtonClicked()
         fun workTypeSelected(workType: WorkType)
 
-        fun exerciseDurationSet(exerciseItemPosition: Int, newDuration: Seconds, redraw: Boolean = true)
-        fun exerciseIntervalDurationSet(exerciseItemPosition: Int, newDuration: Seconds, redraw: Boolean = true)
-        fun exerciseAccelerationDurationSet(exerciseItemPosition: Int, newDuration: Seconds, redraw: Boolean = true)
+        fun exerciseDurationSet(newDuration: Seconds)
+        fun exerciseIntervalDurationSet(newDuration: Seconds)
+        fun exerciseAccelerationDurationSet(newDuration: Seconds)
     }
 
     interface View {
