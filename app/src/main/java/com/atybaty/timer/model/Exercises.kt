@@ -1,31 +1,36 @@
 package com.atybaty.timer.model
 
+import android.content.Context
 import com.atybaty.timer.R
 import com.atybaty.timer.utils.Seconds
-import java.time.Duration
+import com.fasterxml.jackson.annotation.JsonTypeInfo
 
-sealed class Exercise
+@JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, include = JsonTypeInfo.As.PROPERTY, property = "@class")
+sealed class Exercise(var duration: Seconds) {
+    abstract fun getName(context: Context): String
+}
 
-data class Work(val name: String, val options: WorkOptions) : Exercise()
+class Work(val name: String, duration: Seconds, val options: WorkOptions) : Exercise(duration) {
+    override fun getName(context: Context) = name
+}
 
-abstract class Relaxation(val nameStringId: Int) : Exercise() {
-    abstract val duration: Seconds
+abstract class Relaxation(private val nameStringId: Int, duration: Seconds) : Exercise(duration) {
+    override fun getName(context: Context) = context.getString(nameStringId)
 }
 
 
+class RunUp(duration: Seconds) : Relaxation(R.string.exercises_run_up, duration)
 
-data class RunUp(override val duration: Seconds) : Relaxation(R.string.exercises_run_up)
+class RestBetweenSets(duration: Seconds) : Relaxation(R.string.exercises_rest_between_sets, duration)
 
-data class RestBetweenSets(override val duration: Seconds) : Relaxation(R.string.exercises_rest_between_sets)
-
-data class CalmDown(override val duration: Seconds) : Relaxation(R.string.exercises_calm_down)
-
+class CalmDown(duration: Seconds) : Relaxation(R.string.exercises_calm_down, duration)
 
 
+@JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, include = JsonTypeInfo.As.PROPERTY, property = "@class")
 sealed class WorkOptions
 
-data class SimpleWorkOptions(val duration: Seconds) : WorkOptions()
+class SimpleWorkOptions : WorkOptions()
 
 data class WorkWithAccelerationOptions(val accelerationDuration: Seconds) : WorkOptions()
 
-data class WorkWithIntervalsOptions(val interval: Seconds, val rattle: Seconds)
+data class WorkWithIntervalsOptions(val interval: Seconds, val rattle: Seconds) : WorkOptions()
