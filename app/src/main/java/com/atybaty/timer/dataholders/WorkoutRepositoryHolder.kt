@@ -1,4 +1,4 @@
-package com.atybaty.timer
+package com.atybaty.timer.dataholders
 
 import android.content.Context
 import com.atybaty.timer.model.repository.WorkoutRepository
@@ -9,11 +9,15 @@ import java.io.File
 private const val DB_FILE_NAME = "atybaty.db"
 
 // see https://www.dizitart.org/nitrite-database/#tips
-class WorkoutRepositoryHolder {
+class WorkoutRepositoryHolder private constructor() {
     companion object {
         fun getWorkoutRepository(context: Context): WorkoutRepository {
             return singleton ?: synchronized(this) {
-                singleton ?: WorkoutRepository(buildNitriteDB(context)).also {
+                singleton ?: WorkoutRepository(
+                    buildNitriteDB(
+                        context
+                    )
+                ).also {
                     singleton = it
                 }
             }

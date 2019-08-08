@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="8dp"
+    android:background="@color/colorPrimaryDark"
+    android:gravity="center">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/tv_exercise_name"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.8"
+            android:textColor="@color/colorAccent"
+            android:textSize="20sp"
+            android:text="Отдых"
+            android:background="@android:color/transparent"
+            android:gravity="center"
+            android:layout_marginLeft="56dp"
+            android:layout_marginStart="56dp"/>
+
+        <ImageView
+            android:id="@+id/iv_exercise_delete"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:src="@drawable/ic_clear_white"
+            android:padding="12dp"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp">
+
+        <ImageView
+            android:id="@+id/iv_exercise_minus"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:src="@drawable/ic_chevron_left_white"
+            android:padding="12dp"/>
+
+        <EditText
+            android:id="@+id/et_exercise_duration"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.8"
+            android:gravity="center"
+            android:textSize="20sp"
+            android:textColor="@color/colorAccent"
+            android:text="30"
+            android:inputType="number"
+            android:background="@android:color/transparent"/>
+
+        <ImageView
+            android:id="@+id/iv_exercise_plus"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:src="@drawable/ic_chevron_right_white"
+            android:padding="12dp"/>
+
+    </LinearLayout>
+
+</LinearLayout>

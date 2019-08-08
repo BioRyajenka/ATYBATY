@@ -11,8 +11,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-        <EditText
-                android:id="@+id/et_exercise_name"
+        <TextView
+                android:id="@+id/tv_exercise_name"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="0.8"
@@ -46,7 +46,7 @@
                 android:padding="12dp"/>
 
         <EditText
-                android:id="@+id/et_exercise_count"
+                android:id="@+id/et_exercise_duration"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="0.8"
@@ -58,7 +58,7 @@
                 android:background="@android:color/transparent"/>
 
         <ImageView
-                android:id="@+id/iv_exercise_add"
+                android:id="@+id/iv_exercise_plus"
                 android:layout_width="56dp"
                 android:layout_height="56dp"
                 android:src="@drawable/ic_chevron_right_white"
@@ -67,7 +67,7 @@
     </LinearLayout>
 
     <TextView
-            android:id="@+id/tv_exercise_interval"
+            android:id="@+id/tv_exercise_options_desc"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/colorAccent"
@@ -75,16 +75,7 @@
             tools:text="Интервалы: 30 сек"/>
 
     <TextView
-            android:id="@+id/tv_exercise_acceleration"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/colorAccent"
-            android:textSize="20sp"
-            tools:text="Ускорение: 30 сек"
-            android:layout_marginTop="8dp"/>
-
-    <TextView
-            android:id="@+id/tv_exercise_settings"
+            android:id="@+id/tv_setup_exercise"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="18sp"
