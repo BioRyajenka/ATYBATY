@@ -1,23 +1,25 @@
 package com.atybaty.timer.contract
 
+import com.atybaty.timer.utils.Seconds
+
 interface ExerciseSettingsContract {
 
-    interface Presenter{
+    interface Presenter {
+        enum class WorkType {
+            INTERVAL, ACCELERATION
+        }
+
         fun backButtonClicked()
         fun saveButtonClicked()
-        fun addExerciseDurationClicked()
-        fun minusExerciseDurationClicked()
-        fun selectTypeClicked()
-        fun addIntervalDuration()
-        fun minusIntervalDuration()
-        fun addAccelerationDuration()
-        fun minusAccelerationDuration()
+        fun workTypeSelected(workType: WorkType)
+
+        fun exerciseDurationSet(exerciseItemPosition: Int, newDuration: Seconds, redraw: Boolean = true)
+        fun exerciseIntervalDurationSet(exerciseItemPosition: Int, newDuration: Seconds, redraw: Boolean = true)
+        fun exerciseAccelerationDurationSet(exerciseItemPosition: Int, newDuration: Seconds, redraw: Boolean = true)
     }
 
-    interface View{
+    interface View {
         fun closeDialog()
-        fun showSelectedType()
-        fun showInterval()
-        fun showAcceleration()
+        fun showSelectedType(workType: Presenter.WorkType)
     }
 }
