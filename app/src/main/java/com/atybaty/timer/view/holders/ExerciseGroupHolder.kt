@@ -11,16 +11,4 @@ class ExerciseGroupHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     fun setName(name: String){
         itemView.tv_train_set_name.text = name;
     }
-
-    fun setStartTime(startTime: Int){
-        itemView.et_start_starttime_count.setText(startTime.toString());
-    }
-
-    fun setCountSets(count: Int){
-        itemView.tv_train_countset.text = "Сеты: $count"
-    }
-
-    fun setEndTime(endTime: Int){
-        itemView.et_start_endtime_count.setText(endTime.toString())
-    }
 }

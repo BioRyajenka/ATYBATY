@@ -1,59 +1,49 @@
 package com.atybaty.timer.presenter
 
-import com.atybaty.timer.contract.WorkoutContract
-
-package com.atybaty.timer.presenter
-
-import android.widget.Toast
+import android.content.Context
 import com.atybaty.timer.R
+import com.atybaty.timer.contract.WorkoutContract
+import com.atybaty.timer.utils.Seconds
+
+
 import com.atybaty.timer.WorkoutRepositoryHolder
+import com.atybaty.timer.model.ExerciseGroup
+import com.atybaty.timer.model.Workout
 import com.atybaty.timer.view.WorkoutFragment
 
-class WorkoutPresenter(private val view: WorkoutFragment) : WorkoutContract.Presenter {
-    private val workoutRepository = WorkoutRepositoryHolder.getWorkoutRepository(view)
-    private val workouts = workoutRepository.getAllWorkouts().toMutableList()
+class WorkoutPresenter(private val view: WorkoutFragment, private val context: Context) : WorkoutContract.Presenter {
 
-    private fun viewShowWorkouts() {
-        if (workouts.isEmpty()) {
-            view.showEmptyMessage()
-        } else {
-            view.showWorkoutsList(workouts)
-        }
+    private lateinit var workout: Workout
+
+    override fun saveButtonClicked() {
+        TODO("Connect with igors code")
+//        workoutRepository.saveWorkout(CurrentWorkoutHolder.currentWorkout)
+//        view.returnToPreviousFragment()
     }
 
-    override fun fragmentViewCreated() {
-        viewShowWorkouts()
+    override fun fragmentViewDestroyed() {
     }
 
-    override fun addButtonClicked() {
-        val newWorkout = workoutRepository.createNewWorkout(
-            name = view.getString(R.string.default_workout_name),
-            warmUp = view.resources.getInteger(R.integer.default_warmup_time_in_seconds),
-            exerciseGroups = emptyList(),
-            coolDown = view.resources.getInteger(R.integer.default_cooldown_time_in_seconds)
-        )
-        view.showNewWorkout(newWorkout)
-
-        // this is stub
-        workouts.add(newWorkout)
-        viewShowWorkouts()
+    override fun warmUpDurationSet(duration: Seconds) {
+        workout.warmUp = duration
     }
 
-    override fun deleteButtonClicked(itemPosition: Int) {
-        val deletedWorkout = workouts.removeAt(itemPosition)
-        workoutRepository.deleteWorkoutById(deletedWorkout.id)
-        viewShowWorkouts()
+    override fun coolDownDurationSet(duration: Seconds) {
+        workout.coolDown = duration
     }
 
-    override fun playButtonClicked(itemPosition: Int) {
-        Toast.makeText(view, "TODO", Toast.LENGTH_SHORT).show()
+    override fun exerciseGroupClicked(itemPosition: Int) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun itemClicked(itemPosition: Int) {
-        Toast.makeText(view, "TODO", Toast.LENGTH_SHORT).show()
+    override fun addExerciseGroupButtonClicked() {
+        val exerciseGroup = ExerciseGroup(emptyList())
+        workout.exerciseGroups.add(exerciseGroup)
+        view.showWorkout(workout)
     }
 
-    override fun activityDestroyed() {
-        // maybe save to db, but not sure
+    override fun fragmentViewCreated(workout: Workout) {
+        this.workout = workout
+        view.showWorkout(this.workout)
     }
 }
