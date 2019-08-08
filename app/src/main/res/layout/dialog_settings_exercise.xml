@@ -33,7 +33,7 @@
                 android:layout_marginRight="32dp"/>
 
         <ImageView
-                android:id="@+id/iv_exercise_check"
+                android:id="@+id/iv_settings_ex_save"
                 android:layout_width="56dp"
                 android:layout_height="56dp"
                 android:src="@drawable/ic_check_white"
