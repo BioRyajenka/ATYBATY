@@ -1,5 +1,8 @@
 package com.atybaty.timer.contract
 
+import android.content.Context
+import com.atybaty.timer.model.ExerciseGroup
+import com.atybaty.timer.model.Work
 import com.atybaty.timer.utils.Seconds
 
 interface ExerciseSettingsContract {
@@ -8,6 +11,9 @@ interface ExerciseSettingsContract {
         enum class WorkType {
             INTERVAL, ACCELERATION
         }
+
+        fun dialogViewCreated(exerciseGroup: ExerciseGroup, context: Context)
+        fun dialogDestroyed()
 
         fun backButtonClicked()
         fun saveButtonClicked()
@@ -20,6 +26,6 @@ interface ExerciseSettingsContract {
 
     interface View {
         fun closeDialog()
-        fun showSelectedType(workType: Presenter.WorkType)
+        fun showWork(work: Work)
     }
 }
