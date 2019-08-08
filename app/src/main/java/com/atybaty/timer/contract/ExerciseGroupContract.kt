@@ -1,12 +1,13 @@
 package com.atybaty.timer.contract
 
+import android.content.Context
 import com.atybaty.timer.model.ExerciseGroup
 import com.atybaty.timer.utils.Seconds
 
 interface ExerciseGroupContract {
 
     interface Presenter {
-        fun fragmentViewCreated(exerciseGroup: ExerciseGroup)
+        fun fragmentViewCreated(exerciseGroup: ExerciseGroup, context: Context)
         fun fragmentDestroyed()
 
         fun backButtonClicked()
@@ -14,8 +15,7 @@ interface ExerciseGroupContract {
         fun addWorkButtonClicked()
         fun addRestButtonClicked()
 
-
-        fun exerciseDurationSet(exerciseItemPosition: Int, newDuration: Seconds)
+        fun exerciseDurationSet(exerciseItemPosition: Int, newDuration: Seconds, redraw: Boolean = true)
     }
 
     interface View {

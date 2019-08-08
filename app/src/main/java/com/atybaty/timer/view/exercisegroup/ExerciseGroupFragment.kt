@@ -12,12 +12,11 @@ import com.atybaty.timer.contract.ExerciseGroupContract
 import com.atybaty.timer.model.ExerciseGroup
 import com.atybaty.timer.presenter.ExerciseGroupPresenter
 import kotlinx.android.synthetic.main.fragment_set.*
-import kotlinx.android.synthetic.main.fragment_set.view.*
 
 class ExerciseGroupFragment : Fragment(), ExerciseGroupContract.View {
     private lateinit var exerciseGroup: ExerciseGroup
 
-    private val presenter = ExerciseGroupPresenter(this, context!!)
+    private val presenter = ExerciseGroupPresenter(this)
     private val exerciseGroupAdapter = ExerciseGroupAdapter(presenter)
 
     fun setExerciseGroup(exerciseGroup: ExerciseGroup) {
@@ -25,15 +24,22 @@ class ExerciseGroupFragment : Fragment(), ExerciseGroupContract.View {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        println("fragment:onCreateView")
+        return inflater.inflate(R.layout.fragment_set, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         exerciseGroupAdapter.setContext(context!!)
-        return inflater.inflate(R.layout.fragment_set, container, false).apply {
-            rv_set_exercise.adapter = exerciseGroupAdapter
-            rv_set_exercise.layoutManager = LinearLayoutManager(context)
-        }.also {
-            presenter.fragmentViewCreated(exerciseGroup)
-        }
+        rv_set_exercise.adapter = exerciseGroupAdapter
+        rv_set_exercise.layoutManager = LinearLayoutManager(context)
+
+        tv_add_work.setOnClickListener { presenter.addWorkButtonClicked() }
+        tv_add_rest.setOnClickListener { presenter.addRestButtonClicked() }
+        iv_set_save.setOnClickListener { presenter.saveButtonClicked() }
+        iv_set_back.setOnClickListener { presenter.backButtonClicked() }
+
+        presenter.fragmentViewCreated(exerciseGroup, context!!)
     }
 
     override fun showExerciseGroup(exerciseGroup: ExerciseGroup) {

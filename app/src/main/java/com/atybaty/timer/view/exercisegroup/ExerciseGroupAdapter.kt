@@ -1,6 +1,8 @@
 package com.atybaty.timer.view.exercisegroup
 
 import android.content.Context
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -44,7 +46,7 @@ class ExerciseGroupAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ExerciseGroupHolder {
-        val itemView = LayoutInflater.from(context).inflate(R.layout.item_train_set, parent, false)
+        val itemView = LayoutInflater.from(context).inflate(R.layout.item_exercise, parent, false)
         val holder = ExerciseGroupHolder(itemView)
         itemView.iv_exercise_minus.setOnClickListener(durationChangeOnClickListener(holder) { itemPosition, oldDuration ->
             presenter.exerciseDurationSet(itemPosition, max(1, oldDuration - 1))
@@ -52,6 +54,23 @@ class ExerciseGroupAdapter(
         itemView.iv_exercise_plus.setOnClickListener(durationChangeOnClickListener(holder) { itemPosition, oldDuration ->
             presenter.exerciseDurationSet(itemPosition, min(MAX_DURATION, oldDuration + 1))
         })
+        itemView.et_exercise_count.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable) {}
+
+            override fun beforeTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
+
+            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
+                val newDuration = try {
+                    min(MAX_DURATION, max(0, s.toString().toInt()))
+                } catch (_: Exception) {
+                    0
+                }
+                val itemPosition = holder.adapterPosition
+                presenter.exerciseDurationSet(itemPosition, newDuration, redraw = false)
+                exercises[itemPosition].duration = newDuration
+            }
+        })
+
         return holder
     }
 
@@ -63,6 +82,17 @@ class ExerciseGroupAdapter(
             tv_exercise_name.text = exercise.getName(context)
             et_exercise_count.setText(exercise.duration.toString())
         }
+
+/*        holder.itemView.et_exercise_count.setOnFocusChangeListener { view, hasFocus ->
+            if (!hasFocus) {
+                val newDuration = try {
+                    (view as EditText).text.toString().toInt()
+                } catch (_: Exception) {
+                    0
+                }
+                presenter.exerciseDurationSet(position, min(MAX_DURATION, max(0, newDuration)))
+            }
+        }*/
     }
 
 }

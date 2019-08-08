@@ -9,14 +9,19 @@ import com.atybaty.timer.model.ExerciseGroup
 import com.atybaty.timer.model.RestBetweenSets
 import com.atybaty.timer.model.SimpleWorkOptions
 import com.atybaty.timer.model.Work
+import com.atybaty.timer.model.repository.WorkoutRepository
 import com.atybaty.timer.utils.Seconds
 
-class ExerciseGroupPresenter(val view: ExerciseGroupContract.View, private val context: Context) : ExerciseGroupContract.Presenter {
-    private val workoutRepository = WorkoutRepositoryHolder.getWorkoutRepository(context)
+class ExerciseGroupPresenter(val view: ExerciseGroupContract.View) : ExerciseGroupContract.Presenter {
+    private lateinit var context: Context
+    private lateinit var workoutRepository: WorkoutRepository
     private lateinit var exerciseGroup: ExerciseGroup
 
-    override fun fragmentViewCreated(exerciseGroup: ExerciseGroup) {
+    override fun fragmentViewCreated(exerciseGroup: ExerciseGroup, context: Context) {
+        this.context = context
         this.exerciseGroup = exerciseGroup
+        this.workoutRepository = WorkoutRepositoryHolder.getWorkoutRepository(context)
+
         view.showExerciseGroup(exerciseGroup)
     }
 
@@ -46,8 +51,11 @@ class ExerciseGroupPresenter(val view: ExerciseGroupContract.View, private val c
         view.showExerciseGroup(exerciseGroup)
     }
 
-    override fun exerciseDurationSet(exerciseItemPosition: Int, newDuration: Seconds) {
+    override fun exerciseDurationSet(exerciseItemPosition: Int, newDuration: Seconds, redraw: Boolean) {
         exerciseGroup.exercises[exerciseItemPosition].duration = newDuration
+        if (redraw) {
+            view.showExerciseGroup(exerciseGroup)
+        }
     }
 
 }

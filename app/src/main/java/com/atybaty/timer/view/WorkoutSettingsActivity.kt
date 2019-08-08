@@ -12,10 +12,11 @@ private enum class FragmentTags {
 }
 
 class WorkoutSettingsActivity : AppCompatActivity() {
-    override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
+    override fun onCreate(savedInstanceState: Bundle?) {
         println("activity: onCreate")
 
-        super.onCreate(savedInstanceState, persistentState)
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_train)
 
         val exerciseGroupFragment = if (savedInstanceState == null) {
             ExerciseGroupFragment().also { fragment ->

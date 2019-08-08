@@ -3,8 +3,9 @@ package com.atybaty.timer.model
 import android.content.Context
 import com.atybaty.timer.R
 import com.atybaty.timer.utils.Seconds
-import java.time.Duration
+import com.fasterxml.jackson.annotation.JsonTypeInfo
 
+@JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, include = JsonTypeInfo.As.PROPERTY, property = "@class")
 sealed class Exercise(var duration: Seconds) {
     abstract fun getName(context: Context): String
 }
@@ -18,7 +19,6 @@ abstract class Relaxation(private val nameStringId: Int, duration: Seconds) : Ex
 }
 
 
-
 class RunUp(duration: Seconds) : Relaxation(R.string.exercises_run_up, duration)
 
 class RestBetweenSets(duration: Seconds) : Relaxation(R.string.exercises_rest_between_sets, duration)
@@ -26,7 +26,7 @@ class RestBetweenSets(duration: Seconds) : Relaxation(R.string.exercises_rest_be
 class CalmDown(duration: Seconds) : Relaxation(R.string.exercises_calm_down, duration)
 
 
-
+@JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, include = JsonTypeInfo.As.PROPERTY, property = "@class")
 sealed class WorkOptions
 
 class SimpleWorkOptions : WorkOptions()
