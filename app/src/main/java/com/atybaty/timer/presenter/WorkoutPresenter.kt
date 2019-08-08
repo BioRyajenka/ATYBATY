@@ -5,11 +5,9 @@ import com.atybaty.timer.R
 import com.atybaty.timer.contract.WorkoutContract
 import com.atybaty.timer.utils.Seconds
 
-
-import com.atybaty.timer.WorkoutRepositoryHolder
 import com.atybaty.timer.model.ExerciseGroup
 import com.atybaty.timer.model.Workout
-import com.atybaty.timer.view.WorkoutFragment
+import com.atybaty.timer.view.workout.WorkoutFragment
 
 class WorkoutPresenter(private val view: WorkoutFragment, private val context: Context) : WorkoutContract.Presenter {
 
@@ -37,7 +35,9 @@ class WorkoutPresenter(private val view: WorkoutFragment, private val context: C
     }
 
     override fun addExerciseGroupButtonClicked() {
-        val exerciseGroup = ExerciseGroup(emptyList())
+        val exerciseGroup = ExerciseGroup(R.string.exercise_group_default_name.toString()
+                + workout.exerciseGroups.size.toString(), arrayListOf()
+        )
         workout.exerciseGroups.add(exerciseGroup)
         view.showWorkout(workout)
     }

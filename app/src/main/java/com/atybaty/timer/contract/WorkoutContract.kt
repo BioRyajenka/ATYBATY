@@ -22,5 +22,6 @@ interface WorkoutContract {
     interface View {
         fun showWorkout(workout: Workout)
         fun showExerciseGroup(exerciseGroup: ExerciseGroup)
+        fun setWorkout(workout: Workout)
     }
 }
