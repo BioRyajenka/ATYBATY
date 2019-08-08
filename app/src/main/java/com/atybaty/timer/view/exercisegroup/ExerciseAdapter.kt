@@ -61,11 +61,16 @@ class ExerciseGroupAdapter(
 
         itemView.findViewById<ImageView>(R.id.iv_exercise_minus)
             .setOnClickListener(durationChangeOnClickListener(holder) { itemPosition, oldDuration ->
-            presenter.exerciseDurationSet(itemPosition, max(1, oldDuration - 1))
-        })
-        itemView.findViewById<ImageView>(R.id.iv_exercise_plus).setOnClickListener(durationChangeOnClickListener(holder) { itemPosition, oldDuration ->
-            presenter.exerciseDurationSet(itemPosition, min(MAX_DURATION, oldDuration + 1))
-        })
+                val newDuration = max(0, oldDuration - 1)
+                exercises[itemPosition].duration = newDuration
+                presenter.exerciseDurationSet(itemPosition, newDuration)
+            })
+        itemView.findViewById<ImageView>(R.id.iv_exercise_plus)
+            .setOnClickListener(durationChangeOnClickListener(holder) { itemPosition, oldDuration ->
+                val newDuration = min(MAX_DURATION, oldDuration + 1)
+                exercises[itemPosition].duration = newDuration
+                presenter.exerciseDurationSet(itemPosition, newDuration)
+            })
         itemView.findViewById<EditText>(R.id.et_exercise_duration).addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable) {}
 
@@ -78,7 +83,7 @@ class ExerciseGroupAdapter(
                     0
                 }
                 val itemPosition = holder.adapterPosition
-                presenter.exerciseDurationSet(itemPosition, newDuration, redraw = false)
+                presenter.exerciseDurationSet(itemPosition, newDuration)
                 exercises[itemPosition].duration = newDuration
             }
         })

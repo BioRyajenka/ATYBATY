@@ -16,7 +16,7 @@ interface ExerciseGroupContract {
         fun addRestButtonClicked()
         fun setUpExerciseButtonClicked(itemPosition: Int)
 
-        fun exerciseDurationSet(exerciseItemPosition: Int, newDuration: Seconds, redraw: Boolean = true)
+        fun exerciseDurationSet(exerciseItemPosition: Int, newDuration: Seconds)
     }
 
     interface View {
