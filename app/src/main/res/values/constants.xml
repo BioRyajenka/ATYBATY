@@ -2,4 +2,6 @@
 <resources>
     <integer name="default_warmup_time_in_seconds">90</integer>
     <integer name="default_cooldown_time_in_seconds">30</integer>
+    <integer name="default_work_duration_in_seconds">60</integer>
+    <integer name="default_rest_duration_in_seconds">30</integer>
 </resources>
