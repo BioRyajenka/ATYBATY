@@ -8,14 +8,11 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.atybaty.timer.R
 import com.atybaty.timer.contract.WorkoutContract
-import com.atybaty.timer.contract.WorkoutListContract
 import com.atybaty.timer.model.ExerciseGroup
 import com.atybaty.timer.model.Workout
-import com.atybaty.timer.presenter.WorkoutListPresenter
 import com.atybaty.timer.presenter.WorkoutPresenter
-import com.atybaty.timer.view.adapters.ExerciseGroupAdapter
+import com.atybaty.timer.view.workout.ExerciseGroupAdapter
 import com.atybaty.timer.view.adapters.WorkoutAdapter
-import kotlinx.android.synthetic.main.activity_workout_list.*
 import kotlinx.android.synthetic.main.fragment_workout.*
 
 class WorkoutFragment : Fragment(), WorkoutContract.View {
