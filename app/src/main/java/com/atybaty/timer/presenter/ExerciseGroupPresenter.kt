@@ -55,11 +55,8 @@ class ExerciseGroupPresenter(val view: ExerciseGroupContract.View) : ExerciseGro
         view.showExerciseSettings()
     }
 
-    override fun exerciseDurationSet(exerciseItemPosition: Int, newDuration: Seconds, redraw: Boolean) {
+    override fun exerciseDurationSet(exerciseItemPosition: Int, newDuration: Seconds) {
         exerciseGroup.exercises[exerciseItemPosition].duration = newDuration
-        if (redraw) {
-            view.showExerciseGroup(exerciseGroup)
-        }
     }
 
 }
