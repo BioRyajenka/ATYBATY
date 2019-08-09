@@ -7,7 +7,7 @@ import com.atybaty.timer.utils.Seconds
 interface ExerciseGroupContract {
 
     interface Presenter {
-        fun fragmentViewCreated(exerciseGroup: ExerciseGroup, context: Context)
+        fun fragmentViewCreated(context: Context)
         fun fragmentDestroyed()
 
         fun backButtonClicked()

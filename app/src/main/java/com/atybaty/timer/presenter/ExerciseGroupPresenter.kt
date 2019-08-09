@@ -14,12 +14,13 @@ import com.atybaty.timer.utils.Seconds
 
 class ExerciseGroupPresenter(val view: ExerciseGroupContract.View) : ExerciseGroupContract.Presenter {
     private lateinit var context: Context
-
     private lateinit var workoutRepository: WorkoutRepository
+
     private lateinit var exerciseGroup: ExerciseGroup
-    override fun fragmentViewCreated(exerciseGroup: ExerciseGroup, context: Context) {
+
+    override fun fragmentViewCreated(context: Context) {
         this.context = context
-        this.exerciseGroup = exerciseGroup
+        this.exerciseGroup = CurrentWorkoutHolder.currentExerciseGroup
         this.workoutRepository = WorkoutRepositoryHolder.getWorkoutRepository(context)
 
         view.showExerciseGroup(exerciseGroup)

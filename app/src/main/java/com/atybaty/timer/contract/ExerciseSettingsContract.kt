@@ -1,7 +1,6 @@
 package com.atybaty.timer.contract
 
 import android.content.Context
-import com.atybaty.timer.model.ExerciseGroup
 import com.atybaty.timer.model.Work
 import com.atybaty.timer.utils.Seconds
 
