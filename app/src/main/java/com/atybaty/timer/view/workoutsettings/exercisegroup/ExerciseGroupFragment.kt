@@ -1,4 +1,4 @@
-package com.atybaty.timer.view.exercisegroup
+package com.atybaty.timer.view.workoutsettings.exercisegroup
 
 import android.os.Bundle
 import android.view.LayoutInflater
