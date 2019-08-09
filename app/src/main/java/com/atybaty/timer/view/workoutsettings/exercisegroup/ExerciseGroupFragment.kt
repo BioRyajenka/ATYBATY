@@ -39,7 +39,7 @@ class ExerciseGroupFragment : Fragment(), ExerciseGroupContract.View {
         iv_set_save.setOnClickListener { presenter.saveButtonClicked() }
         iv_set_back.setOnClickListener { presenter.backButtonClicked() }
 
-        presenter.fragmentViewCreated(exerciseGroup, context!!)
+        presenter.fragmentViewCreated(context!!)
     }
 
     override fun showExerciseGroup(exerciseGroup: ExerciseGroup) {
