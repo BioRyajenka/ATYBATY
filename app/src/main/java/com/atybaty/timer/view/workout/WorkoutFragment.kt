@@ -1,6 +1,8 @@
 package com.atybaty.timer.view.workout
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -36,11 +38,54 @@ class WorkoutFragment : Fragment(), WorkoutContract.View {
         rv_start_sets.adapter = exerciseGroupAdapter
         rv_start_sets.layoutManager = LinearLayoutManager(context)
         presenter.fragmentViewCreated(workout)
+
+        tv_start_set_add.setOnClickListener { presenter.addExerciseGroupButtonClicked() }
+
+        iv_start_starttime_add.setOnClickListener {
+            workout.warmUp++
+            et_start_starttime_count.setText(workout.warmUp.toString())
+            presenter.warmUpDurationSet(workout.warmUp)
+        }
+        iv_start_starttime_minus.setOnClickListener {
+            workout.warmUp--
+            et_start_starttime_count.setText(workout.warmUp.toString())
+            presenter.warmUpDurationSet(workout.warmUp)
+        }
+        iv_start_endtime_add.setOnClickListener {
+            workout.coolDown++
+            et_start_endtime_count.setText( workout.coolDown.toString())
+            presenter.warmUpDurationSet( workout.coolDown)
+        }
+        iv_start_endtime_minus.setOnClickListener {
+            workout.coolDown--
+            et_start_endtime_count.setText(workout.coolDown.toString())
+            presenter.warmUpDurationSet( workout.coolDown)
+        }
+
+        et_start_name.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(p0: Editable?) {
+            }
+
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                workout.name = p0.toString()
+            }
+        })
+
+        iv_start_save.setOnClickListener { presenter.saveButtonClicked() }
+        iv_start_back.setOnClickListener {
+            presenter.saveButtonClicked()
+            returnToPreviousActivity()
+        }
+
     }
 
     override fun showWorkout(workout: Workout) {
         et_start_starttime_count.setText(workout.warmUp.toString())
         et_start_endtime_count.setText(workout.coolDown.toString())
+        et_start_name.setText(workout.name)
         exerciseGroupAdapter.setWorkout(workout)
         exerciseGroupAdapter.notifyDataSetChanged()
     }
@@ -48,6 +93,10 @@ class WorkoutFragment : Fragment(), WorkoutContract.View {
     override fun onDestroy() {
         super.onDestroy()
         presenter.fragmentViewDestroyed()
+    }
+
+    fun returnToPreviousActivity() {
+        activity!!.onBackPressed()
     }
 
     override fun showExerciseGroup(exerciseGroup: ExerciseGroup) {

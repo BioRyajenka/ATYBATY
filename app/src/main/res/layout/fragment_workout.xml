@@ -33,7 +33,7 @@
                     android:textStyle="bold"
                     android:textSize="26sp"
                     android:gravity="center"
-                    tools:text="Новая тренировка"/>
+                    tools:text="Тренировка"/>
 
             <ImageView
                     android:id="@+id/iv_start_save"
