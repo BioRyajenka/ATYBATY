@@ -5,6 +5,7 @@ import android.widget.Toast
 import com.atybaty.timer.R
 import com.atybaty.timer.dataholders.WorkoutRepositoryHolder
 import com.atybaty.timer.contract.WorkoutListContract
+import com.atybaty.timer.dataholders.CurrentWorkoutHolder
 import com.atybaty.timer.model.ExerciseGroup
 
 class WorkoutListPresenter(private val view: WorkoutListContract.View, private val context: Context) : WorkoutListContract.Presenter {
@@ -31,6 +32,7 @@ class WorkoutListPresenter(private val view: WorkoutListContract.View, private v
             coolDown = context.resources.getInteger(R.integer.default_cooldown_duration_in_seconds)
         )
 
+        CurrentWorkoutHolder.currentWorkout = newWorkout
         view.showWorkout(newWorkout)
 
         // this is stub
@@ -49,7 +51,9 @@ class WorkoutListPresenter(private val view: WorkoutListContract.View, private v
     }
 
     override fun itemClicked(itemPosition: Int) {
-        view.showWorkout(workouts[itemPosition])
+        val workout = workouts[itemPosition]
+        CurrentWorkoutHolder.currentWorkout = workout
+        view.showWorkout(workout)
     }
 
     override fun activityDestroyed() {

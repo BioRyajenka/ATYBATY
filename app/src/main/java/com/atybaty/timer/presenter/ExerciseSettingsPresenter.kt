@@ -37,19 +37,27 @@ class ExerciseSettingsPresenter(val view: ExerciseSettingsContract.View) : Exerc
             is WorkWithIntervalsOptions -> {
                 intervalWork = work.copy()
                 accelerationWork = work.copy(options = defaultAccelerationWorkOptions)
-                currentWorkType = WorkType.ACCELERATION
+                currentWorkType = WorkType.INTERVAL
             }
             is WorkWithAccelerationOptions -> {
                 intervalWork = work.copy(options = defaultIntervalWorkOptions)
                 accelerationWork = work.copy()
-                currentWorkType = WorkType.INTERVAL
+                currentWorkType = WorkType.ACCELERATION
             }
         }
         check(intervalWork.options is WorkWithIntervalsOptions)
         check(accelerationWork.options is WorkWithAccelerationOptions)
+
+        workTypeSelected(currentWorkType)
     }
 
-    override fun dialogDestroyed() {
+    override fun dialogDismissed(listener: () -> Unit) {
+        listener()
+    }
+
+    override fun exerciseNameSet(newName: String) {
+        intervalWork.name = newName
+        accelerationWork.name = newName
     }
 
     override fun backButtonClicked() {
@@ -67,13 +75,22 @@ class ExerciseSettingsPresenter(val view: ExerciseSettingsContract.View) : Exerc
     override fun saveButtonClicked() {
         val currentExerciseIndex = CurrentWorkoutHolder.currentExerciseGroup.exercises
             .indexOf(CurrentWorkoutHolder.currentWork)
-        val selectedWork = getSelectedWork()
-        CurrentWorkoutHolder.currentExerciseGroup.exercises[currentExerciseIndex] = selectedWork
+        val resultingWork = getSelectedWork().let {
+            if (it.options is WorkWithIntervalsOptions && it.options.interval == 0
+                || it.options is WorkWithAccelerationOptions && it.options.accelerationDuration == 0) {
+                it.copy(options = SimpleWorkOptions)
+            } else {
+                it
+            }
+        }
+        CurrentWorkoutHolder.currentExerciseGroup.exercises[currentExerciseIndex] = resultingWork
+        CurrentWorkoutHolder.currentWork = resultingWork
         workoutRepository.saveWorkout(CurrentWorkoutHolder.currentWorkout)
         view.closeDialog()
     }
 
     override fun workTypeSelected(workType: WorkType) {
+        currentWorkType = workType
         view.showWork(getSelectedWork())
     }
 
@@ -86,7 +103,7 @@ class ExerciseSettingsPresenter(val view: ExerciseSettingsContract.View) : Exerc
     }
 
     override fun exerciseAccelerationDurationSet(newDuration: Seconds) {
-        (intervalWork.options as WorkWithAccelerationOptions).accelerationDuration = newDuration
+        (accelerationWork.options as WorkWithAccelerationOptions).accelerationDuration = newDuration
     }
 
 }

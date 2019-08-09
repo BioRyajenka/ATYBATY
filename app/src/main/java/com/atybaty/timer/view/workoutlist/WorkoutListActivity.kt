@@ -47,7 +47,6 @@ class WorkoutListActivity : AppCompatActivity(), WorkoutListContract.View {
 
 
     override fun showWorkout(workout: Workout) {
-        CurrentWorkoutHolder.currentWorkout = workout
         startActivity(Intent(this, WorkoutSettingsActivity::class.java))
     }
 
