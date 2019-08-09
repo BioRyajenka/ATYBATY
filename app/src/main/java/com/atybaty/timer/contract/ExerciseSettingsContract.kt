@@ -20,7 +20,7 @@ interface ExerciseSettingsContract {
 
         fun exerciseDurationSet(newDuration: Seconds)
         fun exerciseIntervalDurationSet(newDuration: Seconds)
-        fun exerciseAccelerationDurationSet( newDuration: Seconds)
+        fun exerciseAccelerationDurationSet(newDuration: Seconds)
     }
 
     interface View {
