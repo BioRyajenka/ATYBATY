@@ -5,19 +5,24 @@ import com.atybaty.timer.model.Exercise
 interface TimerContract {
 
     interface Presenter{
+
+        enum class PauseButtonTag{
+            PLAY, PAUSE
+        }
+
         fun activityCreated()
         fun backButtonClicked()
         fun lockButtonClicked()
-        fun pauseButtonCLicked()
+        fun pauseButtonClicked()
     }
 
     interface View{
-        fun showTime(time: Long)
-        fun updatePauseButton()
+        fun updateTime(time: Long)
+        fun updatePauseButton(tag: Presenter.PauseButtonTag)
         fun showPreviousScreen()
-        fun showExercises(exercises: ArrayList<Exercise>)
-        fun showExerciseName(name: String)
-        fun showExerciseGroupName(name: String)
-        fun showCurrentExerciseFromList(itemPosition: Int)
+        fun showExercises(exercises: List<Exercise>)
+        fun updateExerciseName(name: String)
+        fun updateExerciseGroupName(name: String)
+        fun updateCurrentExerciseFromList(itemPosition: Int)
     }
 }
