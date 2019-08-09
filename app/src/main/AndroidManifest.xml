@@ -9,15 +9,18 @@
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
-        <activity android:name=".view.workoutlist.WorkoutListActivity">
+        <activity android:name=".view.workoutlist.WorkoutListActivity"
+                  android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".view.workoutsettings.WorkoutSettingsActivity">
-        </activity>
+        <activity android:name=".view.WorkoutSettingsActivity"
+                  android:screenOrientation="portrait"/>
+        <activity android:name=".view.timer.TimerExerciseActivity"
+                  android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

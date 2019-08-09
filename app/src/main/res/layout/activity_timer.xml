@@ -75,6 +75,7 @@
             android:textStyle="bold"
             android:textSize="24sp"
             android:gravity="center"
+            android:textAllCaps="true"
             android:text="ОСТАНОВИТЬ"
             android:layout_margin="16dp"/>
 
