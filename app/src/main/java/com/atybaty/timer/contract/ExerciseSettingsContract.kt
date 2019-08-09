@@ -12,12 +12,13 @@ interface ExerciseSettingsContract {
         }
 
         fun dialogViewCreated(context: Context)
-        fun dialogDestroyed()
+        fun dialogDismissed(listener: () -> Unit)
 
         fun backButtonClicked()
         fun saveButtonClicked()
         fun workTypeSelected(workType: WorkType)
 
+        fun exerciseNameSet(newName: String)
         fun exerciseDurationSet(newDuration: Seconds)
         fun exerciseIntervalDurationSet(newDuration: Seconds)
         fun exerciseAccelerationDurationSet(newDuration: Seconds)
