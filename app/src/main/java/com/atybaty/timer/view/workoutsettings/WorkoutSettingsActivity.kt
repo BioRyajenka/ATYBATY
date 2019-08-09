@@ -1,10 +1,10 @@
-package com.atybaty.timer.view
+package com.atybaty.timer.view.workoutsettings
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.atybaty.timer.dataholders.CurrentWorkoutHolder
 import com.atybaty.timer.R
-import com.atybaty.timer.view.exercisegroup.ExerciseGroupFragment
+import com.atybaty.timer.view.workoutsettings.exercisegroup.ExerciseGroupFragment
 
 private enum class FragmentTags {
     EXERCISE_GROUP
