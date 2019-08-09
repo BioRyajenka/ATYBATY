@@ -5,21 +5,19 @@ import com.atybaty.timer.dataholders.CurrentWorkoutHolder
 import com.atybaty.timer.R
 import com.atybaty.timer.dataholders.WorkoutRepositoryHolder
 import com.atybaty.timer.contract.ExerciseGroupContract
-import com.atybaty.timer.model.ExerciseGroup
-import com.atybaty.timer.model.RestBetweenSets
-import com.atybaty.timer.model.SimpleWorkOptions
-import com.atybaty.timer.model.Work
+import com.atybaty.timer.model.*
 import com.atybaty.timer.model.repository.WorkoutRepository
 import com.atybaty.timer.utils.Seconds
 
 class ExerciseGroupPresenter(val view: ExerciseGroupContract.View) : ExerciseGroupContract.Presenter {
     private lateinit var context: Context
-
     private lateinit var workoutRepository: WorkoutRepository
+
     private lateinit var exerciseGroup: ExerciseGroup
-    override fun fragmentViewCreated(exerciseGroup: ExerciseGroup, context: Context) {
+
+    override fun fragmentViewCreated(context: Context) {
         this.context = context
-        this.exerciseGroup = exerciseGroup
+        this.exerciseGroup = CurrentWorkoutHolder.currentExerciseGroup
         this.workoutRepository = WorkoutRepositoryHolder.getWorkoutRepository(context)
 
         view.showExerciseGroup(exerciseGroup)
@@ -52,7 +50,12 @@ class ExerciseGroupPresenter(val view: ExerciseGroupContract.View) : ExerciseGro
     }
 
     override fun setUpExerciseButtonClicked(itemPosition: Int) {
-        view.showExerciseSettings()
+        view.showExerciseSettings(itemPosition, exerciseGroup.exercises[itemPosition])
+    }
+
+    override fun exerciseUpdated(exerciseItemPosition: Int, newExercise: Exercise) {
+        exerciseGroup.exercises[exerciseItemPosition] = newExercise
+        view.updateExercise(exerciseItemPosition, exerciseGroup)
     }
 
     override fun exerciseDurationSet(exerciseItemPosition: Int, newDuration: Seconds) {

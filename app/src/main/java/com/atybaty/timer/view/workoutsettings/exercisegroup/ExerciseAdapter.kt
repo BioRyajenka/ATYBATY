@@ -1,4 +1,4 @@
-package com.atybaty.timer.view.exercisegroup
+package com.atybaty.timer.view.workoutsettings.exercisegroup
 
 import android.content.Context
 import android.text.Editable
@@ -112,7 +112,7 @@ class ExerciseGroupAdapter(
             if (exercise is Work) {
                 findViewById<TextView>(R.id.tv_exercise_options_desc).text = when (val options = exercise.options) {
                     is SimpleWorkOptions -> ""
-                    is WorkWithIntervalsOptions -> "Интервалы: ${options.interval}"
+                    is WorkWithIntervalsOptions -> "Интервал: ${options.interval}"
                     is WorkWithAccelerationOptions -> "Ускорение: ${options.accelerationDuration}"
                 }
             }

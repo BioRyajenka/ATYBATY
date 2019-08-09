@@ -11,7 +11,7 @@ import com.atybaty.timer.R
 import com.atybaty.timer.contract.WorkoutListContract
 import com.atybaty.timer.model.Workout
 import com.atybaty.timer.presenter.WorkoutListPresenter
-import com.atybaty.timer.view.WorkoutSettingsActivity
+import com.atybaty.timer.view.workoutsettings.WorkoutSettingsActivity
 import kotlinx.android.synthetic.main.activity_workout_list.*
 
 class WorkoutListActivity : AppCompatActivity(), WorkoutListContract.View {
@@ -47,7 +47,6 @@ class WorkoutListActivity : AppCompatActivity(), WorkoutListContract.View {
 
 
     override fun showWorkout(workout: Workout) {
-        CurrentWorkoutHolder.currentWorkout = workout
         startActivity(Intent(this, WorkoutSettingsActivity::class.java))
     }
 
