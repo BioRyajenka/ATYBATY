@@ -28,8 +28,14 @@ class ExerciseGroupAdapter(private val presenter: WorkoutContract.Presenter
         itemView.setOnClickListener {
             val itemPosition = holder.adapterPosition
             if (itemPosition != RecyclerView.NO_POSITION){
-                println("ne hui")
                 presenter.exerciseGroupClicked(itemPosition)
+            }
+        }
+
+        itemView.setOnClickListener {
+            val itemPosition = holder.adapterPosition
+            if (itemPosition != RecyclerView.NO_POSITION){
+                presenter.deleteButtonClicked(itemPosition)
             }
         }
         return holder
@@ -41,11 +47,8 @@ class ExerciseGroupAdapter(private val presenter: WorkoutContract.Presenter
     }
 
     override fun onBindViewHolder(holder: ExerciseGroupHolder, position: Int) {
-        // TODO("proper name")
-        // val exerciseGroup = workout.exerciseGroups[position]
-        holder.setName("Сет" + position)
+        val name = workout.exerciseGroups[position].name
+        holder.setName(name)
     }
-
-
 
 }

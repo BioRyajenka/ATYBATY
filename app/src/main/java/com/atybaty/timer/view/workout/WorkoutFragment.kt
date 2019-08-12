@@ -96,7 +96,7 @@ class WorkoutFragment : Fragment(), WorkoutContract.View {
         presenter.fragmentViewDestroyed()
     }
 
-    fun returnToPreviousActivity() {
+    override fun returnToPreviousActivity() {
         activity!!.onBackPressed()
     }
 

@@ -47,6 +47,12 @@ class WorkoutPresenter(private val view: WorkoutFragment, private val context: C
         view.showWorkout(workout)
     }
 
+    override fun deleteButtonClicked(itemPosition: Int) {
+        workout.exerciseGroups.removeAt(itemPosition)
+        workoutRepository.saveWorkout(workout)
+        view.showWorkout(this.workout)
+    }
+
     override fun fragmentViewCreated() {
         this.workout = CurrentWorkoutHolder.currentWorkout
         this.workoutRepository = WorkoutRepositoryHolder.getWorkoutRepository(context)

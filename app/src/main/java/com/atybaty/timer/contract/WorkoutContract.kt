@@ -16,11 +16,13 @@ interface WorkoutContract {
 
         fun exerciseGroupClicked(itemPosition: Int)
 
+        fun deleteButtonClicked(itemPosition: Int)
         fun addExerciseGroupButtonClicked()
     }
 
     interface View {
         fun showWorkout(workout: Workout)
         fun showExerciseGroup(exerciseGroup: ExerciseGroup)
+        fun returnToPreviousActivity()
     }
 }
