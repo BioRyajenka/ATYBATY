@@ -21,10 +21,6 @@ class WorkoutFragment : Fragment(), WorkoutContract.View {
     private lateinit var presenter: WorkoutContract.Presenter
     private lateinit var exerciseGroupAdapter: ExerciseGroupAdapter
 
-    override fun setWorkout(workout: Workout) {
-        this.workout = workout
-    }
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         return inflater.inflate(R.layout.fragment_workout, container, false)
     }
@@ -37,7 +33,7 @@ class WorkoutFragment : Fragment(), WorkoutContract.View {
 
         rv_start_sets.adapter = exerciseGroupAdapter
         rv_start_sets.layoutManager = LinearLayoutManager(context)
-        presenter.fragmentViewCreated(workout)
+        presenter.fragmentViewCreated()
 
         tv_start_set_add.setOnClickListener { presenter.addExerciseGroupButtonClicked() }
 
@@ -83,6 +79,7 @@ class WorkoutFragment : Fragment(), WorkoutContract.View {
     }
 
     override fun showWorkout(workout: Workout) {
+        this.workout = workout
         et_start_starttime_count.setText(workout.warmUp.toString())
         et_start_endtime_count.setText(workout.coolDown.toString())
         et_start_name.setText(workout.name)

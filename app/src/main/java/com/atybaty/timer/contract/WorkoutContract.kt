@@ -7,7 +7,7 @@ import com.atybaty.timer.utils.Seconds
 interface WorkoutContract {
 
     interface Presenter {
-        fun fragmentViewCreated(workout: Workout)
+        fun fragmentViewCreated()
         fun fragmentViewDestroyed()
         fun saveButtonClicked()
 
@@ -22,6 +22,5 @@ interface WorkoutContract {
     interface View {
         fun showWorkout(workout: Workout)
         fun showExerciseGroup(exerciseGroup: ExerciseGroup)
-        fun setWorkout(workout: Workout)
     }
 }

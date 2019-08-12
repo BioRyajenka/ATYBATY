@@ -46,9 +46,9 @@ class WorkoutPresenter(private val view: WorkoutFragment, private val context: C
         view.showWorkout(workout)
     }
 
-    override fun fragmentViewCreated(workout: Workout) {
-        this.workout = workout
-        view.showWorkout(this.workout)
+    override fun fragmentViewCreated() {
+        this.workout = CurrentWorkoutHolder.currentWorkout
         this.workoutRepository = WorkoutRepositoryHolder.getWorkoutRepository(context)
+        view.showWorkout(this.workout)
     }
 }
