@@ -8,8 +8,8 @@ class ExerciseGroupSettingsPresenter(val view: ExerciseGroupSettingsContract.Vie
 
     private val currentExerciseGroup = CurrentWorkoutHolder.currentExerciseGroup
 
-    override fun activityCreated() {
-
+    override fun fragmentViewCreated() {
+        view.showExerciseGroup(currentExerciseGroup)
     }
 
     override fun backButtonClicked() {
