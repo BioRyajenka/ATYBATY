@@ -1,6 +1,5 @@
 package com.atybaty.timer.presenter
 
-import android.app.ActivityManager
 import android.content.Context
 import com.atybaty.timer.R
 import com.atybaty.timer.contract.WorkoutContract
@@ -35,7 +34,9 @@ class WorkoutPresenter(private val view: WorkoutFragment, private val context: C
     }
 
     override fun exerciseGroupClicked(itemPosition: Int) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        val exerciseGroup = workout.exerciseGroups[itemPosition]
+        CurrentWorkoutHolder.currentExerciseGroup = exerciseGroup
+        view.showExerciseGroup(exerciseGroup)
     }
 
     override fun addExerciseGroupButtonClicked() {

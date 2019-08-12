@@ -13,6 +13,7 @@ import com.atybaty.timer.contract.WorkoutContract
 import com.atybaty.timer.model.ExerciseGroup
 import com.atybaty.timer.model.Workout
 import com.atybaty.timer.presenter.WorkoutPresenter
+import com.atybaty.timer.view.workoutsettings.exercisegroup.ExerciseGroupFragment
 import kotlinx.android.synthetic.main.fragment_workout.*
 
 class WorkoutFragment : Fragment(), WorkoutContract.View {
@@ -70,9 +71,12 @@ class WorkoutFragment : Fragment(), WorkoutContract.View {
             }
         })
 
-        iv_start_save.setOnClickListener { presenter.saveButtonClicked() }
-        iv_start_back.setOnClickListener {
+        iv_start_save.setOnClickListener {
             presenter.saveButtonClicked()
+            returnToPreviousActivity()
+        }
+
+        iv_start_back.setOnClickListener {
             returnToPreviousActivity()
         }
 
@@ -97,6 +101,7 @@ class WorkoutFragment : Fragment(), WorkoutContract.View {
     }
 
     override fun showExerciseGroup(exerciseGroup: ExerciseGroup) {
-        // TODO("next screen")
+        activity!!.supportFragmentManager!!.beginTransaction().replace(R.id.fl_train_frames, ExerciseGroupFragment())
+            .addToBackStack(null).commit()
     }
 }

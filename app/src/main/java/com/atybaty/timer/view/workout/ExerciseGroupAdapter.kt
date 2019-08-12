@@ -25,6 +25,13 @@ class ExerciseGroupAdapter(private val presenter: WorkoutContract.Presenter
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ExerciseGroupHolder {
         val itemView = LayoutInflater.from(context).inflate(R.layout.item_train_set, parent, false)
         val holder = ExerciseGroupHolder(itemView)
+        itemView.setOnClickListener {
+            val itemPosition = holder.adapterPosition
+            if (itemPosition != RecyclerView.NO_POSITION){
+                println("ne hui")
+                presenter.exerciseGroupClicked(itemPosition)
+            }
+        }
         return holder
     }
 
