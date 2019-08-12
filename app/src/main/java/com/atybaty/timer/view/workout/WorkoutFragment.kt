@@ -73,11 +73,11 @@ class WorkoutFragment : Fragment(), WorkoutContract.View {
 
         iv_start_save.setOnClickListener {
             presenter.saveButtonClicked()
-            returnToPreviousActivity()
+            returnToPreviousScreen()
         }
 
         iv_start_back.setOnClickListener {
-            returnToPreviousActivity()
+            returnToPreviousScreen()
         }
 
     }
@@ -91,12 +91,7 @@ class WorkoutFragment : Fragment(), WorkoutContract.View {
         exerciseGroupAdapter.notifyDataSetChanged()
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        presenter.fragmentViewDestroyed()
-    }
-
-    override fun returnToPreviousActivity() {
+    override fun returnToPreviousScreen() {
         activity!!.onBackPressed()
     }
 

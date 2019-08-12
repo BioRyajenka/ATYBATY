@@ -21,10 +21,6 @@ class WorkoutPresenter(private val view: WorkoutFragment, private val context: C
         workoutRepository.saveWorkout(CurrentWorkoutHolder.currentWorkout)
     }
 
-    override fun fragmentViewDestroyed() {
-    }
-
-
     override fun warmUpDurationSet(duration: Seconds) {
         workout.warmUp = duration
     }

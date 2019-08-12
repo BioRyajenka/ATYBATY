@@ -8,7 +8,6 @@ interface WorkoutContract {
 
     interface Presenter {
         fun fragmentViewCreated()
-        fun fragmentViewDestroyed()
         fun saveButtonClicked()
 
         fun warmUpDurationSet(duration: Seconds)
@@ -23,6 +22,6 @@ interface WorkoutContract {
     interface View {
         fun showWorkout(workout: Workout)
         fun showExerciseGroup(exerciseGroup: ExerciseGroup)
-        fun returnToPreviousActivity()
+        fun returnToPreviousScreen()
     }
 }
