@@ -6,6 +6,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.atybaty.timer.R
 import com.atybaty.timer.contract.TimerContract
 import com.atybaty.timer.model.Workout
+import com.atybaty.timer.presenter.TimerExercisePresenter
+import com.atybaty.timer.utils.Seconds
 import kotlinx.android.synthetic.main.activity_timer.*
 
 class TimerExerciseActivity: AppCompatActivity(), TimerContract.View {
@@ -17,14 +19,22 @@ class TimerExerciseActivity: AppCompatActivity(), TimerContract.View {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_timer)
 
-        timerPresenter.activityCreated()
+        timerPresenter = TimerExercisePresenter(this)
+        timerPresenter.setContext(this)
 
         iv_timer_back.setOnClickListener { timerPresenter.backButtonClicked() }
         iv_timer_lock.setOnClickListener { timerPresenter.lockButtonClicked() }
         tv_timer_pause.setOnClickListener { timerPresenter.pauseButtonClicked() }
+
+        timerPresenter.activityCreated()
     }
 
-    override fun updateTime(time: Long) {
+    override fun onStop() {
+        super.onStop()
+        timerPresenter.activityStopped()
+    }
+
+    override fun updateTime(time: Seconds) {
         tv_timer_time.text = time.toString()
     }
 
@@ -58,5 +68,13 @@ class TimerExerciseActivity: AppCompatActivity(), TimerContract.View {
 
     override fun updateCurrentExerciseFromList(itemPosition: Int) {
         timerExerciseAdapter.setSelectPosition(itemPosition)
+    }
+
+    override fun updateLockButton(tag: TimerContract.Presenter.LockButtonTag) {
+        if (tag == TimerContract.Presenter.LockButtonTag.LOCK){
+            iv_timer_lock.setImageResource(R.drawable.ic_lock_white)
+        }else{
+            iv_timer_lock.setImageResource(R.drawable.ic_lock_open_white)
+        }
     }
 }

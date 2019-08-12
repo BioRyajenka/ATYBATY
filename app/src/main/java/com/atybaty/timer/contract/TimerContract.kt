@@ -1,7 +1,9 @@
 package com.atybaty.timer.contract
 
+import android.content.Context
 import com.atybaty.timer.model.Exercise
 import com.atybaty.timer.model.Workout
+import com.atybaty.timer.utils.Seconds
 
 interface TimerContract {
 
@@ -11,7 +13,12 @@ interface TimerContract {
             PLAY, PAUSE
         }
 
+        enum class LockButtonTag{
+            LOCK, UNLOCK
+        }
+        fun setContext(context: Context)
         fun activityCreated()
+        fun activityStopped()
         fun backButtonClicked()
         fun lockButtonClicked()
         fun pauseButtonClicked()
@@ -19,8 +26,9 @@ interface TimerContract {
     }
 
     interface View{
-        fun updateTime(time: Long)
+        fun updateTime(time: Seconds)
         fun updatePauseButton(tag: Presenter.PauseButtonTag)
+        fun updateLockButton(tag: Presenter.LockButtonTag)
         fun showPreviousScreen()
         fun showExercises(workout: Workout)
         fun updateExerciseName(name: String)
