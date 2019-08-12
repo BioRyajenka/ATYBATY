@@ -2,6 +2,7 @@ package com.atybaty.timer.presenter
 
 import com.atybaty.timer.contract.ExerciseGroupSettingsContract
 import com.atybaty.timer.dataholders.CurrentWorkoutHolder
+import com.atybaty.timer.utils.Seconds
 
 class ExerciseGroupSettingsPresenter(val view: ExerciseGroupSettingsContract.View): ExerciseGroupSettingsContract.Presenter {
 
@@ -19,39 +20,23 @@ class ExerciseGroupSettingsPresenter(val view: ExerciseGroupSettingsContract.Vie
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun addStartTimeButtonClicked() {
+    override fun startTimeSet(time: Seconds) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun minusStartTimeButtonClicked() {
+    override fun defaultTimeSet(time: Seconds) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun addDefaultTimeButtonClicked() {
+    override fun relaxTimeSet(time: Seconds) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun minusDefaultTimeButtonClicked() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun addRelaxTimeButtonClicked() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun minusRelaxTimeButtonClicked() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun addRepeatsButtonClicked() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun minusRepeatsButtonClicked() {
+    override fun repeatsCountSet(count: Int) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     override fun changeWorkButtonClicked() {
-        view.showChangeMessage()
+        view.showExerciseSettings()
     }
 }
