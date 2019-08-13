@@ -38,7 +38,7 @@ class ExerciseGroupPresenter(val view: ExerciseGroupContract.View) : ExerciseGro
 
     override fun addWorkButtonClicked() {
         val workDuration = context.resources.getInteger(R.integer.default_work_duration_in_seconds)
-        val work = Work("Работа", workDuration, SimpleWorkOptions())
+        val work = Work("Работа", workDuration, SimpleWorkOptions)
         exerciseGroup.exercises.add(work)
         view.showExerciseGroup(exerciseGroup)
     }

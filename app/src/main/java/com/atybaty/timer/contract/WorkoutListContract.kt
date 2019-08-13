@@ -5,7 +5,7 @@ import com.atybaty.timer.model.Workout
 interface WorkoutListContract {
 
     interface Presenter {
-        fun activityCreated()
+        fun activityResumed()
         fun activityDestroyed()
 
         fun addButtonClicked()

@@ -6,7 +6,6 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.atybaty.timer.dataholders.CurrentWorkoutHolder
 import com.atybaty.timer.R
 import com.atybaty.timer.contract.WorkoutListContract
 import com.atybaty.timer.model.Workout
@@ -29,8 +28,6 @@ class WorkoutListActivity : AppCompatActivity(), WorkoutListContract.View {
         rv_main_trains.adapter = workoutAdapter
 
         iv_main_add.setOnClickListener { presenter.addButtonClicked() }
-
-        presenter.activityCreated()
     }
 
     override fun showWorkoutsList(workouts: List<Workout>) {
@@ -57,5 +54,10 @@ class WorkoutListActivity : AppCompatActivity(), WorkoutListContract.View {
     override fun onDestroy() {
         super.onDestroy()
         presenter.activityDestroyed()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        presenter.activityResumed()
     }
 }

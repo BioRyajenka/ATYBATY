@@ -7,12 +7,14 @@ import com.atybaty.timer.dataholders.WorkoutRepositoryHolder
 import com.atybaty.timer.contract.WorkoutListContract
 import com.atybaty.timer.dataholders.CurrentWorkoutHolder
 import com.atybaty.timer.model.ExerciseGroup
+import com.atybaty.timer.model.Workout
 
 class WorkoutListPresenter(private val view: WorkoutListContract.View, private val context: Context) : WorkoutListContract.Presenter {
     private val workoutRepository = WorkoutRepositoryHolder.getWorkoutRepository(context)
-    private val workouts = workoutRepository.getAllWorkouts().toMutableList()
+    private lateinit var workouts: MutableList<Workout>
 
     private fun viewShowWorkouts() {
+        workouts = workoutRepository.getAllWorkouts().toMutableList()
         if (workouts.isEmpty()) {
             view.showEmptyMessage()
         } else {
@@ -20,7 +22,7 @@ class WorkoutListPresenter(private val view: WorkoutListContract.View, private v
         }
     }
 
-    override fun activityCreated() {
+    override fun activityResumed() {
         viewShowWorkouts()
     }
 

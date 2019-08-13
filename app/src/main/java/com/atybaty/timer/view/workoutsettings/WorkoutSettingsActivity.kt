@@ -5,11 +5,12 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.atybaty.timer.dataholders.CurrentWorkoutHolder
 import com.atybaty.timer.R
+import com.atybaty.timer.view.workout.WorkoutFragment
 import com.atybaty.timer.view.workoutsettings.FragmentTag.EXERCISE_GROUP
 import com.atybaty.timer.view.workoutsettings.exercisegroup.ExerciseGroupFragment
 
 private enum class FragmentTag {
-    EXERCISE_GROUP
+    EXERCISE_GROUP, WORKOUT,
 }
 
 class WorkoutSettingsActivity : AppCompatActivity() {
@@ -17,8 +18,8 @@ class WorkoutSettingsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_train)
 
-        loadFragment(savedInstanceState, EXERCISE_GROUP) {
-            ExerciseGroupFragment()
+        loadFragment(savedInstanceState, FragmentTag.WORKOUT) {
+            WorkoutFragment()
         }
         // TODO: stub
         val exerciseGroup = CurrentWorkoutHolder.currentWorkout.exerciseGroups.first()
