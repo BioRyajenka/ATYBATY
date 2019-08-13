@@ -1,4 +1,4 @@
-package com.atybaty.timer.view.workout;
+package com.atybaty.timer.view.workoutsettings.workout;
 
 import android.content.Context
 import android.view.LayoutInflater

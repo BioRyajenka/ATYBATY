@@ -10,7 +10,7 @@ import com.atybaty.timer.dataholders.WorkoutRepositoryHolder
 import com.atybaty.timer.model.ExerciseGroup
 import com.atybaty.timer.model.Workout
 import com.atybaty.timer.model.repository.WorkoutRepository
-import com.atybaty.timer.view.workout.WorkoutFragment
+import com.atybaty.timer.view.workoutsettings.workout.WorkoutFragment
 
 class WorkoutPresenter(private val view: WorkoutFragment, private val context: Context) : WorkoutContract.Presenter {
 

@@ -5,9 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.atybaty.timer.dataholders.CurrentWorkoutHolder
 import com.atybaty.timer.R
-import com.atybaty.timer.view.workout.WorkoutFragment
-import com.atybaty.timer.view.workoutsettings.FragmentTag.EXERCISE_GROUP
-import com.atybaty.timer.view.workoutsettings.exercisegroup.ExerciseGroupFragment
+import com.atybaty.timer.view.workoutsettings.workout.WorkoutFragment
 
 private enum class FragmentTag {
     EXERCISE_GROUP, WORKOUT,

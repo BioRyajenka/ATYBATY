@@ -1,12 +1,13 @@
 package com.atybaty.timer.contract
 
+import android.content.Context
 import com.atybaty.timer.model.ExerciseGroup
 import com.atybaty.timer.utils.Seconds
 
 interface ExerciseGroupSettingsContract {
 
     interface Presenter{
-        fun fragmentViewCreated()
+        fun fragmentViewCreated(context: Context)
         fun backButtonClicked()
         fun saveButtonClicked()
         fun startTimeSet(time: Seconds)
@@ -18,10 +19,6 @@ interface ExerciseGroupSettingsContract {
 
     interface View{
         fun showExerciseGroup(exerciseGroup: ExerciseGroup)
-        fun updateStartTime(time: Seconds)
-        fun updateDefaultTime(time: Seconds)
-        fun updateRelaxTime(time: Seconds)
-        fun updateRepeatsCount(count: Int)
         fun showChangeMessage()
         fun hideChangeMessage()
         fun showPreviousScreen()

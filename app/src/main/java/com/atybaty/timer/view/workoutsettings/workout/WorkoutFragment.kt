@@ -1,4 +1,4 @@
-package com.atybaty.timer.view.workout
+package com.atybaty.timer.view.workoutsettings.workout
 
 import android.os.Bundle
 import android.text.Editable
@@ -36,7 +36,7 @@ class WorkoutFragment : Fragment(), WorkoutContract.View {
         rv_start_sets.layoutManager = LinearLayoutManager(context)
         presenter.fragmentViewCreated()
 
-        tv_start_set_add.setOnClickListener { presenter.addExerciseGroupButtonClicked() }
+        iv_start_set_add.setOnClickListener { presenter.addExerciseGroupButtonClicked() }
 
         iv_start_starttime_add.setOnClickListener {
             workout.warmUp++
