@@ -21,8 +21,9 @@ interface ExerciseGroupSettingsContract {
         fun updateStartTime(time: Seconds)
         fun updateDefaultTime(time: Seconds)
         fun updateRelaxTime(time: Seconds)
-        fun updateRepeatscCount(count: Int)
+        fun updateRepeatsCount(count: Int)
         fun showChangeMessage()
+        fun hideChangeMessage()
         fun showPreviousScreen()
         fun showExerciseSettings()
     }

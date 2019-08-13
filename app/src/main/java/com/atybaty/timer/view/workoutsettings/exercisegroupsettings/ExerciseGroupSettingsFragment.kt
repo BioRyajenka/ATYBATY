@@ -15,7 +15,7 @@ import kotlinx.android.synthetic.main.fragment_exercisegroup_settings.*
 class ExerciseGroupSettingsFragment: Fragment(), ExerciseGroupSettingsContract.View {
 
     private lateinit var exerciseGroupSettingsPresenter: ExerciseGroupSettingsContract.Presenter
-    private var messageShown = false
+    private lateinit var exerciseGroup: ExerciseGroup
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_exercisegroup_settings, container, false)
@@ -28,7 +28,7 @@ class ExerciseGroupSettingsFragment: Fragment(), ExerciseGroupSettingsContract.V
     }
 
     override fun showExerciseGroup(exerciseGroup: ExerciseGroup) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        this.exerciseGroup = exerciseGroup
     }
 
     override fun updateStartTime(time: Seconds) {
@@ -43,17 +43,16 @@ class ExerciseGroupSettingsFragment: Fragment(), ExerciseGroupSettingsContract.V
         et_work_relaxtime_count.setText(time.toString())
     }
 
-    override fun updateRepeatscCount(count: Int) {
+    override fun updateRepeatsCount(count: Int) {
         et_work_repeats_count.setText(count.toString())
     }
 
+    override fun hideChangeMessage() {
+        tv_work_flag.visibility = View.GONE
+    }
+
     override fun showChangeMessage() {
-        if (messageShown){
-            tv_work_flag.visibility = View.GONE
-        }else{
-            tv_work_flag.visibility = View.VISIBLE
-        }
-        messageShown = !messageShown
+        tv_work_flag.visibility = View.VISIBLE
     }
 
     override fun showPreviousScreen() {
