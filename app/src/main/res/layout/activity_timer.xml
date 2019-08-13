@@ -38,7 +38,7 @@
     </LinearLayout>
 
     <TextView
-            android:id="@+id/tv_timer_set_number"
+            android:id="@+id/tv_timer_exercise_group_name"
             android:layout_width="match_parent"
             android:layout_height="56dp"
             android:textColor="@color/colorAccent"
@@ -64,7 +64,7 @@
             android:layout_height="0dp"
             android:layout_weight="0.5"
             android:padding="8dp"
-            tools:listitem="@layout/item_timer_workout"/>
+            tools:listitem="@layout/item_timer_exercise"/>
 
     <TextView
             android:id="@+id/tv_timer_pause"

@@ -1,38 +1,38 @@
 package com.atybaty.timer.contract
 
 import android.content.Context
-import com.atybaty.timer.model.Exercise
 import com.atybaty.timer.model.Workout
-import com.atybaty.timer.utils.Seconds
+import com.atybaty.timer.util.Seconds
 
 interface TimerContract {
 
-    interface Presenter{
+    interface Presenter {
 
-        enum class PauseButtonTag{
-            PLAY, PAUSE
+        enum class PauseStatus {
+            PLAYING, PAUSED, NOT_STARTED
         }
 
-        enum class LockButtonTag{
+        enum class LockStatus {
             LOCK, UNLOCK
         }
-        fun setContext(context: Context)
-        fun activityCreated()
+
+        fun activityCreated(context: Context)
         fun activityStopped()
         fun backButtonClicked()
         fun lockButtonClicked()
         fun pauseButtonClicked()
-        fun itemExerciseClicked(itemPosition: Int)
+        fun itemExerciseClicked(exerciseGroupIndex: Int, exerciseIndex: Int)
     }
 
-    interface View{
-        fun updateTime(time: Seconds)
-        fun updatePauseButton(tag: Presenter.PauseButtonTag)
-        fun updateLockButton(tag: Presenter.LockButtonTag)
+    interface View {
         fun showPreviousScreen()
-        fun showExercises(workout: Workout)
-        fun updateExerciseName(name: String)
-        fun updateExerciseGroupName(name: String)
-        fun updateCurrentExerciseFromList(itemPosition: Int)
+        fun showWorkout(workout: Workout)
+        fun showNotificationAboutLock()
+
+        fun updateTime(time: Seconds)
+        fun updatePauseButton(status: Presenter.PauseStatus)
+        fun updateLockButton(status: Presenter.LockStatus)
+        fun updateCurrentExerciseSelection(exerciseGroupIndex: Int, exerciseIndex: Int)
+        fun clearCurrentExerciseSelection()
     }
 }

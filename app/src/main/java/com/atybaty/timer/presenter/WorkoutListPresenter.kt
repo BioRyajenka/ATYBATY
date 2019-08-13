@@ -5,16 +5,15 @@ import android.widget.Toast
 import com.atybaty.timer.R
 import com.atybaty.timer.dataholders.WorkoutRepositoryHolder
 import com.atybaty.timer.contract.WorkoutListContract
-import com.atybaty.timer.dataholders.CurrentWorkoutHolder
 import com.atybaty.timer.model.ExerciseGroup
-import com.atybaty.timer.model.Workout
+import com.atybaty.timer.model.repository.WorkoutRepository
 
-class WorkoutListPresenter(private val view: WorkoutListContract.View, private val context: Context) : WorkoutListContract.Presenter {
-    private val workoutRepository = WorkoutRepositoryHolder.getWorkoutRepository(context)
-    private lateinit var workouts: MutableList<Workout>
+class WorkoutListPresenter(private val view: WorkoutListContract.View) : WorkoutListContract.Presenter {
+    private lateinit var context: Context
+    private lateinit var workoutRepository: WorkoutRepository
+    private val workouts = workoutRepository.getAllWorkouts().toMutableList()
 
     private fun viewShowWorkouts() {
-        workouts = workoutRepository.getAllWorkouts().toMutableList()
         if (workouts.isEmpty()) {
             view.showEmptyMessage()
         } else {
@@ -22,7 +21,10 @@ class WorkoutListPresenter(private val view: WorkoutListContract.View, private v
         }
     }
 
-    override fun activityResumed() {
+    override fun activityCreated(context: Context) {
+        this.context = context
+        this.workoutRepository = WorkoutRepositoryHolder.getWorkoutRepository(context)
+
         viewShowWorkouts()
     }
 
@@ -34,7 +36,6 @@ class WorkoutListPresenter(private val view: WorkoutListContract.View, private v
             coolDown = context.resources.getInteger(R.integer.default_cooldown_duration_in_seconds)
         )
 
-        CurrentWorkoutHolder.currentWorkout = newWorkout
         view.showWorkout(newWorkout)
 
         // this is stub
@@ -53,9 +54,7 @@ class WorkoutListPresenter(private val view: WorkoutListContract.View, private v
     }
 
     override fun itemClicked(itemPosition: Int) {
-        val workout = workouts[itemPosition]
-        CurrentWorkoutHolder.currentWorkout = workout
-        view.showWorkout(workout)
+        view.showWorkout(workouts[itemPosition])
     }
 
     override fun activityDestroyed() {

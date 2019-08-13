@@ -6,71 +6,99 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.atybaty.timer.R
 import com.atybaty.timer.contract.TimerContract
+import com.atybaty.timer.model.Exercise
+import com.atybaty.timer.model.ExerciseGroup
 import com.atybaty.timer.model.Workout
+import kotlin.properties.Delegates
+
+private const val VIEWTYPE_EXERCISEGROUP = 0
+private const val VIEWTYPE_EXERCISE = 1
+
+private data class ListItemHolder(val exerciseOrGroup: Any, val exerciseGroupIndex: Int, val exerciseIndex: Int) {
+    init {
+        require(exerciseIndex >= -1)
+        require(exerciseGroupIndex >= 0)
+    }
+}
 
 class TimerExerciseAdapter(val context: Context, val presenter: TimerContract.Presenter) :
     RecyclerView.Adapter<TimerExerciseHolder>() {
 
-    private lateinit var workout: Workout
-    private var selectPosition = 0
+    private var selectedExerciseGroupIndex: Int by Delegates.notNull()
+    private var selectedExerciseIndex: Int by Delegates.notNull()
 
-    fun setWorkout(workout: Workout) {
-        this.workout = workout
+    private lateinit var listItems: List<ListItemHolder>
+
+    init {
+        clearExerciseSelection()
     }
 
-    fun setSelectPosition(itemPosition: Int) {
-        selectPosition = itemPosition
-        notifyDataSetChanged()
+    fun setWorkout(workout: Workout) {
+        listItems = workout.exerciseGroups.withIndex().flatMap { (egIndex, eg) ->
+            listOf(ListItemHolder(eg, egIndex,-1)) + eg.exercises.mapIndexed { eIndex, e ->
+                ListItemHolder(e, egIndex, eIndex)
+            }
+        }
+    }
+
+    fun setSelectedExercise(exerciseGroupIndex: Int, exerciseIndex: Int) {
+        this.selectedExerciseGroupIndex = exerciseGroupIndex
+        this.selectedExerciseIndex = exerciseIndex
+    }
+
+    fun clearExerciseSelection() {
+        this.selectedExerciseGroupIndex = -1
+        this.selectedExerciseIndex = -1
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TimerExerciseHolder {
-        val view = LayoutInflater.from(context).inflate(R.layout.item_timer_workout, parent, false)
+        val layoutId = if (viewType == VIEWTYPE_EXERCISEGROUP) {
+            R.layout.item_timer_exercisegroup
+        } else {
+            check(viewType == VIEWTYPE_EXERCISE)
+            R.layout.item_timer_exercise
+        }
+        val view = LayoutInflater.from(context).inflate(layoutId, parent, false)
         val holder = TimerExerciseHolder(context, view)
+
         view.setOnClickListener {
             val itemPosition = holder.adapterPosition
             if (itemPosition != RecyclerView.NO_POSITION) {
-                presenter.itemExerciseClicked(itemPosition)
+                with(listItems[itemPosition]) {
+                    if (exerciseIndex != -1) {
+                        presenter.itemExerciseClicked(exerciseGroupIndex, exerciseIndex)
+                    }
+                }
             }
         }
         return holder
     }
 
-    override fun getItemCount(): Int {
-        //count exercise with coolDown
-        var itemCount = 1
-        workout.exerciseGroups.forEach {
-            itemCount += it.exercises.size + 1
+    override fun getItemViewType(position: Int): Int {
+        return if (listItems[position].exerciseOrGroup is ExerciseGroup) {
+            VIEWTYPE_EXERCISEGROUP
+        } else {
+            VIEWTYPE_EXERCISE
         }
-        return itemCount
+    }
+
+    override fun getItemCount(): Int {
+        return listItems.size
     }
 
     override fun onBindViewHolder(holder: TimerExerciseHolder, position: Int) {
-        if (position == selectPosition) {
+        if (listItems[position].exerciseGroupIndex == selectedExerciseGroupIndex &&
+            listItems[position].exerciseIndex == selectedExerciseIndex
+        ) {
             holder.selectExercise()
         } else {
             holder.unselectExercise()
         }
-        when (position) {
-            itemCount - 1 -> holder.showExercise("Заминка", workout.coolDown)
-            else -> {
-                var count = 0
-                for (i in 0 until workout.exerciseGroups.size) {
-                    if (count == position) {
-                        holder.showExerciseGroupName(workout.exerciseGroups[i].name)
-                        break
-                    } else {
-                        for (j in 0 until workout.exerciseGroups[i].exercises.size) {
-                            count++
-                            if (count == position) {
-                                val exercise = workout.exerciseGroups[i].exercises[j]
-                                holder.showExercise(exercise.getName(context), exercise.duration)
-                                holder.showNumber(j + 1)
-                                break
-                            }
-                        }
-                    }
-                    count++
-                }
+        with(listItems[position]) {
+            if (exerciseOrGroup is ExerciseGroup) {
+                holder.showExerciseGroup(exerciseOrGroup)
+            } else {
+                holder.showExercise(exerciseOrGroup as Exercise, exerciseIndex)
             }
         }
     }

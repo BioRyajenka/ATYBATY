@@ -1,179 +1,114 @@
 package com.atybaty.timer.presenter
 
 import android.content.Context
-import android.os.CountDownTimer
 import com.atybaty.timer.CurrentWorkoutHolder
 import com.atybaty.timer.contract.TimerContract
-import com.atybaty.timer.utils.ITimerCallback
-import com.atybaty.timer.utils.Seconds
-import com.atybaty.timer.utils.TimerExercise
+import com.atybaty.timer.contract.TimerContract.Presenter.LockStatus
+import com.atybaty.timer.contract.TimerContract.Presenter.PauseStatus
+import com.atybaty.timer.util.Seconds
+import com.atybaty.timer.util.SecondsTimer
+import com.atybaty.timer.util.SecondsTimerCallback
 
-class TimerExercisePresenter(val view: TimerContract.View) : TimerContract.Presenter, ITimerCallback {
+class TimerExercisePresenter(val view: TimerContract.View) : TimerContract.Presenter, SecondsTimerCallback {
 
-    //private val currentWorkout = CurrentWorkoutHolder.currentWorkout
-    private val currentWorkout = CurrentWorkoutHolder.createWorkout()
+    //private val workout = CurrentWorkoutHolder.workout
+    private val workout = CurrentWorkoutHolder.createWorkout()
 
-    private var pauseTag = TimerContract.Presenter.PauseButtonTag.PAUSE
-    private var lockTag = TimerContract.Presenter.LockButtonTag.UNLOCK
-    private var currentPosition = 0
-    private var currenExerciseGroup = 0
-    private lateinit var timer: TimerExercise
+    private var pauseStatus = PauseStatus.NOT_STARTED
+    private var lockStatus = LockStatus.UNLOCK
+    private var currentExerciseGroupIndex = 0
+    private var currentExerciseIndex = 0
+    private val timer: SecondsTimer = SecondsTimer(this)
+
     private lateinit var context: Context
 
-    override fun setContext(context: Context) {
-        this.context = context
+    private fun synchronizeTimer(pauseStatus: PauseStatus) {
+        if (pauseStatus == PauseStatus.PLAYING) {
+            timer.play()
+        } else {
+            timer.pause()
+        }
     }
 
-    override fun activityCreated() {
-        view.showExercises(currentWorkout)
-        timer = updateTimer()
-        timer.start()
+    private fun synchronizeExerciseSelection(exerciseGroupIndex: Int, exerciseIndex: Int) {
+        timer.pause()
+        timer.setTime(workout.exerciseGroups[exerciseGroupIndex].exercises[exerciseIndex].duration)
+        synchronizeTimer(pauseStatus)
+        view.updateCurrentExerciseSelection(exerciseGroupIndex, exerciseIndex)
+    }
+
+    override fun activityCreated(context: Context) {
+        this.context = context
+
+        view.showWorkout(workout)
+        view.updatePauseButton(pauseStatus)
+        synchronizeExerciseSelection(currentExerciseGroupIndex, currentExerciseIndex)
     }
 
     override fun activityStopped() {
-        timer.cancel()
+        timer.pause()
     }
 
     override fun backButtonClicked() {
+        if (lockStatus == LockStatus.LOCK) {
+            view.showNotificationAboutLock()
+            return
+        }
+
+        timer.pause()
         view.showPreviousScreen()
     }
 
     override fun lockButtonClicked() {
-        if (lockTag == TimerContract.Presenter.LockButtonTag.LOCK) {
-            lockTag = TimerContract.Presenter.LockButtonTag.UNLOCK
+        lockStatus = if (lockStatus == LockStatus.LOCK) {
+            LockStatus.UNLOCK
         } else {
-            lockTag = TimerContract.Presenter.LockButtonTag.LOCK
+            LockStatus.LOCK
         }
-        view.updateLockButton(lockTag)
+        view.updateLockButton(lockStatus)
     }
 
     override fun pauseButtonClicked() {
-        if (pauseTag == TimerContract.Presenter.PauseButtonTag.PLAY) {
-            pauseTag = TimerContract.Presenter.PauseButtonTag.PAUSE
-            timer.start()
+        if (lockStatus == LockStatus.LOCK) {
+            view.showNotificationAboutLock()
+            return
+        }
+
+        pauseStatus = if (pauseStatus == PauseStatus.PLAYING) {
+            PauseStatus.PAUSED
         } else {
-            pauseTag = TimerContract.Presenter.PauseButtonTag.PLAY
-            timer.onFinish()
-            timer.cancel()
+            PauseStatus.PLAYING
         }
-        view.updatePauseButton(pauseTag)
+        synchronizeTimer(pauseStatus)
+        view.updatePauseButton(pauseStatus)
     }
 
-    override fun itemExerciseClicked(itemPosition: Int) {
-        if (getDuration(itemPosition) >= 0){
-            currentPosition = itemPosition
-            currenExerciseGroup = getCurrentExerciseGroup()
-            timer.cancel()
-            timer = updateTimer()
-            timer.start()
-        }
-    }
-
-    override fun tick(seconds: Int) {
-        view.updateTime(seconds)
-    }
-
-    override fun stop() {
-        if (currentPosition < getItemCount()) {
-            timer = updateTimer()
-            timer.start()
-        }else{
-            view.updateTime(0)
-        }
-    }
-
-    override fun pause(seconds: Int) {
-        timer = TimerExercise(this, (seconds * 1000).toLong(), 1000)
-    }
-
-    private fun getCurrentExerciseGroup(): Int{
-        var countItems = 0
-        var numberExerciseGroup = -1
-
-        for (i in 0 until currentWorkout.exerciseGroups.size){
-            numberExerciseGroup++
-            if (countItems == currentPosition){
-                return numberExerciseGroup
-            }
-            for (j in 0 until currentWorkout.exerciseGroups[i].exercises.size){
-                countItems++
-                if (countItems == currentPosition){
-                    return numberExerciseGroup
-                }
-            }
-            countItems++
+    override fun itemExerciseClicked(exerciseGroupIndex: Int, exerciseIndex: Int) {
+        if (lockStatus == LockStatus.LOCK) {
+            view.showNotificationAboutLock()
+            return
         }
 
-        return numberExerciseGroup
+        this.currentExerciseGroupIndex = exerciseGroupIndex
+        this.currentExerciseIndex = exerciseIndex
+        synchronizeExerciseSelection(currentExerciseGroupIndex, currentExerciseIndex)
+
     }
 
-    private fun getNameExercise(itemPosition: Int): String {
-        when (itemPosition) {
-            getItemCount() - 1 -> return "Заминка"
-            else -> {
-                var count = 0
-                for (i in 0 until currentWorkout.exerciseGroups.size) {
-                    if (count == itemPosition) {
-                        return currentWorkout.exerciseGroups[i].name
-                    } else {
-                        for (j in 0 until currentWorkout.exerciseGroups[i].exercises.size) {
-                            count++
-                            if (count == itemPosition) {
-                                return currentWorkout.exerciseGroups[i].exercises[j].getName(context)
-                            }
-                        }
-                    }
-                    count++
-                }
-                return ""
-            }
+    override fun onTick(remainingTime: Seconds) {
+        view.updateTime(remainingTime)
+    }
+
+    override fun onFinish() {
+        currentExerciseIndex++
+        if (currentExerciseIndex == workout.exerciseGroups[currentExerciseGroupIndex].exercises.size) {
+            currentExerciseGroupIndex++
+            currentExerciseIndex = 0
         }
-    }
-
-    private fun getDuration(itemPosition: Int): Seconds {
-        when (itemPosition) {
-            getItemCount() - 1 -> return currentWorkout.coolDown
-            else -> {
-                var count = 0
-                for (i in 0 until currentWorkout.exerciseGroups.size) {
-                    if (count == itemPosition) {
-                        return -1
-                    } else {
-                        for (j in 0 until currentWorkout.exerciseGroups[i].exercises.size) {
-                            count++
-                            if (count == itemPosition) {
-                                return currentWorkout.exerciseGroups[i].exercises[j].duration
-                            }
-                        }
-                    }
-                    count++
-                }
-                return -1
-            }
-        }
-    }
-
-    private fun updateTimer(): TimerExercise {
-        if (getDuration(currentPosition) < 0) {
-            view.updateExerciseGroupName(currentWorkout.exerciseGroups[currenExerciseGroup].name)
-            currenExerciseGroup++
-            currentPosition++
-            return updateTimer()
+        if (currentExerciseGroupIndex == workout.exerciseGroups.size) {
+            view.clearCurrentExerciseSelection()
         } else {
-            view.updateCurrentExerciseFromList(currentPosition)
-            view.updateExerciseName(getNameExercise(currentPosition))
-            val duration = getDuration(currentPosition)
-            currentPosition++
-            return TimerExercise(this, (duration * 1000).toLong(), 1000)
+            view.updateCurrentExerciseSelection(currentExerciseGroupIndex, currentExerciseIndex)
         }
-    }
-
-    private fun getItemCount(): Int {
-        //count exercise with coolDown
-        var itemCount = 1
-        currentWorkout.exerciseGroups.forEach {
-            itemCount += it.exercises.size + 1
-        }
-        return itemCount
     }
 }
