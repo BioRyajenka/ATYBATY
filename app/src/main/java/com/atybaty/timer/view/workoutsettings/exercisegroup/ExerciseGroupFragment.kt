@@ -8,10 +8,8 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.atybaty.timer.R
 import com.atybaty.timer.contract.ExerciseGroupContract
-import com.atybaty.timer.dataholders.CurrentWorkoutHolder
 import com.atybaty.timer.model.Exercise
 import com.atybaty.timer.model.ExerciseGroup
-import com.atybaty.timer.model.Work
 import com.atybaty.timer.presenter.ExerciseGroupPresenter
 import com.atybaty.timer.view.workoutsettings.exercisesettings.ExerciseSettingsDialog
 import kotlinx.android.synthetic.main.fragment_set.*
@@ -31,8 +29,7 @@ class ExerciseGroupFragment : Fragment(), ExerciseGroupContract.View {
         rv_set_exercise.adapter = exerciseGroupAdapter
         rv_set_exercise.layoutManager = LinearLayoutManager(context)
 
-        tv_add_work.setOnClickListener { presenter.addWorkButtonClicked() }
-        tv_add_rest.setOnClickListener { presenter.addRestButtonClicked() }
+        tv_set_default_btn.setOnClickListener { presenter.setUpDefaultButtonClicked() }
         iv_set_save.setOnClickListener { presenter.saveButtonClicked() }
         iv_set_back.setOnClickListener { presenter.backButtonClicked() }
 
@@ -51,9 +48,8 @@ class ExerciseGroupFragment : Fragment(), ExerciseGroupContract.View {
     }
 
     override fun showExerciseSettings(exerciseItemPosition: Int, exercise: Exercise) {
-        CurrentWorkoutHolder.currentWork = exercise as Work
-        ExerciseSettingsDialog {
-            presenter.exerciseUpdated(exerciseItemPosition, CurrentWorkoutHolder.currentWork)
+        ExerciseSettingsDialog() {
+            presenter.exerciseUpdated(exerciseItemPosition, exercise)
         }.show(fragmentManager, "dialog")
     }
 
