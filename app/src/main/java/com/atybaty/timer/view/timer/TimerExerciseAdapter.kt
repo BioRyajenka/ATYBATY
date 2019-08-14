@@ -22,10 +22,10 @@ private data class ListItemHolder(val exerciseOrGroup: Any, val exerciseGroupInd
 }
 
 class TimerExerciseAdapter(private val context: Context,
-                           private val presenter: TimerContract.Presenter,
-                           private var itemsColorId: Int) :
+                           private val presenter: TimerContract.Presenter) :
     RecyclerView.Adapter<TimerExerciseHolder>() {
 
+    private var itemsColorId: Int = R.color.colorPrimaryDark // just stub color. affects nothing
     private var selectedExerciseGroupIndex: Int by Delegates.notNull()
     private var selectedExerciseIndex: Int by Delegates.notNull()
 

@@ -9,4 +9,6 @@
 
     <color name="timerWork">#bb3333</color>
     <color name="timerRest">#06376c</color>
+
+    <color name="timerCounterColorDefault">#ffffff</color>
 </resources>

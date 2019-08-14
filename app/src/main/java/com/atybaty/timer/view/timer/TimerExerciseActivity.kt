@@ -1,7 +1,6 @@
 package com.atybaty.timer.view.timer
 
 import android.os.Bundle
-import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -26,7 +25,7 @@ class TimerExerciseActivity : AppCompatActivity(), TimerContract.View {
 
         timerPresenter = TimerExercisePresenter(this)
 
-        timerExerciseAdapter = TimerExerciseAdapter(this, timerPresenter, R.color.)
+        timerExerciseAdapter = TimerExerciseAdapter(this, timerPresenter)
         rv_timer_workout.layoutManager = LinearLayoutManager(this)
         rv_timer_workout.adapter = timerExerciseAdapter
 
@@ -95,8 +94,8 @@ class TimerExerciseActivity : AppCompatActivity(), TimerContract.View {
     }
 
     override fun updateScreenColor(colorId: Int) {
-        val color = resources.getColor(R.color.timerWork)
-        findViewById<LinearLayout>(android.R.id.content).setBackgroundColor(color)
-        timerExerciseAdapter
+        val color = resources.getColor(colorId)
+        ll_timer_background.setBackgroundColor(color)
+        timerExerciseAdapter.setItemsColor(colorId)
     }
 }
