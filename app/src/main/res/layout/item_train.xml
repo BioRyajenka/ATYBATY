@@ -44,27 +44,7 @@
     </LinearLayout>
 
     <TextView
-            android:id="@+id/tv_train_starttime"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:textColor="@color/colorAccent"
-            tools:text="Подготовка: 10 сек"/>
-
-    <TextView
             android:id="@+id/tv_train_countset"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:textColor="@color/colorAccent"
-            tools:text="Сеты: 8"/>
-
-    <TextView
-            android:id="@+id/tv_train_endtime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
@@ -72,6 +52,6 @@
             android:textSize="20sp"
             android:textStyle="bold"
             android:textColor="@color/colorAccent"
-            tools:text="Заминка: 10 сек"/>
+            tools:text="Сеты: 8"/>
 
 </LinearLayout>

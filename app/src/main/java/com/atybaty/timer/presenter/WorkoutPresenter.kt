@@ -21,12 +21,8 @@ class WorkoutPresenter(private val view: WorkoutFragment, private val context: C
         workoutRepository.saveWorkout(CurrentWorkoutHolder.currentWorkout)
     }
 
-    override fun warmUpDurationSet(duration: Seconds) {
-        workout.warmUp = duration
-    }
-
-    override fun coolDownDurationSet(duration: Seconds) {
-        workout.coolDown = duration
+    override fun timeAfterExererciseSet(itemPosition: Int, time: Seconds) {
+        workout.exerciseGroups[itemPosition].relaxAfter.duration = time
     }
 
     override fun exerciseGroupClicked(itemPosition: Int) {

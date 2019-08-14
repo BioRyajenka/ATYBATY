@@ -66,46 +66,7 @@
                     android:layout_height="wrap_content"
                     android:textColor="@color/colorAccent"
                     android:textSize="20sp"
-                    android:text="Разминка"/>
-
-            <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="8dp">
-
-                <ImageView
-                        android:id="@+id/iv_start_starttime_minus"
-                        android:layout_width="56dp"
-                        android:layout_height="56dp"
-                        android:src="@drawable/ic_chevron_left_white"
-                        android:padding="12dp"/>
-
-                <EditText
-                        android:id="@+id/et_start_starttime_count"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="0.8"
-                        android:gravity="center"
-                        android:textSize="20sp"
-                        android:textColor="@color/colorAccent"
-                        android:text="30"
-                        android:inputType="number"
-                        android:background="@android:color/transparent"/>
-
-                <ImageView
-                        android:id="@+id/iv_start_starttime_add"
-                        android:layout_width="56dp"
-                        android:layout_height="56dp"
-                        android:src="@drawable/ic_chevron_right_white"
-                        android:padding="12dp"/>
-
-            </LinearLayout>
-
-            <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/colorAccent"
-                    android:textSize="20sp"
+                    android:layout_marginTop="8dp"
                     android:text="Сеты"/>
 
             <LinearLayout
@@ -120,47 +81,6 @@
                         android:layout_height="wrap_content"
                         android:padding="8dp"
                         tools:listitem="@layout/item_train_set"/>
-
-            </LinearLayout>
-
-            <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/colorAccent"
-                    android:textSize="20sp"
-                    android:text="Заминка"
-                    android:layout_marginTop="8dp"/>
-
-            <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="8dp">
-
-                <ImageView
-                        android:id="@+id/iv_start_endtime_minus"
-                        android:layout_width="56dp"
-                        android:layout_height="56dp"
-                        android:src="@drawable/ic_chevron_left_white"
-                        android:padding="12dp"/>
-
-                <EditText
-                        android:id="@+id/et_start_endtime_count"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="0.8"
-                        android:gravity="center"
-                        android:textSize="20sp"
-                        android:textColor="@color/colorAccent"
-                        android:text="30"
-                        android:inputType="number"
-                        android:background="@android:color/transparent"/>
-
-                <ImageView
-                        android:id="@+id/iv_start_endtime_add"
-                        android:layout_width="56dp"
-                        android:layout_height="56dp"
-                        android:src="@drawable/ic_chevron_right_white"
-                        android:padding="12dp"/>
 
             </LinearLayout>
 

@@ -2,27 +2,79 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
-              android:background="@color/colorPrimary"
+              android:background="@color/colorPrimaryDark"
+              android:orientation="vertical"
               android:padding="8dp"
               android:gravity="center"
               android:layout_marginTop="8dp">
 
-    <TextView
-            android:id="@+id/tv_train_set_name"
-            android:layout_width="0dp"
+    <LinearLayout
+            android:id="@+id/ll_train_set_btn"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="0.8"
-            android:textColor="@color/colorAccent"
-            android:textStyle="bold"
-            android:textSize="18sp"
-            android:gravity="center"
-            tools:text="Сет 1"/>
+            android:background="@color/colorPrimary"
+            android:gravity="center">
 
-    <ImageView
-            android:id="@+id/iv_train_set_delete"
-            android:layout_width="56dp"
-            android:layout_height="56dp"
-            android:src="@drawable/ic_clear_white"
-            android:padding="12dp"/>
+        <TextView
+                android:id="@+id/tv_train_set_name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.8"
+                android:textColor="@color/colorAccent"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:gravity="center"
+                tools:text="Сет 1"/>
+
+        <ImageView
+                android:id="@+id/iv_train_set_delete"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:src="@drawable/ic_clear_white"
+                android:padding="12dp"/>
+
+    </LinearLayout>
+
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorAccent"
+            android:textSize="20sp"
+            android:text="Отдых"
+            android:layout_marginTop="8dp"/>
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp">
+
+        <ImageView
+                android:id="@+id/iv_train_set_relax_minus"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:src="@drawable/ic_chevron_left_white"
+                android:padding="12dp"/>
+
+        <EditText
+                android:id="@+id/et_train_set_relax_count"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.8"
+                android:gravity="center"
+                android:textSize="20sp"
+                android:textColor="@color/colorAccent"
+                android:text="30"
+                android:inputType="number"
+                android:background="@android:color/transparent"/>
+
+        <ImageView
+                android:id="@+id/iv_train_set_relax_add"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:src="@drawable/ic_chevron_right_white"
+                android:padding="12dp"/>
+
+    </LinearLayout>
 
 </LinearLayout>

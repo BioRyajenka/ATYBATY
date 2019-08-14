@@ -10,15 +10,7 @@ class WorkoutHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         itemView.tv_train_name.text = name
     }
 
-    fun setStartTime(startTime: Int){
-        itemView.tv_train_starttime.text = "Подготовка: $startTime сек"
-    }
-
     fun setCountSets(count: Int){
         itemView.tv_train_countset.text = "Сеты: $count"
-    }
-
-    fun setEndTime(endTime: Int){
-        itemView.tv_train_endtime.text = "Заминка: $endTime сек"
     }
 }

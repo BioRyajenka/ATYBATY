@@ -29,9 +29,7 @@ class WorkoutListPresenter(private val view: WorkoutListContract.View, private v
     override fun addButtonClicked() {
         val newWorkout = workoutRepository.createNewWorkout(
             name = context.getString(R.string.default_workout_name),
-            warmUp = context.resources.getInteger(R.integer.default_warmup_duration_in_seconds),
-            exerciseGroups = listOf(ExerciseGroup("Сет 1", mutableListOf())), // stub. TODO: change to emptyList()
-            coolDown = context.resources.getInteger(R.integer.default_cooldown_duration_in_seconds)
+            exerciseGroups = listOf(ExerciseGroup("Сет 1", mutableListOf())) // stub. TODO: change to emptyList()
         )
 
         CurrentWorkoutHolder.currentWorkout = newWorkout

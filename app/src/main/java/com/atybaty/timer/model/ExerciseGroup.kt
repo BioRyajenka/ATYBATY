@@ -8,7 +8,8 @@ data class ExerciseGroup(
     var defaultTime: Seconds,
     var relaxTime: Seconds,
     var repeatsCount: Int,
-    val exercises: MutableList<Exercise>
+    val exercises: MutableList<Exercise>,
+    val relaxAfter: CalmDown
 ) {
-    constructor(name: String, exercises: MutableList<Exercise>) : this(name, 10, 60, 10, 1, exercises)
+    constructor(name: String, exercises: MutableList<Exercise>) : this(name, 10, 60, 10, 1, exercises, CalmDown(10))
 }

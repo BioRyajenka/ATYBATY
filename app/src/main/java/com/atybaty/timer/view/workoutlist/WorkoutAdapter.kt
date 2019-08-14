@@ -50,8 +50,6 @@ class WorkoutAdapter(
     override fun onBindViewHolder(holder: WorkoutHolder, position: Int) {
         val workout = workouts[position]
         holder.setName(workout.name)
-        holder.setStartTime(workout.warmUp)
         holder.setCountSets(workout.exerciseGroups.size)
-        holder.setEndTime(workout.coolDown)
     }
 }
