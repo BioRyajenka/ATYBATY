@@ -4,7 +4,7 @@ import android.content.Context
 import com.atybaty.timer.R
 import com.atybaty.timer.contract.WorkoutContract
 import com.atybaty.timer.dataholders.CurrentWorkoutHolder
-import com.atybaty.timer.utils.Seconds
+import com.atybaty.timer.util.Seconds
 import com.atybaty.timer.dataholders.WorkoutRepositoryHolder
 
 import com.atybaty.timer.model.ExerciseGroup
@@ -36,9 +36,9 @@ class WorkoutPresenter(private val view: WorkoutFragment, private val context: C
     }
 
     override fun addExerciseGroupButtonClicked() {
-        val exerciseGroup = ExerciseGroup(R.string.exercise_group_default_name.toString()
-                + workout.exerciseGroups.size.toString(), mutableListOf()
-        )
+        val exerciseGroupName =
+            "${context.getString(R.string.exercise_group_default_name)} ${workout.exerciseGroups.size + 1}"
+        val exerciseGroup = ExerciseGroup(exerciseGroupName, mutableListOf())
         workout.exerciseGroups.add(exerciseGroup)
         view.showWorkout(workout)
     }

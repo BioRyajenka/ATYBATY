@@ -1,17 +1,19 @@
 package com.atybaty.timer.presenter
 
 import android.content.Context
+import com.atybaty.timer.R
 import com.atybaty.timer.contract.TimerContract
 import com.atybaty.timer.contract.TimerContract.Presenter.LockStatus
 import com.atybaty.timer.contract.TimerContract.Presenter.PauseStatus
 import com.atybaty.timer.dataholders.CurrentWorkoutHolder
+import com.atybaty.timer.model.Work
 import com.atybaty.timer.util.Seconds
 import com.atybaty.timer.util.SecondsTimer
 import com.atybaty.timer.util.SecondsTimerCallback
 
 class TimerExercisePresenter(val view: TimerContract.View) : TimerContract.Presenter, SecondsTimerCallback {
 
-    private val workout = CurrentWorkoutHolder.workout
+    private val workout = CurrentWorkoutHolder.currentWorkout
 
     private var pauseStatus = PauseStatus.NOT_STARTED
     private var lockStatus = LockStatus.UNLOCK

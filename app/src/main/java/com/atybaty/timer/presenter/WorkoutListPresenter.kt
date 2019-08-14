@@ -3,16 +3,16 @@ package com.atybaty.timer.presenter
 import android.content.Context
 import android.widget.Toast
 import com.atybaty.timer.R
-import com.atybaty.timer.dataholders.WorkoutRepositoryHolder
 import com.atybaty.timer.contract.WorkoutListContract
 import com.atybaty.timer.dataholders.CurrentWorkoutHolder
-import com.atybaty.timer.model.ExerciseGroup
+import com.atybaty.timer.dataholders.WorkoutRepositoryHolder
+import com.atybaty.timer.model.Workout
 import com.atybaty.timer.model.repository.WorkoutRepository
 
 class WorkoutListPresenter(private val view: WorkoutListContract.View) : WorkoutListContract.Presenter {
     private lateinit var context: Context
     private lateinit var workoutRepository: WorkoutRepository
-    private val workouts = workoutRepository.getAllWorkouts().toMutableList()
+    private lateinit var workouts: MutableList<Workout>
 
     private fun viewShowWorkouts() {
         if (workouts.isEmpty()) {
@@ -22,9 +22,10 @@ class WorkoutListPresenter(private val view: WorkoutListContract.View) : Workout
         }
     }
 
-    override fun activityCreated(context: Context) {
+    override fun activityResumed(context: Context) {
         this.context = context
         this.workoutRepository = WorkoutRepositoryHolder.getWorkoutRepository(context)
+        this.workouts = workoutRepository.getAllWorkouts().toMutableList()
 
         viewShowWorkouts()
     }
@@ -33,7 +34,7 @@ class WorkoutListPresenter(private val view: WorkoutListContract.View) : Workout
         val newWorkout = workoutRepository.createNewWorkout(
             name = context.getString(R.string.default_workout_name),
             warmUp = context.resources.getInteger(R.integer.default_warmup_duration_in_seconds),
-            exerciseGroups = listOf(ExerciseGroup("Сет 1", mutableListOf())), // stub. TODO: change to emptyList()
+            exerciseGroups = listOf(),
             coolDown = context.resources.getInteger(R.integer.default_cooldown_duration_in_seconds)
         )
 
@@ -63,6 +64,7 @@ class WorkoutListPresenter(private val view: WorkoutListContract.View) : Workout
     }
 
     override fun itemClicked(itemPosition: Int) {
+        CurrentWorkoutHolder.currentWorkout = workouts[itemPosition]
         view.showWorkout(workouts[itemPosition])
     }
 
