@@ -50,7 +50,19 @@ class WorkoutListPresenter(private val view: WorkoutListContract.View) : Workout
     }
 
     override fun playButtonClicked(itemPosition: Int) {
-        Toast.makeText(context, "TODO", Toast.LENGTH_SHORT).show()
+        val workout = workouts[itemPosition]
+
+        if (workout.exerciseGroups.isEmpty()) {
+            Toast.makeText(context, "Добавьте сетов в тренировку", Toast.LENGTH_SHORT).show()
+            return
+        }
+        if (workout.exerciseGroups.any { it.exercises.isEmpty() }) {
+            Toast.makeText(context, "В тренировке присутствуют пустые сеты", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        CurrentWorkoutHolder.currentWorkout = workout
+        view.showTimer(workout)
     }
 
     override fun itemClicked(itemPosition: Int) {
