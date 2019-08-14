@@ -2,7 +2,7 @@ package com.atybaty.timer.model.repository
 
 import com.atybaty.timer.model.ExerciseGroup
 import com.atybaty.timer.model.Workout
-import com.atybaty.timer.utils.Seconds
+import com.atybaty.timer.util.Seconds
 import org.dizitart.kno2.getRepository
 import org.dizitart.no2.Nitrite
 import org.dizitart.no2.objects.filters.ObjectFilters.eq
