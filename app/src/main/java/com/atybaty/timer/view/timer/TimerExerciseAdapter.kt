@@ -21,7 +21,9 @@ private data class ListItemHolder(val exerciseOrGroup: Any, val exerciseGroupInd
     }
 }
 
-class TimerExerciseAdapter(val context: Context, val presenter: TimerContract.Presenter) :
+class TimerExerciseAdapter(private val context: Context,
+                           private val presenter: TimerContract.Presenter,
+                           private var itemsColorId: Int) :
     RecyclerView.Adapter<TimerExerciseHolder>() {
 
     private var selectedExerciseGroupIndex: Int by Delegates.notNull()
@@ -49,6 +51,10 @@ class TimerExerciseAdapter(val context: Context, val presenter: TimerContract.Pr
     fun clearExerciseSelection() {
         this.selectedExerciseGroupIndex = -1
         this.selectedExerciseIndex = -1
+    }
+
+    fun setItemsColor(colorId: Int) {
+        itemsColorId = colorId
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TimerExerciseHolder {
@@ -87,6 +93,7 @@ class TimerExerciseAdapter(val context: Context, val presenter: TimerContract.Pr
     }
 
     override fun onBindViewHolder(holder: TimerExerciseHolder, position: Int) {
+        holder.setColor(itemsColorId)
         if (listItems[position].exerciseGroupIndex == selectedExerciseGroupIndex &&
             listItems[position].exerciseIndex == selectedExerciseIndex
         ) {
