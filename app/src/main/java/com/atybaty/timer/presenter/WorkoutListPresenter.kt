@@ -5,6 +5,7 @@ import android.widget.Toast
 import com.atybaty.timer.R
 import com.atybaty.timer.dataholders.WorkoutRepositoryHolder
 import com.atybaty.timer.contract.WorkoutListContract
+import com.atybaty.timer.dataholders.CurrentWorkoutHolder
 import com.atybaty.timer.model.ExerciseGroup
 import com.atybaty.timer.model.repository.WorkoutRepository
 
@@ -37,10 +38,6 @@ class WorkoutListPresenter(private val view: WorkoutListContract.View) : Workout
         )
 
         view.showWorkout(newWorkout)
-
-        // this is stub
-//        workouts.add(newWorkout)
-//        viewShowWorkouts()
     }
 
     override fun deleteButtonClicked(itemPosition: Int) {
