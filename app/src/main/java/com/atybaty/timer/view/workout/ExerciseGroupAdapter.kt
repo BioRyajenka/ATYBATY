@@ -1,4 +1,4 @@
-package com.atybaty.timer.view.workout;
+package com.atybaty.timer.view.workout
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -7,8 +7,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.atybaty.timer.R
 import com.atybaty.timer.contract.WorkoutContract
 import com.atybaty.timer.model.Workout
+import kotlinx.android.synthetic.main.item_train_set.view.*
 
-class ExerciseGroupAdapter(private val presenter: WorkoutContract.Presenter
+class ExerciseGroupAdapter(
+    private val presenter: WorkoutContract.Presenter
 ) : RecyclerView.Adapter<ExerciseGroupHolder>() {
 
     private lateinit var workout: Workout
@@ -27,14 +29,14 @@ class ExerciseGroupAdapter(private val presenter: WorkoutContract.Presenter
         val holder = ExerciseGroupHolder(itemView)
         itemView.setOnClickListener {
             val itemPosition = holder.adapterPosition
-            if (itemPosition != RecyclerView.NO_POSITION){
+            if (itemPosition != RecyclerView.NO_POSITION) {
                 presenter.exerciseGroupClicked(itemPosition)
             }
         }
 
-        itemView.setOnClickListener {
+        itemView.iv_train_set_delete.setOnClickListener {
             val itemPosition = holder.adapterPosition
-            if (itemPosition != RecyclerView.NO_POSITION){
+            if (itemPosition != RecyclerView.NO_POSITION) {
                 presenter.deleteButtonClicked(itemPosition)
             }
         }

@@ -92,4 +92,10 @@ class TimerExerciseActivity : AppCompatActivity(), TimerContract.View {
         timerExerciseAdapter.clearExerciseSelection()
         timerExerciseAdapter.notifyDataSetChanged()
     }
+
+    override fun updateScreenColor(colorId: Int) {
+        val color = resources.getColor(colorId)
+        ll_timer_background.setBackgroundColor(color)
+        timerExerciseAdapter.setItemsColor(colorId)
+    }
 }

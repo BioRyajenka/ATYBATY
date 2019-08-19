@@ -1,6 +1,7 @@
 package com.atybaty.timer.contract
 
 import android.content.Context
+import android.graphics.Color
 import com.atybaty.timer.model.Workout
 import com.atybaty.timer.util.Seconds
 
@@ -34,5 +35,7 @@ interface TimerContract {
         fun updateLockButton(status: Presenter.LockStatus)
         fun updateCurrentExerciseSelection(exerciseGroupIndex: Int, exerciseIndex: Int)
         fun clearCurrentExerciseSelection()
+
+        fun updateScreenColor(colorId: Int)
     }
 }

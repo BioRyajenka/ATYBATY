@@ -1,6 +1,9 @@
 package com.atybaty.timer.view.timer
 
 import android.content.Context
+import android.graphics.Color
+import android.graphics.ColorFilter
+import android.graphics.PorterDuff
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.atybaty.timer.R
@@ -13,12 +16,17 @@ import kotlinx.android.synthetic.main.item_timer_exercisegroup.view.*
 
 class TimerExerciseHolder(val context: Context, itemView: View) : RecyclerView.ViewHolder(itemView) {
 
+    fun setColor(colorId: Int) {
+        itemView.ll_timer_exercise_view.setBackgroundColor(context.resources.getColor(colorId))
+    }
+
     fun selectExercise(){
-        itemView.ll_timer_exercise_view.setBackgroundColor(context.resources.getColor(R.color.colorPrimary))
+//        itemView.ll_timer_exercise_view.setBackgroundColor(context.resources.getColor(R.color.colorPrimary))
+        itemView.ll_timer_exercise_view.background.setColorFilter(Color.rgb(123, 123, 123), PorterDuff.Mode.MULTIPLY)
     }
 
     fun unselectExercise(){
-        itemView.ll_timer_exercise_view.setBackgroundColor(context.resources.getColor(R.color.colorPrimaryDark))
+        itemView.ll_timer_exercise_view.background.setColorFilter(Color.rgb(255, 255, 255), PorterDuff.Mode.MULTIPLY)
     }
 
     fun showExerciseGroup(exerciseGroup: ExerciseGroup) {

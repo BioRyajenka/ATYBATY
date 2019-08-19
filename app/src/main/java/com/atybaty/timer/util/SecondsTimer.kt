@@ -47,3 +47,9 @@ class SecondsTimer(private val callback: SecondsTimerCallback) {
         }
     }
 }
+
+interface SecondsTimerCallback {
+    fun onTick(remainingTime: Seconds)
+
+    fun onFinish()
+}
