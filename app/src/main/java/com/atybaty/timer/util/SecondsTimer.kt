@@ -3,6 +3,11 @@ package com.atybaty.timer.util
 import android.os.CountDownTimer
 import kotlin.properties.Delegates
 
+private const val TIMER_ERROR = 100
+
+/**
+ * Timer counts downto zero (so callback.onTick is also called on zero)
+ */
 class SecondsTimer(private val callback: SecondsTimerCallback) {
     constructor(countDownTime: Seconds, callback: SecondsTimerCallback): this(callback) {
         setTime(countDownTime)
@@ -41,9 +46,8 @@ class SecondsTimer(private val callback: SecondsTimerCallback) {
 
             override fun onTick(millisUntilFinished: Long) {
                 millisRemaining = millisUntilFinished
-                callback.onTick((millisUntilFinished / MILLIS_IN_SECOND).toInt())
+                callback.onTick(((millisUntilFinished - TIMER_ERROR) / MILLIS_IN_SECOND).toInt() + 1)
             }
-
         }
     }
 }
