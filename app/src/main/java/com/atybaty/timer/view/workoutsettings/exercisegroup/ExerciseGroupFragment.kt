@@ -16,7 +16,7 @@ import kotlinx.android.synthetic.main.fragment_set.*
 
 class ExerciseGroupFragment : Fragment(), ExerciseGroupContract.View {
     private val presenter = ExerciseGroupPresenter(this)
-    private val exerciseGroupAdapter = ExerciseAdapter(presenter)
+    private val exerciseAdapter = ExerciseAdapter(presenter)
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         return inflater.inflate(R.layout.fragment_set, container, false)
@@ -25,8 +25,8 @@ class ExerciseGroupFragment : Fragment(), ExerciseGroupContract.View {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        exerciseGroupAdapter.setContext(context!!)
-        rv_set_exercise.adapter = exerciseGroupAdapter
+        exerciseAdapter.setContext(context!!)
+        rv_set_exercise.adapter = exerciseAdapter
         rv_set_exercise.layoutManager = LinearLayoutManager(context)
 
         tv_set_default_btn.setOnClickListener { presenter.setUpDefaultButtonClicked() }
@@ -38,13 +38,13 @@ class ExerciseGroupFragment : Fragment(), ExerciseGroupContract.View {
 
     override fun showExerciseGroup(exerciseGroup: ExerciseGroup) {
         tv_set_title.text = exerciseGroup.name
-        exerciseGroupAdapter.setExercises(exerciseGroup.exercises)
-        exerciseGroupAdapter.notifyDataSetChanged()
+        exerciseAdapter.setExercises(exerciseGroup.exercises)
+        exerciseAdapter.notifyDataSetChanged()
     }
 
     override fun updateExercise(exerciseItemPosition: Int, exerciseGroup: ExerciseGroup) {
-        exerciseGroupAdapter.setExercises(exerciseGroup.exercises)
-        exerciseGroupAdapter.notifyItemChanged(exerciseItemPosition)
+        exerciseAdapter.setExercises(exerciseGroup.exercises)
+        exerciseAdapter.notifyItemChanged(exerciseItemPosition)
     }
 
     override fun showExerciseSettings(exerciseItemPosition: Int, exercise: Exercise) {
