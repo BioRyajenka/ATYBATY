@@ -2,7 +2,7 @@ package com.atybaty.timer.contract
 
 import android.content.Context
 import com.atybaty.timer.model.ExerciseGroup
-import com.atybaty.timer.utils.Seconds
+import com.atybaty.timer.util.Seconds
 
 interface ExerciseGroupSettingsContract {
 

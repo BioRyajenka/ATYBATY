@@ -11,7 +11,7 @@ import com.atybaty.timer.R
 import com.atybaty.timer.contract.ExerciseGroupSettingsContract
 import com.atybaty.timer.model.ExerciseGroup
 import com.atybaty.timer.presenter.ExerciseGroupSettingsPresenter
-import com.atybaty.timer.utils.Seconds
+import com.atybaty.timer.util.Seconds
 import com.atybaty.timer.view.workoutsettings.exercisegroup.ExerciseGroupFragment
 import kotlinx.android.synthetic.main.fragment_exercisegroup_settings.*
 import kotlin.math.max

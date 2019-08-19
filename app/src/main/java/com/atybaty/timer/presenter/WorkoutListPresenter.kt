@@ -38,6 +38,7 @@ class WorkoutListPresenter(private val view: WorkoutListContract.View) : Workout
             name = context.getString(R.string.default_workout_name),
             exerciseGroups = listOf(ExerciseGroup("Сет 1", mutableListOf(work, relax))) // stub. TODO: change to emptyList()
         )
+        CurrentWorkoutHolder.currentWorkout = newWorkout
 
         view.showWorkout(newWorkout)
     }

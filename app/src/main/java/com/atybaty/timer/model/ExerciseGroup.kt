@@ -1,6 +1,6 @@
 package com.atybaty.timer.model
 
-import com.atybaty.timer.utils.Seconds
+import com.atybaty.timer.util.Seconds
 
 data class ExerciseGroup(
     val name: String,

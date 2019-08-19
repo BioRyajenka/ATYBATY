@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.atybaty.timer.R
 import com.atybaty.timer.contract.WorkoutContract
 import com.atybaty.timer.model.Workout
-import com.atybaty.timer.utils.Seconds
+import com.atybaty.timer.util.Seconds
 import kotlinx.android.synthetic.main.item_train_set.view.*
 import kotlin.math.max
 import kotlin.math.min

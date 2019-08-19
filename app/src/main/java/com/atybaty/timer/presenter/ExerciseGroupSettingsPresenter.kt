@@ -6,7 +6,7 @@ import com.atybaty.timer.dataholders.CurrentWorkoutHolder
 import com.atybaty.timer.dataholders.WorkoutRepositoryHolder
 import com.atybaty.timer.model.*
 import com.atybaty.timer.model.repository.WorkoutRepository
-import com.atybaty.timer.utils.Seconds
+import com.atybaty.timer.util.Seconds
 
 class ExerciseGroupSettingsPresenter(val view: ExerciseGroupSettingsContract.View): ExerciseGroupSettingsContract.Presenter {
 
