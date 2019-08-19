@@ -49,6 +49,11 @@ class ExerciseGroupSettingsPresenter(val view: ExerciseGroupSettingsContract.Vie
 
     override fun relaxTimeSet(time: Seconds) {
         currentExerciseGroup.relaxTime = time
+        currentExerciseGroup.exercises.forEach {
+            if (it is Relaxation){
+                it.duration = time
+            }
+        }
     }
 
     override fun repeatsCountSet(count: Int) {
