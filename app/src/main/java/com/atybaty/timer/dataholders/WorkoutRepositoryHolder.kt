@@ -13,7 +13,7 @@ class WorkoutRepositoryHolder private constructor() {
         fun getWorkoutRepository(context: Context): WorkoutRepository {
             return singleton ?: synchronized(this) {
                 singleton ?: WorkoutRepository(
-                    buildNitriteDB(
+                    buildRoomDB(
                         context
                     )
                 ).also {
@@ -25,7 +25,7 @@ class WorkoutRepositoryHolder private constructor() {
         @Volatile
         private var singleton: WorkoutRepository? = null
 
-        private fun buildNitriteDB(context: Context): AppDatabase {
+        private fun buildRoomDB(context: Context): AppDatabase {
             val db = Room.databaseBuilder(
                 context,
                 AppDatabase::class.java, DB_FILE_NAME
