@@ -7,7 +7,7 @@ import com.atybaty.timer.dataholders.WorkoutRepositoryHolder
 import com.atybaty.timer.contract.ExerciseGroupContract
 import com.atybaty.timer.model.*
 import com.atybaty.timer.model.repository.WorkoutRepository
-import com.atybaty.timer.utils.Seconds
+import com.atybaty.timer.util.Seconds
 
 class ExerciseGroupPresenter(val view: ExerciseGroupContract.View) : ExerciseGroupContract.Presenter {
     private lateinit var context: Context
@@ -36,20 +36,13 @@ class ExerciseGroupPresenter(val view: ExerciseGroupContract.View) : ExerciseGro
         view.returnToPreviousFragment()
     }
 
-    override fun addWorkButtonClicked() {
-        val workDuration = context.resources.getInteger(R.integer.default_work_duration_in_seconds)
-        val work = Work("Работа", workDuration, SimpleWorkOptions)
-        exerciseGroup.exercises.add(work)
-        view.showExerciseGroup(exerciseGroup)
-    }
-
-    override fun addRestButtonClicked() {
-        val rest = RestBetweenSets(context.resources.getInteger(R.integer.default_rest_duration_in_seconds))
-        exerciseGroup.exercises.add(rest)
+    override fun setUpDefaultButtonClicked() {
+        updateExercise()
         view.showExerciseGroup(exerciseGroup)
     }
 
     override fun setUpExerciseButtonClicked(itemPosition: Int) {
+        CurrentWorkoutHolder.currentWork = exerciseGroup.exercises[itemPosition] as Work
         view.showExerciseSettings(itemPosition, exerciseGroup.exercises[itemPosition])
     }
 
@@ -60,6 +53,22 @@ class ExerciseGroupPresenter(val view: ExerciseGroupContract.View) : ExerciseGro
 
     override fun exerciseDurationSet(exerciseItemPosition: Int, newDuration: Seconds) {
         exerciseGroup.exercises[exerciseItemPosition].duration = newDuration
+    }
+
+    private fun updateExercise(){
+        for (i in 0 until exerciseGroup.exercises.size){
+            if (exerciseGroup.exercises[i] is Work){
+                val work = exerciseGroup.exercises[i] as Work
+                work.duration = exerciseGroup.defaultTime
+                work.options = SimpleWorkOptions
+                exerciseGroup.exercises[i] = work
+            }
+            if (exerciseGroup.exercises[i] is Relaxation){
+                val relax = exerciseGroup.exercises[i] as CalmDown
+                relax.duration = exerciseGroup.relaxTime
+                exerciseGroup.exercises[i] = relax
+            }
+        }
     }
 
 }

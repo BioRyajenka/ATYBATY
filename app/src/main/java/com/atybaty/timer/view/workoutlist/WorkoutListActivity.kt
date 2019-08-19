@@ -3,13 +3,13 @@ package com.atybaty.timer.view.workoutlist
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.atybaty.timer.R
 import com.atybaty.timer.contract.WorkoutListContract
 import com.atybaty.timer.model.Workout
 import com.atybaty.timer.presenter.WorkoutListPresenter
+import com.atybaty.timer.view.timer.TimerExerciseActivity
 import com.atybaty.timer.view.workoutsettings.WorkoutSettingsActivity
 import kotlinx.android.synthetic.main.activity_workout_list.*
 
@@ -21,13 +21,15 @@ class WorkoutListActivity : AppCompatActivity(), WorkoutListContract.View {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_workout_list)
 
-        presenter = WorkoutListPresenter(this, this)
+        presenter = WorkoutListPresenter(this)
 
         workoutAdapter = WorkoutAdapter(this, presenter)
         rv_main_trains.layoutManager = LinearLayoutManager(this)
         rv_main_trains.adapter = workoutAdapter
 
         iv_main_add.setOnClickListener { presenter.addButtonClicked() }
+
+        presenter.activityResumed(this)
     }
 
     override fun showWorkoutsList(workouts: List<Workout>) {
@@ -48,7 +50,7 @@ class WorkoutListActivity : AppCompatActivity(), WorkoutListContract.View {
     }
 
     override fun showTimer(workout: Workout) {
-        Toast.makeText(applicationContext, "TODO", Toast.LENGTH_SHORT).show()
+        startActivity(Intent(this, TimerExerciseActivity::class.java))
     }
 
     override fun onDestroy() {
@@ -58,6 +60,6 @@ class WorkoutListActivity : AppCompatActivity(), WorkoutListContract.View {
 
     override fun onResume() {
         super.onResume()
-        presenter.activityResumed()
+        presenter.activityResumed(this)
     }
 }

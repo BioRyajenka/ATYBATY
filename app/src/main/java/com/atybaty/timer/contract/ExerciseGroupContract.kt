@@ -3,7 +3,7 @@ package com.atybaty.timer.contract
 import android.content.Context
 import com.atybaty.timer.model.Exercise
 import com.atybaty.timer.model.ExerciseGroup
-import com.atybaty.timer.utils.Seconds
+import com.atybaty.timer.util.Seconds
 
 interface ExerciseGroupContract {
 
@@ -13,8 +13,7 @@ interface ExerciseGroupContract {
 
         fun backButtonClicked()
         fun saveButtonClicked()
-        fun addWorkButtonClicked()
-        fun addRestButtonClicked()
+        fun setUpDefaultButtonClicked()
         fun setUpExerciseButtonClicked(itemPosition: Int)
 
         fun exerciseDurationSet(exerciseItemPosition: Int, newDuration: Seconds)

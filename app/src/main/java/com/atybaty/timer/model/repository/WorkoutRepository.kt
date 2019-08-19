@@ -2,9 +2,9 @@ package com.atybaty.timer.model.repository
 
 import com.atybaty.timer.model.ExerciseGroup
 import com.atybaty.timer.model.Workout
+import com.atybaty.timer.util.Seconds
 import com.atybaty.timer.model.repository.room.AppDatabase
 import com.atybaty.timer.model.repository.room.WorkoutModel
-import com.atybaty.timer.utils.Seconds
 
 class WorkoutRepository(val database: AppDatabase) : Repository {
 
@@ -27,10 +27,10 @@ class WorkoutRepository(val database: AppDatabase) : Repository {
         database.workoutModelDao().update(workoutModel)
     }
 
-    override fun createNewWorkout(name: String, warmUp: Seconds, exerciseGroups: List<ExerciseGroup>, coolDown: Seconds): Workout {
+    override fun createNewWorkout(name: String, exerciseGroups: List<ExerciseGroup>): Workout {
         val maxIdWorkout = getAllWorkouts().maxBy { it.id }
         val maxId = maxIdWorkout?.id ?: 0
-        val workout = Workout(maxId + 1, name, warmUp, exerciseGroups.toMutableList(), coolDown)
+        val workout = Workout(maxId + 1, name, exerciseGroups.toMutableList())
         val workoutModel = WorkoutModel(workout)
         database.workoutModelDao().insert(workoutModel)
         return workout

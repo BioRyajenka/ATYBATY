@@ -6,4 +6,9 @@
 
     <color name="colorSelected">#0196db</color>
     <color name="colorUnselected">#880196db</color>
+
+    <color name="timerWork">#bb3333</color>
+    <color name="timerRest">#06376c</color>
+
+    <color name="timerCounterColorDefault">#ffffff</color>
 </resources>

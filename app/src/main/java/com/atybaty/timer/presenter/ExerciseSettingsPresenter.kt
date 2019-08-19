@@ -10,7 +10,7 @@ import com.atybaty.timer.model.Work
 import com.atybaty.timer.model.WorkWithAccelerationOptions
 import com.atybaty.timer.model.WorkWithIntervalsOptions
 import com.atybaty.timer.model.repository.WorkoutRepository
-import com.atybaty.timer.utils.Seconds
+import com.atybaty.timer.util.Seconds
 
 class ExerciseSettingsPresenter(val view: ExerciseSettingsContract.View) : ExerciseSettingsContract.Presenter {
     private lateinit var context: Context
@@ -76,8 +76,8 @@ class ExerciseSettingsPresenter(val view: ExerciseSettingsContract.View) : Exerc
         val currentExerciseIndex = CurrentWorkoutHolder.currentExerciseGroup.exercises
             .indexOf(CurrentWorkoutHolder.currentWork)
         val resultingWork = getSelectedWork().let {
-            if (it.options is WorkWithIntervalsOptions && it.options.interval == 0
-                || it.options is WorkWithAccelerationOptions && it.options.accelerationDuration == 0) {
+            if (it.options is WorkWithIntervalsOptions && (it.options as WorkWithIntervalsOptions).interval == 0
+                || it.options is WorkWithAccelerationOptions && (it.options as WorkWithAccelerationOptions).accelerationDuration == 0) {
                 it.copy(options = SimpleWorkOptions)
             } else {
                 it

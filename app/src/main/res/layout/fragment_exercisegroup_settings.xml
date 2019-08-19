@@ -29,7 +29,7 @@
                 tools:text="Настройка работы"/>
 
         <ImageView
-                android:id="@+id/iv_work_back_save"
+                android:id="@+id/iv_work_save"
                 android:layout_width="56dp"
                 android:layout_height="56dp"
                 android:src="@drawable/ic_check_white"
@@ -140,19 +140,6 @@
             </LinearLayout>
 
             <TextView
-                    android:id="@+id/tv_work_settings"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-                    android:textColor="@color/colorAccent"
-                    android:text="Настроить работу"
-                    android:padding="16dp"
-                    android:background="@drawable/rounded_bg"
-                    android:layout_margin="8dp"
-                    android:gravity="center"/>
-
-            <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/colorAccent"
@@ -233,6 +220,21 @@
                         android:padding="12dp"/>
 
             </LinearLayout>
+
+
+
+            <TextView
+                    android:id="@+id/tv_work_settings"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/colorAccent"
+                    android:text="Детальная настройка"
+                    android:padding="16dp"
+                    android:background="@drawable/rounded_bg"
+                    android:layout_margin="16dp"
+                    android:gravity="center"/>
 
         </LinearLayout>
 

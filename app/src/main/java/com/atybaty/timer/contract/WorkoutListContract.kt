@@ -1,11 +1,12 @@
 package com.atybaty.timer.contract
 
+import android.content.Context
 import com.atybaty.timer.model.Workout
 
 interface WorkoutListContract {
 
     interface Presenter {
-        fun activityResumed()
+        fun activityResumed(context: Context)
         fun activityDestroyed()
 
         fun addButtonClicked()

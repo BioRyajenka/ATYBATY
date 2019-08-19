@@ -1,4 +1,4 @@
-package com.atybaty.timer.view.workout
+package com.atybaty.timer.view.workoutsettings.workout
 
 import android.os.Bundle
 import android.text.Editable
@@ -36,28 +36,7 @@ class WorkoutFragment : Fragment(), WorkoutContract.View {
         rv_start_sets.layoutManager = LinearLayoutManager(context)
         presenter.fragmentViewCreated()
 
-        tv_start_set_add.setOnClickListener { presenter.addExerciseGroupButtonClicked() }
-
-        iv_start_starttime_add.setOnClickListener {
-            workout.warmUp++
-            et_start_starttime_count.setText(workout.warmUp.toString())
-            presenter.warmUpDurationSet(workout.warmUp)
-        }
-        iv_start_starttime_minus.setOnClickListener {
-            workout.warmUp--
-            et_start_starttime_count.setText(workout.warmUp.toString())
-            presenter.warmUpDurationSet(workout.warmUp)
-        }
-        iv_start_endtime_add.setOnClickListener {
-            workout.coolDown++
-            et_start_endtime_count.setText( workout.coolDown.toString())
-            presenter.warmUpDurationSet( workout.coolDown)
-        }
-        iv_start_endtime_minus.setOnClickListener {
-            workout.coolDown--
-            et_start_endtime_count.setText(workout.coolDown.toString())
-            presenter.warmUpDurationSet( workout.coolDown)
-        }
+        iv_start_set_add.setOnClickListener { presenter.addExerciseGroupButtonClicked() }
 
         et_start_name.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(p0: Editable?) {
@@ -84,8 +63,6 @@ class WorkoutFragment : Fragment(), WorkoutContract.View {
 
     override fun showWorkout(workout: Workout) {
         this.workout = workout
-        et_start_starttime_count.setText(workout.warmUp.toString())
-        et_start_endtime_count.setText(workout.coolDown.toString())
         et_start_name.setText(workout.name)
         exerciseGroupAdapter.setWorkout(workout)
         exerciseGroupAdapter.notifyDataSetChanged()
@@ -96,7 +73,10 @@ class WorkoutFragment : Fragment(), WorkoutContract.View {
     }
 
     override fun showExerciseGroup(exerciseGroup: ExerciseGroup) {
-        activity!!.supportFragmentManager!!.beginTransaction().replace(R.id.fl_train_frames, ExerciseGroupFragment())
-            .addToBackStack(null).commit()
+        activity!!.supportFragmentManager!!
+            .beginTransaction()
+            .replace(R.id.fl_train_frames, ExerciseGroupFragment())
+            .addToBackStack(null)
+            .commit()
     }
 }

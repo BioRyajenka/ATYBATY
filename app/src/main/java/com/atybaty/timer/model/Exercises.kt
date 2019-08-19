@@ -2,7 +2,7 @@ package com.atybaty.timer.model
 
 import android.content.Context
 import com.atybaty.timer.R
-import com.atybaty.timer.utils.Seconds
+import com.atybaty.timer.util.Seconds
 import com.fasterxml.jackson.annotation.JsonTypeInfo
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, include = JsonTypeInfo.As.PROPERTY, property = "@class")
@@ -10,7 +10,7 @@ sealed class Exercise(var duration: Seconds) {
     abstract fun getName(context: Context): String
 }
 
-class Work(var name: String, duration: Seconds, val options: WorkOptions) : Exercise(duration) {
+class Work(var name: String, duration: Seconds, var options: WorkOptions) : Exercise(duration) {
     override fun getName(context: Context) = name
 
     fun copy(name: String = this.name, duration: Seconds = this.duration, options: WorkOptions = this.options): Work {
