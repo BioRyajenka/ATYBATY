@@ -4,10 +4,12 @@ import android.content.Context
 import com.atybaty.timer.R
 import com.atybaty.timer.contract.WorkoutContract
 import com.atybaty.timer.dataholders.CurrentWorkoutHolder
-import com.atybaty.timer.utils.Seconds
+import com.atybaty.timer.util.Seconds
 import com.atybaty.timer.dataholders.WorkoutRepositoryHolder
 import com.atybaty.timer.model.*
 
+import com.atybaty.timer.model.ExerciseGroup
+import com.atybaty.timer.model.Workout
 import com.atybaty.timer.model.repository.WorkoutRepository
 import com.atybaty.timer.view.workoutsettings.workout.WorkoutFragment
 

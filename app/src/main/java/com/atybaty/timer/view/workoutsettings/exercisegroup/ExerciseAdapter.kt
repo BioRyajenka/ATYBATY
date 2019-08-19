@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.atybaty.timer.R
 import com.atybaty.timer.contract.ExerciseGroupContract
 import com.atybaty.timer.model.*
-import com.atybaty.timer.utils.Seconds
+import com.atybaty.timer.util.Seconds
 import kotlin.math.max
 import kotlin.math.min
 

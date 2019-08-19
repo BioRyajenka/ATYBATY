@@ -2,7 +2,7 @@ package com.atybaty.timer.model
 
 import android.content.Context
 import com.atybaty.timer.R
-import com.atybaty.timer.utils.Seconds
+import com.atybaty.timer.util.Seconds
 import com.fasterxml.jackson.annotation.JsonTypeInfo
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, include = JsonTypeInfo.As.PROPERTY, property = "@class")

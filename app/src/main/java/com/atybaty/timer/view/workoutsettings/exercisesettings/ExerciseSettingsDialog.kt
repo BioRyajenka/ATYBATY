@@ -15,7 +15,7 @@ import com.atybaty.timer.model.Work
 import com.atybaty.timer.model.WorkWithAccelerationOptions
 import com.atybaty.timer.model.WorkWithIntervalsOptions
 import com.atybaty.timer.presenter.ExerciseSettingsPresenter
-import com.atybaty.timer.utils.Seconds
+import com.atybaty.timer.util.Seconds
 import kotlinx.android.synthetic.main.dialog_settings_exercise.*
 import kotlin.math.max
 import kotlin.math.min

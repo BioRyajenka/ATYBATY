@@ -73,7 +73,10 @@ class WorkoutFragment : Fragment(), WorkoutContract.View {
     }
 
     override fun showExerciseGroup(exerciseGroup: ExerciseGroup) {
-        activity!!.supportFragmentManager!!.beginTransaction().replace(R.id.fl_train_frames, ExerciseGroupFragment())
-            .addToBackStack(null).commit()
+        activity!!.supportFragmentManager!!
+            .beginTransaction()
+            .replace(R.id.fl_train_frames, ExerciseGroupFragment())
+            .addToBackStack(null)
+            .commit()
     }
 }

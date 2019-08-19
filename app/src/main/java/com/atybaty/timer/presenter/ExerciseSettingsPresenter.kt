@@ -10,7 +10,7 @@ import com.atybaty.timer.model.Work
 import com.atybaty.timer.model.WorkWithAccelerationOptions
 import com.atybaty.timer.model.WorkWithIntervalsOptions
 import com.atybaty.timer.model.repository.WorkoutRepository
-import com.atybaty.timer.utils.Seconds
+import com.atybaty.timer.util.Seconds
 
 class ExerciseSettingsPresenter(val view: ExerciseSettingsContract.View) : ExerciseSettingsContract.Presenter {
     private lateinit var context: Context
