@@ -14,6 +14,7 @@ import com.atybaty.timer.model.ExerciseGroup
 import com.atybaty.timer.model.Workout
 import com.atybaty.timer.presenter.WorkoutPresenter
 import com.atybaty.timer.view.workoutsettings.exercisegroup.ExerciseGroupFragment
+import com.atybaty.timer.view.workoutsettings.exercisegroupsettings.ExerciseGroupSettingsFragment
 import kotlinx.android.synthetic.main.fragment_workout.*
 
 class WorkoutFragment : Fragment(), WorkoutContract.View {
@@ -75,7 +76,7 @@ class WorkoutFragment : Fragment(), WorkoutContract.View {
     override fun showExerciseGroup(exerciseGroup: ExerciseGroup) {
         activity!!.supportFragmentManager!!
             .beginTransaction()
-            .replace(R.id.fl_train_frames, ExerciseGroupFragment())
+            .replace(R.id.fl_train_frames, ExerciseGroupSettingsFragment())
             .addToBackStack(null)
             .commit()
     }

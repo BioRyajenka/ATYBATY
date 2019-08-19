@@ -27,7 +27,7 @@ class ExerciseSettingsPresenter(val view: ExerciseSettingsContract.View) : Exerc
         val defaultIntervalWorkOptions = WorkWithIntervalsOptions(0, 0)
         val defaultAccelerationWorkOptions = WorkWithAccelerationOptions(0)
 
-        val work = CurrentWorkoutHolder.currentWork
+        val work = CurrentWorkoutHolder.currentWork.copy()
         when (work.options) {
             is SimpleWorkOptions -> {
                 intervalWork = work.copy(options = defaultIntervalWorkOptions)

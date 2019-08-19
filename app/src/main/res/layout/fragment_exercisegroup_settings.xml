@@ -103,6 +103,8 @@
                     android:layout_marginTop="4dp"
                     android:textStyle="italic"
                     android:textColor="@color/colorPrimary"
+                    android:padding="16dp"
+                    android:gravity="center"
                     android:text="Длительность работы изменена для разных циклов"
                     android:visibility="gone"/>
 
