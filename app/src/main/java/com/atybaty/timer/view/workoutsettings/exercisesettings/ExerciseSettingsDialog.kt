@@ -153,8 +153,8 @@ class ExerciseSettingsDialog(private val onDismissListener: () -> Unit) : Dialog
 
         setIntervalVisible(work.options is WorkWithIntervalsOptions)
         if (work.options is WorkWithIntervalsOptions) {
-            et_settings_ex_interval_count.setText(work.options.interval.toString())
-            interval = work.options.interval
+            et_settings_ex_interval_count.setText((work.options as WorkWithIntervalsOptions).interval.toString())
+            interval = (work.options as WorkWithIntervalsOptions).interval
         } else {
             acceleration = (work.options as WorkWithAccelerationOptions).accelerationDuration
             et_settings_ex_acceleration_count.setText(acceleration.toString())

@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.atybaty.timer.R
 import com.atybaty.timer.contract.WorkoutListContract
 import com.atybaty.timer.model.Workout
-import kotlinx.android.synthetic.main.item_train.view.*
+import kotlinx.android.synthetic.main.item_workout.view.*
 
 class WorkoutAdapter(
     private val context: Context,
@@ -20,7 +20,7 @@ class WorkoutAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WorkoutHolder {
-        val itemView = LayoutInflater.from(context).inflate(R.layout.item_train, parent, false)
+        val itemView = LayoutInflater.from(context).inflate(R.layout.item_workout, parent, false)
         val holder = WorkoutHolder(itemView)
         itemView.iv_train_delete.setOnClickListener {
             val itemPosition = holder.adapterPosition
@@ -50,8 +50,6 @@ class WorkoutAdapter(
     override fun onBindViewHolder(holder: WorkoutHolder, position: Int) {
         val workout = workouts[position]
         holder.setName(workout.name)
-        holder.setStartTime(workout.warmUp)
         holder.setCountSets(workout.exerciseGroups.size)
-        holder.setEndTime(workout.coolDown)
     }
 }

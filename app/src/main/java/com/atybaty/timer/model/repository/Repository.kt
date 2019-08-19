@@ -9,5 +9,5 @@ interface Repository {
     fun getWorkoutById(id: Int): Workout
     fun deleteWorkoutById(id: Int)
     fun saveWorkout(workout: Workout)
-    fun createNewWorkout(name: String, warmUp: Seconds, exerciseGroups: List<ExerciseGroup>, coolDown: Seconds): Workout
+    fun createNewWorkout(name: String, exerciseGroups: List<ExerciseGroup>): Workout
 }

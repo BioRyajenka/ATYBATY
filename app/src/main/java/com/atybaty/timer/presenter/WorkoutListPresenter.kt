@@ -5,6 +5,7 @@ import android.widget.Toast
 import com.atybaty.timer.R
 import com.atybaty.timer.contract.WorkoutListContract
 import com.atybaty.timer.dataholders.CurrentWorkoutHolder
+import com.atybaty.timer.model.*
 import com.atybaty.timer.dataholders.WorkoutRepositoryHolder
 import com.atybaty.timer.model.Workout
 import com.atybaty.timer.model.repository.WorkoutRepository
@@ -31,12 +32,13 @@ class WorkoutListPresenter(private val view: WorkoutListContract.View) : Workout
     }
 
     override fun addButtonClicked() {
+        val work = Work("Работа", 60, SimpleWorkOptions)
+        val relax = CalmDown(10)
         val newWorkout = workoutRepository.createNewWorkout(
             name = context.getString(R.string.default_workout_name),
-            warmUp = context.resources.getInteger(R.integer.default_warmup_duration_in_seconds),
-            exerciseGroups = listOf(),
-            coolDown = context.resources.getInteger(R.integer.default_cooldown_duration_in_seconds)
+            exerciseGroups = listOf(ExerciseGroup("Сет 1", mutableListOf(work, relax))) // stub. TODO: change to emptyList()
         )
+        CurrentWorkoutHolder.currentWorkout = newWorkout
 
         view.showWorkout(newWorkout)
     }

@@ -76,8 +76,8 @@ class ExerciseSettingsPresenter(val view: ExerciseSettingsContract.View) : Exerc
         val currentExerciseIndex = CurrentWorkoutHolder.currentExerciseGroup.exercises
             .indexOf(CurrentWorkoutHolder.currentWork)
         val resultingWork = getSelectedWork().let {
-            if (it.options is WorkWithIntervalsOptions && it.options.interval == 0
-                || it.options is WorkWithAccelerationOptions && it.options.accelerationDuration == 0) {
+            if (it.options is WorkWithIntervalsOptions && (it.options as WorkWithIntervalsOptions).interval == 0
+                || it.options is WorkWithAccelerationOptions && (it.options as WorkWithAccelerationOptions).accelerationDuration == 0) {
                 it.copy(options = SimpleWorkOptions)
             } else {
                 it

@@ -10,11 +10,8 @@ interface WorkoutContract {
         fun fragmentViewCreated()
         fun saveButtonClicked()
 
-        fun warmUpDurationSet(duration: Seconds)
-        fun coolDownDurationSet(duration: Seconds)
-
         fun exerciseGroupClicked(itemPosition: Int)
-
+        fun timeAfterExererciseSet(itemPosition: Int, time: Seconds)
         fun deleteButtonClicked(itemPosition: Int)
         fun addExerciseGroupButtonClicked()
     }

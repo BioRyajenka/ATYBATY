@@ -5,9 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.atybaty.timer.dataholders.CurrentWorkoutHolder
 import com.atybaty.timer.R
-import com.atybaty.timer.view.workout.WorkoutFragment
-import com.atybaty.timer.view.workoutsettings.FragmentTag.EXERCISE_GROUP
-import com.atybaty.timer.view.workoutsettings.exercisegroup.ExerciseGroupFragment
+import com.atybaty.timer.view.workoutsettings.workout.WorkoutFragment
 
 private enum class FragmentTag {
     EXERCISE_GROUP, WORKOUT,
@@ -16,7 +14,7 @@ private enum class FragmentTag {
 class WorkoutSettingsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_train)
+        setContentView(R.layout.activity_workout_settings)
 
         loadFragment(savedInstanceState, FragmentTag.WORKOUT) {
             WorkoutFragment()
