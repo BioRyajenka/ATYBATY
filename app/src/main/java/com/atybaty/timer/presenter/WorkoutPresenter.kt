@@ -19,8 +19,7 @@ class WorkoutPresenter(private val view: WorkoutFragment, private val context: C
     private lateinit var workoutRepository: WorkoutRepository
 
     override fun saveButtonClicked() {
-        val position = CurrentWorkoutHolder.currentWorkout.exerciseGroups.indexOf(CurrentWorkoutHolder.currentExerciseGroup)
-        CurrentWorkoutHolder.currentWorkout.exerciseGroups.set(position, CurrentWorkoutHolder.currentExerciseGroup)
+        CurrentWorkoutHolder.currentWorkout = workout.deepCopy()
         workoutRepository.saveWorkout(CurrentWorkoutHolder.currentWorkout)
     }
 
@@ -29,9 +28,8 @@ class WorkoutPresenter(private val view: WorkoutFragment, private val context: C
     }
 
     override fun exerciseGroupClicked(itemPosition: Int) {
-        val exerciseGroup = workout.exerciseGroups[itemPosition].deepCopy()
-        CurrentWorkoutHolder.currentExerciseGroup = exerciseGroup
-        view.showExerciseGroup(exerciseGroup)
+        CurrentWorkoutHolder.currenExerciseGroupPosition = itemPosition
+        view.showExerciseGroup()
     }
 
     override fun addExerciseGroupButtonClicked() {
@@ -53,7 +51,6 @@ class WorkoutPresenter(private val view: WorkoutFragment, private val context: C
     override fun fragmentViewCreated() {
         this.workout = CurrentWorkoutHolder.currentWorkout.deepCopy()
         this.workoutRepository = WorkoutRepositoryHolder.getWorkoutRepository(context)
-        CurrentWorkoutHolder.currentExerciseGroup = CurrentWorkoutHolder.currentWorkout.exerciseGroups[0]
         view.showWorkout(this.workout)
     }
 }

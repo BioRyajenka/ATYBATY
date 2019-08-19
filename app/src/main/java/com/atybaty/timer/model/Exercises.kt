@@ -15,7 +15,7 @@ sealed class Exercise(var duration: Seconds) {
 class Work(var name: String, duration: Seconds, var options: WorkOptions) : Exercise(duration) {
     override fun getName(context: Context) = name
 
-    override fun deepCopy(): Exercise {
+    override fun deepCopy(): Work {
         return Work(name, duration, options.copy())
     }
 }
@@ -27,21 +27,21 @@ abstract class Relaxation(private val nameStringId: Int, duration: Seconds) : Ex
 
 class RunUp(duration: Seconds) : Relaxation(R.string.exercises_run_up, duration){
 
-    override fun deepCopy(): Exercise {
+    override fun deepCopy(): RunUp {
         return RunUp(this.duration)
     }
 }
 
 class RestBetweenSets(duration: Seconds) : Relaxation(R.string.exercises_rest_between_sets, duration){
 
-    override fun deepCopy(): Exercise {
+    override fun deepCopy(): RestBetweenSets {
         return RestBetweenSets(this.duration)
     }
 }
 
 class CalmDown(duration: Seconds) : Relaxation(R.string.exercises_calm_down, duration){
 
-    override fun deepCopy(): Exercise {
+    override fun deepCopy(): CalmDown {
         return CalmDown(this.duration)
     }
 }
@@ -53,21 +53,21 @@ sealed class WorkOptions{
 }
 
 object SimpleWorkOptions : WorkOptions(){
-    override fun copy(): WorkOptions {
+    override fun copy(): SimpleWorkOptions{
         return SimpleWorkOptions
     }
 }
 
 data class WorkWithAccelerationOptions(var accelerationDuration: Seconds) : WorkOptions(){
 
-    override fun copy(): WorkOptions {
+    override fun copy(): WorkWithAccelerationOptions {
         return WorkWithAccelerationOptions(this.accelerationDuration)
     }
 }
 
 data class WorkWithIntervalsOptions(var interval: Seconds, var rattle: Seconds) : WorkOptions(){
 
-    override fun copy(): WorkOptions {
+    override fun copy(): WorkWithIntervalsOptions {
         return WorkWithIntervalsOptions(this.interval, this.rattle)
     }
 }

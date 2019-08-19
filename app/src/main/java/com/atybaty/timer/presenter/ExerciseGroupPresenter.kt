@@ -17,7 +17,8 @@ class ExerciseGroupPresenter(val view: ExerciseGroupContract.View) : ExerciseGro
 
     override fun fragmentViewCreated(context: Context) {
         this.context = context
-        this.exerciseGroup = CurrentWorkoutHolder.currentExerciseGroup.deepCopy()
+        this.exerciseGroup = CurrentWorkoutHolder.currentWorkout
+            .exerciseGroups[CurrentWorkoutHolder.currenExerciseGroupPosition].deepCopy()
         this.workoutRepository = WorkoutRepositoryHolder.getWorkoutRepository(context)
 
         view.showExerciseGroup(exerciseGroup)
@@ -32,9 +33,8 @@ class ExerciseGroupPresenter(val view: ExerciseGroupContract.View) : ExerciseGro
     }
 
     override fun saveButtonClicked() {
-        val position = CurrentWorkoutHolder.currentWorkout.exerciseGroups.indexOf(CurrentWorkoutHolder.currentExerciseGroup)
-        CurrentWorkoutHolder.currentExerciseGroup = exerciseGroup.deepCopy()
-        CurrentWorkoutHolder.currentWorkout.exerciseGroups.set(position, CurrentWorkoutHolder.currentExerciseGroup)
+        CurrentWorkoutHolder.currentWorkout.exerciseGroups
+            .set(CurrentWorkoutHolder.currenExerciseGroupPosition, exerciseGroup.deepCopy())
         workoutRepository.saveWorkout(CurrentWorkoutHolder.currentWorkout)
         view.returnToPreviousFragment()
     }
@@ -45,7 +45,7 @@ class ExerciseGroupPresenter(val view: ExerciseGroupContract.View) : ExerciseGro
     }
 
     override fun setUpExerciseButtonClicked(itemPosition: Int) {
-        CurrentWorkoutHolder.currentWork = exerciseGroup.exercises[itemPosition] as Work
+        CurrentWorkoutHolder.currentWorkPosition = itemPosition
         view.showExerciseSettings(itemPosition, exerciseGroup.exercises[itemPosition])
     }
 

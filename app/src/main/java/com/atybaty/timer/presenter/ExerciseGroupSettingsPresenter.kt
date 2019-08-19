@@ -14,7 +14,8 @@ class ExerciseGroupSettingsPresenter(val view: ExerciseGroupSettingsContract.Vie
     private lateinit var workoutRepository: WorkoutRepository
 
     override fun fragmentViewCreated(context: Context) {
-        currentExerciseGroup = CurrentWorkoutHolder.currentExerciseGroup.deepCopy()
+        currentExerciseGroup = CurrentWorkoutHolder.currentWorkout
+            .exerciseGroups[CurrentWorkoutHolder.currenExerciseGroupPosition].deepCopy()
         workoutRepository = WorkoutRepositoryHolder.getWorkoutRepository(context)
         view.showExerciseGroup(currentExerciseGroup)
         if (hasChanges()){
@@ -73,9 +74,8 @@ class ExerciseGroupSettingsPresenter(val view: ExerciseGroupSettingsContract.Vie
     }
 
     private fun saveExerciseWorkout(){
-        val position = CurrentWorkoutHolder.currentWorkout.exerciseGroups.indexOf(CurrentWorkoutHolder.currentExerciseGroup)
-        CurrentWorkoutHolder.currentExerciseGroup = currentExerciseGroup.deepCopy()
-        CurrentWorkoutHolder.currentWorkout.exerciseGroups.set(position, CurrentWorkoutHolder.currentExerciseGroup)
+        CurrentWorkoutHolder.currentWorkout.exerciseGroups
+            .set(CurrentWorkoutHolder.currenExerciseGroupPosition, currentExerciseGroup.deepCopy())
         workoutRepository.saveWorkout(CurrentWorkoutHolder.currentWorkout)
     }
 
