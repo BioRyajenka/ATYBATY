@@ -2,7 +2,6 @@ package com.atybaty.timer.presenter
 
 import android.content.Context
 import com.atybaty.timer.dataholders.CurrentWorkoutHolder
-import com.atybaty.timer.R
 import com.atybaty.timer.dataholders.WorkoutRepositoryHolder
 import com.atybaty.timer.contract.ExerciseGroupContract
 import com.atybaty.timer.model.*
@@ -40,7 +39,18 @@ class ExerciseGroupPresenter(val view: ExerciseGroupContract.View) : ExerciseGro
     }
 
     override fun setUpDefaultButtonClicked() {
-        updateExercise()
+        for (i in 0 until exerciseGroup.exercises.size){
+            if (exerciseGroup.exercises[i] is Work){
+                val work = exerciseGroup.exercises[i] as Work
+                work.duration = exerciseGroup.defaultTime
+                work.options = SimpleWorkOptions
+            }
+            if (exerciseGroup.exercises[i] is Relaxation){
+                val relax = exerciseGroup.exercises[i] as CalmDown
+                relax.duration = exerciseGroup.relaxTime
+            }
+        }
+
         view.showExerciseGroup(exerciseGroup)
     }
 
@@ -56,22 +66,6 @@ class ExerciseGroupPresenter(val view: ExerciseGroupContract.View) : ExerciseGro
 
     override fun exerciseDurationSet(exerciseItemPosition: Int, newDuration: Seconds) {
         exerciseGroup.exercises[exerciseItemPosition].duration = newDuration
-    }
-
-    private fun updateExercise(){
-        for (i in 0 until exerciseGroup.exercises.size){
-            if (exerciseGroup.exercises[i] is Work){
-                val work = exerciseGroup.exercises[i] as Work
-                work.duration = exerciseGroup.defaultTime
-                work.options = SimpleWorkOptions
-                exerciseGroup.exercises[i] = work
-            }
-            if (exerciseGroup.exercises[i] is Relaxation){
-                val relax = exerciseGroup.exercises[i] as CalmDown
-                relax.duration = exerciseGroup.relaxTime
-                exerciseGroup.exercises[i] = relax
-            }
-        }
     }
 
 }

@@ -48,7 +48,7 @@ class ExerciseGroupFragment : Fragment(), ExerciseGroupContract.View {
     }
 
     override fun showExerciseSettings(exerciseItemPosition: Int, exercise: Exercise) {
-        ExerciseSettingsDialog() {
+        ExerciseSettingsDialog {
             presenter.exerciseUpdated(exerciseItemPosition, exercise)
         }.show(fragmentManager, "dialog")
     }
