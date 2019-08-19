@@ -14,7 +14,7 @@ private enum class FragmentTag {
 class WorkoutSettingsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_train)
+        setContentView(R.layout.activity_workout_settings)
 
         loadFragment(savedInstanceState, FragmentTag.WORKOUT) {
             WorkoutFragment()

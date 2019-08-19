@@ -6,8 +6,7 @@ import com.atybaty.timer.R
 import com.atybaty.timer.dataholders.WorkoutRepositoryHolder
 import com.atybaty.timer.contract.WorkoutListContract
 import com.atybaty.timer.dataholders.CurrentWorkoutHolder
-import com.atybaty.timer.model.ExerciseGroup
-import com.atybaty.timer.model.Workout
+import com.atybaty.timer.model.*
 
 class WorkoutListPresenter(private val view: WorkoutListContract.View, private val context: Context) : WorkoutListContract.Presenter {
     private val workoutRepository = WorkoutRepositoryHolder.getWorkoutRepository(context)
@@ -27,9 +26,11 @@ class WorkoutListPresenter(private val view: WorkoutListContract.View, private v
     }
 
     override fun addButtonClicked() {
+        val work = Work("Работа", 60, SimpleWorkOptions)
+        val relax = CalmDown(10)
         val newWorkout = workoutRepository.createNewWorkout(
             name = context.getString(R.string.default_workout_name),
-            exerciseGroups = listOf(ExerciseGroup("Сет 1", mutableListOf())) // stub. TODO: change to emptyList()
+            exerciseGroups = listOf(ExerciseGroup("Сет 1", mutableListOf(work, relax))) // stub. TODO: change to emptyList()
         )
 
         CurrentWorkoutHolder.currentWorkout = newWorkout
@@ -47,7 +48,7 @@ class WorkoutListPresenter(private val view: WorkoutListContract.View, private v
     }
 
     override fun playButtonClicked(itemPosition: Int) {
-        Toast.makeText(context, "TODO", Toast.LENGTH_SHORT).show()
+        view.showTimer(workouts[itemPosition])
     }
 
     override fun itemClicked(itemPosition: Int) {
