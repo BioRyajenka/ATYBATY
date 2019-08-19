@@ -28,6 +28,8 @@ class WorkoutPresenter(private val view: WorkoutFragment, private val context: C
     }
 
     override fun exerciseGroupClicked(itemPosition: Int) {
+        CurrentWorkoutHolder.currentWorkout = workout.deepCopy()
+        workoutRepository.saveWorkout(CurrentWorkoutHolder.currentWorkout)
         CurrentWorkoutHolder.currentExerciseGroupPosition = itemPosition
         view.showExerciseGroup()
     }
@@ -44,7 +46,6 @@ class WorkoutPresenter(private val view: WorkoutFragment, private val context: C
 
     override fun deleteButtonClicked(itemPosition: Int) {
         workout.exerciseGroups.removeAt(itemPosition)
-        workoutRepository.saveWorkout(workout)
         view.showWorkout(this.workout)
     }
 

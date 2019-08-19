@@ -21,9 +21,8 @@
 
         <EditText
                 android:id="@+id/et_settings_ex_name"
-                android:layout_width="0dp"
+                android:layout_width="120dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.8"
                 android:textColor="@color/colorAccent"
                 android:textSize="20sp"
                 android:text="Работа"
