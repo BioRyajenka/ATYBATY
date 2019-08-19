@@ -28,7 +28,7 @@ class WorkoutPresenter(private val view: WorkoutFragment, private val context: C
     }
 
     override fun exerciseGroupClicked(itemPosition: Int) {
-        CurrentWorkoutHolder.currenExerciseGroupPosition = itemPosition
+        CurrentWorkoutHolder.currentExerciseGroupPosition = itemPosition
         view.showExerciseGroup()
     }
 
