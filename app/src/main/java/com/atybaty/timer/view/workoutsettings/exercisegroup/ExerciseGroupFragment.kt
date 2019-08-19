@@ -16,7 +16,7 @@ import kotlinx.android.synthetic.main.fragment_set.*
 
 class ExerciseGroupFragment : Fragment(), ExerciseGroupContract.View {
     private val presenter = ExerciseGroupPresenter(this)
-    private val exerciseGroupAdapter = ExerciseGroupAdapter(presenter)
+    private val exerciseGroupAdapter = ExerciseAdapter(presenter)
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         return inflater.inflate(R.layout.fragment_set, container, false)

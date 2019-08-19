@@ -6,7 +6,9 @@ import com.atybaty.timer.contract.TimerContract
 import com.atybaty.timer.contract.TimerContract.Presenter.LockStatus
 import com.atybaty.timer.contract.TimerContract.Presenter.PauseStatus
 import com.atybaty.timer.dataholders.CurrentWorkoutHolder
+import com.atybaty.timer.dataholders.SelectedSoundsHolder
 import com.atybaty.timer.model.Work
+import com.atybaty.timer.util.AudioPlayer
 import com.atybaty.timer.util.Seconds
 import com.atybaty.timer.util.SecondsTimer
 import com.atybaty.timer.util.SecondsTimerCallback
@@ -20,6 +22,7 @@ class TimerExercisePresenter(val view: TimerContract.View) : TimerContract.Prese
     private var currentExerciseGroupIndex = 0
     private var currentExerciseIndex = 0
     private val timer: SecondsTimer = SecondsTimer(this)
+    private lateinit var audioPlayer: AudioPlayer
 
     private lateinit var context: Context
 
@@ -44,6 +47,7 @@ class TimerExercisePresenter(val view: TimerContract.View) : TimerContract.Prese
 
     override fun activityCreated(context: Context) {
         this.context = context
+        this.audioPlayer = AudioPlayer(context)
 
         view.showWorkout(workout)
         view.updatePauseButton(pauseStatus)
@@ -101,6 +105,12 @@ class TimerExercisePresenter(val view: TimerContract.View) : TimerContract.Prese
     }
 
     override fun onTick(remainingTime: Seconds) {
+        when (remainingTime) {
+            in (1..3) -> {
+                audioPlayer.playSound(SelectedSoundsHolder.timerExerciseEndsTick)
+            }
+        }
+
         view.updateTime(remainingTime)
     }
 
@@ -111,8 +121,13 @@ class TimerExercisePresenter(val view: TimerContract.View) : TimerContract.Prese
             currentExerciseIndex = 0
         }
         if (currentExerciseGroupIndex == workout.exerciseGroups.size) {
+            audioPlayer.playSound(SelectedSoundsHolder.timerTrainingFinished)
+
             view.clearCurrentExerciseSelection()
+            view.updateTime(0)
         } else {
+            audioPlayer.playSound(SelectedSoundsHolder.timerExerciseFinished)
+
             synchronizeExerciseSelection(currentExerciseGroupIndex, currentExerciseIndex)
         }
     }
