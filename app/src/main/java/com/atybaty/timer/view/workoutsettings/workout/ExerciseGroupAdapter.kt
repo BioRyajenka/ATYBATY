@@ -15,7 +15,9 @@ import kotlin.math.max
 import kotlin.math.min
 
 private const val MAX_DURATION: Seconds = 24 * 60 * 60
-class ExerciseGroupAdapter(private val presenter: WorkoutContract.Presenter
+
+class ExerciseGroupAdapter(
+    private val presenter: WorkoutContract.Presenter
 ) : RecyclerView.Adapter<ExerciseGroupHolder>() {
 
     private lateinit var workout: Workout

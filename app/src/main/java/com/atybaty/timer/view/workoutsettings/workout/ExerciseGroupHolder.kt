@@ -2,7 +2,7 @@ package com.atybaty.timer.view.workoutsettings.workout
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
-import com.atybaty.timer.utils.Seconds
+import com.atybaty.timer.util.Seconds
 
 import kotlinx.android.synthetic.main.item_train_set.view.*
 

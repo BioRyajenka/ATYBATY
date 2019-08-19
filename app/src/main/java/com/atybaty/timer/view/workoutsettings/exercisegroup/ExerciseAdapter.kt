@@ -22,7 +22,7 @@ private const val MAX_DURATION: Seconds = 24 * 60 * 60
 private const val VIEWTYPE_WORK = 0
 private const val VIEWTYPE_REST = 1
 
-class ExerciseGroupAdapter(
+class ExerciseAdapter(
     private val presenter: ExerciseGroupContract.Presenter
 ) : RecyclerView.Adapter<ExerciseHolder>() {
 
