@@ -2,35 +2,37 @@ package com.atybaty.timer.model.repository
 
 import com.atybaty.timer.model.ExerciseGroup
 import com.atybaty.timer.model.Workout
+import com.atybaty.timer.model.repository.room.AppDatabase
+import com.atybaty.timer.model.repository.room.WorkoutModel
 import com.atybaty.timer.utils.Seconds
-import org.dizitart.kno2.getRepository
-import org.dizitart.no2.Nitrite
-import org.dizitart.no2.objects.filters.ObjectFilters.eq
 
-class WorkoutRepository(nitrite: Nitrite) : Repository {
-    private val repository = nitrite.getRepository<Workout>()
+class WorkoutRepository(val database: AppDatabase) : Repository {
 
     override fun getAllWorkouts(): List<Workout> {
-        return repository.find().toList()
+        return database.workoutModelDao().all.map { it.getData() }
     }
 
     override fun getWorkoutById(id: Int): Workout {
-        return repository.find(eq("id", id)).first()
+        return database.workoutModelDao().getById(id).getData()
     }
 
     override fun deleteWorkoutById(id: Int) {
-        repository.remove(eq("id", id))
+        val workout = getWorkoutById(id)
+        val workoutModel = WorkoutModel(workout)
+        database.workoutModelDao().delete(workoutModel)
     }
 
     override fun saveWorkout(workout: Workout) {
-        repository.update(eq("id", workout.id), workout)
+        val workoutModel = WorkoutModel(workout)
+        database.workoutModelDao().update(workoutModel)
     }
 
     override fun createNewWorkout(name: String, warmUp: Seconds, exerciseGroups: List<ExerciseGroup>, coolDown: Seconds): Workout {
-        val maxIdWorkout = repository.find().maxBy { it.id }
+        val maxIdWorkout = getAllWorkouts().maxBy { it.id }
         val maxId = maxIdWorkout?.id ?: 0
         val workout = Workout(maxId + 1, name, warmUp, exerciseGroups.toMutableList(), coolDown)
-        repository.insert(workout)
+        val workoutModel = WorkoutModel(workout)
+        database.workoutModelDao().insert(workoutModel)
         return workout
     }
 
