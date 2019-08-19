@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.atybaty.timer.R
 import com.atybaty.timer.contract.ExerciseGroupContract
+import com.atybaty.timer.dataholders.CurrentWorkoutHolder
 import com.atybaty.timer.model.Exercise
 import com.atybaty.timer.model.ExerciseGroup
 import com.atybaty.timer.presenter.ExerciseGroupPresenter
@@ -49,7 +50,10 @@ class ExerciseGroupFragment : Fragment(), ExerciseGroupContract.View {
 
     override fun showExerciseSettings(exerciseItemPosition: Int, exercise: Exercise) {
         ExerciseSettingsDialog {
-            presenter.exerciseUpdated(exerciseItemPosition, exercise)
+            val newExercise = with(CurrentWorkoutHolder) {
+                currentWorkout.exerciseGroups[currentExerciseGroupPosition].exercises[currentWorkPosition]
+            }
+            presenter.exerciseUpdated(exerciseItemPosition, newExercise)
         }.show(fragmentManager, "dialog")
     }
 

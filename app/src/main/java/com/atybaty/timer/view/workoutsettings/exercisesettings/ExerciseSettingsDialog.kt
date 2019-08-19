@@ -59,7 +59,7 @@ class ExerciseSettingsDialog(private val onDismissListener: () -> Unit) : Dialog
             presenter.exerciseDurationSet(work.duration)
         }
         iv_settings_ex_duration_minus.setOnClickListener {
-            work.duration--
+            work.duration = max(0, work.duration - 1)
             et_settings_ex_duration_count.setText(work.duration.toString())
             presenter.exerciseDurationSet(work.duration)
         }
@@ -69,7 +69,7 @@ class ExerciseSettingsDialog(private val onDismissListener: () -> Unit) : Dialog
             presenter.exerciseIntervalDurationSet(interval)
         }
         iv_settings_ex_interval_minus.setOnClickListener {
-            interval--
+            interval = max(0, interval - 1)
             et_settings_ex_interval_count.setText(interval.toString())
             presenter.exerciseIntervalDurationSet(interval)
         }
@@ -79,7 +79,7 @@ class ExerciseSettingsDialog(private val onDismissListener: () -> Unit) : Dialog
             presenter.exerciseAccelerationDurationSet(acceleration)
         }
         iv_settings_ex_acceleration_minus.setOnClickListener {
-            acceleration--
+            acceleration = max(0, acceleration - 1)
             et_settings_ex_acceleration_count.setText(acceleration.toString())
             presenter.exerciseAccelerationDurationSet(acceleration)
         }

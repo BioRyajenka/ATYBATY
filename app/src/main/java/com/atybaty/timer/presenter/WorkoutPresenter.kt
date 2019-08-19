@@ -28,8 +28,9 @@ class WorkoutPresenter(private val view: WorkoutFragment, private val context: C
     }
 
     override fun exerciseGroupClicked(itemPosition: Int) {
-        saveButtonClicked()
-        CurrentWorkoutHolder.currenExerciseGroupPosition = itemPosition
+        CurrentWorkoutHolder.currentWorkout = workout.deepCopy()
+        workoutRepository.saveWorkout(CurrentWorkoutHolder.currentWorkout)
+        CurrentWorkoutHolder.currentExerciseGroupPosition = itemPosition
         view.showExerciseGroup()
     }
 

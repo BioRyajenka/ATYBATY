@@ -5,7 +5,7 @@ import com.atybaty.timer.model.Workout
 class CurrentWorkoutHolder private constructor() {
     companion object {
         lateinit var currentWorkout: Workout
-        var currenExerciseGroupPosition = 0
+        var currentExerciseGroupPosition = 0
         var currentWorkPosition = 0
     }
 }
