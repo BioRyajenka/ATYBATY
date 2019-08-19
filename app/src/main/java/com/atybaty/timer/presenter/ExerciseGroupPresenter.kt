@@ -32,8 +32,9 @@ class ExerciseGroupPresenter(val view: ExerciseGroupContract.View) : ExerciseGro
     }
 
     override fun saveButtonClicked() {
+        val position = CurrentWorkoutHolder.currentWorkout.exerciseGroups.indexOf(CurrentWorkoutHolder.currentExerciseGroup)
         CurrentWorkoutHolder.currentExerciseGroup = exerciseGroup.deepCopy()
-        CurrentWorkoutHolder.currentWorkout.exerciseGroups.set(CurrentWorkoutHolder.currentExerciseGroupPosition, CurrentWorkoutHolder.currentExerciseGroup)
+        CurrentWorkoutHolder.currentWorkout.exerciseGroups.set(position, CurrentWorkoutHolder.currentExerciseGroup)
         workoutRepository.saveWorkout(CurrentWorkoutHolder.currentWorkout)
         view.returnToPreviousFragment()
     }

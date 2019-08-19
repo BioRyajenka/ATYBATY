@@ -74,8 +74,9 @@ class ExerciseGroupSettingsPresenter(val view: ExerciseGroupSettingsContract.Vie
     }
 
     private fun saveExerciseWorkout(){
+        val position = CurrentWorkoutHolder.currentWorkout.exerciseGroups.indexOf(CurrentWorkoutHolder.currentExerciseGroup)
         CurrentWorkoutHolder.currentExerciseGroup = currentExerciseGroup.deepCopy()
-        CurrentWorkoutHolder.currentWorkout.exerciseGroups.set(CurrentWorkoutHolder.currentExerciseGroupPosition, CurrentWorkoutHolder.currentExerciseGroup)
+        CurrentWorkoutHolder.currentWorkout.exerciseGroups.set(position, CurrentWorkoutHolder.currentExerciseGroup)
         workoutRepository.saveWorkout(CurrentWorkoutHolder.currentWorkout)
     }
 

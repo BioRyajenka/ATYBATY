@@ -8,7 +8,6 @@ class CurrentWorkoutHolder private constructor() {
     companion object {
         lateinit var currentWorkout: Workout
         lateinit var currentExerciseGroup: ExerciseGroup
-        var currentExerciseGroupPosition = 0
         lateinit var currentWork: Work
     }
 }

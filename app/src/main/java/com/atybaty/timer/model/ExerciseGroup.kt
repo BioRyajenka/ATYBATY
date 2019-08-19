@@ -23,33 +23,10 @@ data class ExerciseGroup(
         val copyExercises = ArrayList<Exercise>()
         exercises.forEach {
             if (it is Work) {
-                when (it.options) {
-                    is SimpleWorkOptions -> {
-                        copyExercises.add(Work(it.name, it.duration, SimpleWorkOptions))
-                    }
-                    is WorkWithAccelerationOptions -> {
-                        val duration = (it.options as WorkWithAccelerationOptions).accelerationDuration
-                        copyExercises.add(Work(it.name, it.duration, WorkWithAccelerationOptions(duration)))
-                    }
-                    else -> {
-                        val interval = (it.options as WorkWithIntervalsOptions).interval
-                        val rattle = (it.options as WorkWithIntervalsOptions).rattle
-                        copyExercises.add(Work(it.name, it.duration, WorkWithIntervalsOptions(interval, rattle)))
-                    }
-                }
+                copyExercises.add(it.copy())
             } else {
                 val relaxation = it as Relaxation
-                when (relaxation) {
-                    is RunUp -> {
-                        copyExercises.add(RunUp(relaxation.duration))
-                    }
-                    is RestBetweenSets -> {
-                        copyExercises.add(RestBetweenSets(relaxation.duration))
-                    }
-                    else -> {
-                        copyExercises.add(CalmDown(relaxation.duration))
-                    }
-                }
+                copyExercises.add(relaxation.copy())
             }
         }
         return ExerciseGroup(name, warmUp, defaultTime, relaxTime, repeatsCount, copyExercises, relaxAfter)

@@ -14,27 +14,60 @@ class Work(var name: String, duration: Seconds, var options: WorkOptions) : Exer
     override fun getName(context: Context) = name
 
     fun copy(name: String = this.name, duration: Seconds = this.duration, options: WorkOptions = this.options): Work {
-        return Work(name, duration, options)
+        return Work(name, duration, options.copy())
     }
 }
 
 abstract class Relaxation(private val nameStringId: Int, duration: Seconds) : Exercise(duration) {
     override fun getName(context: Context) = context.getString(nameStringId)
+
+    abstract fun copy(): Relaxation
 }
 
 
-class RunUp(duration: Seconds) : Relaxation(R.string.exercises_run_up, duration)
+class RunUp(duration: Seconds) : Relaxation(R.string.exercises_run_up, duration){
 
-class RestBetweenSets(duration: Seconds) : Relaxation(R.string.exercises_rest_between_sets, duration)
+    override fun copy(): Relaxation {
+        return RunUp(this.duration)
+    }
+}
 
-class CalmDown(duration: Seconds) : Relaxation(R.string.exercises_calm_down, duration)
+class RestBetweenSets(duration: Seconds) : Relaxation(R.string.exercises_rest_between_sets, duration){
+
+    override fun copy(): Relaxation {
+        return RestBetweenSets(this.duration)
+    }
+}
+
+class CalmDown(duration: Seconds) : Relaxation(R.string.exercises_calm_down, duration){
+
+    override fun copy(): Relaxation {
+        return CalmDown(this.duration)
+    }
+}
 
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, include = JsonTypeInfo.As.PROPERTY, property = "@class")
-sealed class WorkOptions
+sealed class WorkOptions{
+    abstract fun copy(): WorkOptions
+}
 
-object SimpleWorkOptions : WorkOptions()
+object SimpleWorkOptions : WorkOptions(){
+    override fun copy(): WorkOptions {
+        return SimpleWorkOptions
+    }
+}
 
-data class WorkWithAccelerationOptions(var accelerationDuration: Seconds) : WorkOptions()
+data class WorkWithAccelerationOptions(var accelerationDuration: Seconds) : WorkOptions(){
 
-data class WorkWithIntervalsOptions(var interval: Seconds, var rattle: Seconds) : WorkOptions()
+    override fun copy(): WorkOptions {
+        return WorkWithAccelerationOptions(this.accelerationDuration)
+    }
+}
+
+data class WorkWithIntervalsOptions(var interval: Seconds, var rattle: Seconds) : WorkOptions(){
+
+    override fun copy(): WorkOptions {
+        return WorkWithIntervalsOptions(this.interval, this.rattle)
+    }
+}
