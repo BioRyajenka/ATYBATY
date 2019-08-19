@@ -20,15 +20,7 @@ data class ExerciseGroup(
         exercises: MutableList<Exercise> = this.exercises,
         relaxAfter: CalmDown = this.relaxAfter
     ): ExerciseGroup {
-        val copyExercises = ArrayList<Exercise>()
-        exercises.forEach {
-            if (it is Work) {
-                copyExercises.add(it.copy())
-            } else {
-                val relaxation = it as Relaxation
-                copyExercises.add(relaxation.copy())
-            }
-        }
+        val copyExercises = exercises.map(Exercise::deepCopy).toMutableList()
         return ExerciseGroup(name, warmUp, defaultTime, relaxTime, repeatsCount, copyExercises, relaxAfter)
     }
 }

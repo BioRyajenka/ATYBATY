@@ -8,40 +8,40 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo
 @JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, include = JsonTypeInfo.As.PROPERTY, property = "@class")
 sealed class Exercise(var duration: Seconds) {
     abstract fun getName(context: Context): String
+
+    abstract fun deepCopy(): Exercise
 }
 
 class Work(var name: String, duration: Seconds, var options: WorkOptions) : Exercise(duration) {
     override fun getName(context: Context) = name
 
-    fun copy(name: String = this.name, duration: Seconds = this.duration, options: WorkOptions = this.options): Work {
+    override fun deepCopy(): Exercise {
         return Work(name, duration, options.copy())
     }
 }
 
 abstract class Relaxation(private val nameStringId: Int, duration: Seconds) : Exercise(duration) {
     override fun getName(context: Context) = context.getString(nameStringId)
-
-    abstract fun copy(): Relaxation
 }
 
 
 class RunUp(duration: Seconds) : Relaxation(R.string.exercises_run_up, duration){
 
-    override fun copy(): Relaxation {
+    override fun deepCopy(): Exercise {
         return RunUp(this.duration)
     }
 }
 
 class RestBetweenSets(duration: Seconds) : Relaxation(R.string.exercises_rest_between_sets, duration){
 
-    override fun copy(): Relaxation {
+    override fun deepCopy(): Exercise {
         return RestBetweenSets(this.duration)
     }
 }
 
 class CalmDown(duration: Seconds) : Relaxation(R.string.exercises_calm_down, duration){
 
-    override fun copy(): Relaxation {
+    override fun deepCopy(): Exercise {
         return CalmDown(this.duration)
     }
 }
