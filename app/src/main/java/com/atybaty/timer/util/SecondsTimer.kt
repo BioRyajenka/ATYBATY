@@ -3,13 +3,13 @@ package com.atybaty.timer.util
 import android.os.CountDownTimer
 import kotlin.properties.Delegates
 
-private const val TIMER_ERROR = 100
+private const val TIMER_CORRECTION = 500
 
 /**
  * Timer counts downto zero (so callback.onTick is also called on zero)
  */
 class SecondsTimer(private val callback: SecondsTimerCallback) {
-    constructor(countDownTime: Seconds, callback: SecondsTimerCallback): this(callback) {
+    constructor(countDownTime: Seconds, callback: SecondsTimerCallback) : this(callback) {
         setTime(countDownTime)
     }
 
@@ -39,14 +39,18 @@ class SecondsTimer(private val callback: SecondsTimerCallback) {
     }
 
     private fun createNestedTimer(countDownTimeInMillis: Long): CountDownTimer {
-        return object : CountDownTimer(countDownTimeInMillis, MILLIS_IN_SECOND) {
+        return object : CountDownTimer(countDownTimeInMillis + TIMER_CORRECTION, MILLIS_IN_SECOND) {
             override fun onFinish() {
+                pause()
                 callback.onFinish()
             }
 
             override fun onTick(millisUntilFinished: Long) {
+                if (millisRemaining < TIMER_CORRECTION) {
+                    return
+                }
                 millisRemaining = millisUntilFinished
-                callback.onTick(((millisUntilFinished - TIMER_ERROR) / MILLIS_IN_SECOND).toInt() + 1)
+                callback.onTick((millisUntilFinished / MILLIS_IN_SECOND).toInt())
             }
         }
     }

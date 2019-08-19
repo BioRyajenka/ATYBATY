@@ -123,6 +123,8 @@ class TimerExercisePresenter(val view: TimerContract.View) : TimerContract.Prese
 
             view.clearCurrentExerciseSelection()
             view.updateTime(0)
+            pauseStatus = PauseStatus.PAUSED
+            view.updatePauseButton(pauseStatus)
         } else {
             audioPlayer.playSound(SelectedSoundsHolder.timerExerciseFinished)
 
