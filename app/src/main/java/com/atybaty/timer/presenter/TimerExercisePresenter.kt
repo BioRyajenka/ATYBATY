@@ -105,10 +105,8 @@ class TimerExercisePresenter(val view: TimerContract.View) : TimerContract.Prese
     }
 
     override fun onTick(remainingTime: Seconds) {
-        when (remainingTime) {
-            in (1..3) -> {
-                audioPlayer.playSound(SelectedSoundsHolder.timerExerciseEndsTick)
-            }
+        if (remainingTime in (1..3)) {
+            audioPlayer.playSound(SelectedSoundsHolder.timerExerciseEndsTick)
         }
 
         view.updateTime(remainingTime)
