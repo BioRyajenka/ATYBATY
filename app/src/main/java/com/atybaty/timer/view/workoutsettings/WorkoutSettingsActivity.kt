@@ -19,9 +19,6 @@ class WorkoutSettingsActivity : AppCompatActivity() {
         loadFragment(savedInstanceState, FragmentTag.WORKOUT) {
             WorkoutFragment()
         }
-        // TODO: stub
-        val exerciseGroup = CurrentWorkoutHolder.currentWorkout.exerciseGroups.first()
-        CurrentWorkoutHolder.currentExerciseGroup = exerciseGroup
     }
 
     private inline fun <reified F: Fragment> loadFragment(savedInstanceState: Bundle?, tag: FragmentTag, builder: () -> F) : F {
