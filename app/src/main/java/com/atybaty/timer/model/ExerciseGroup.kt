@@ -12,4 +12,9 @@ data class ExerciseGroup(
     val relaxAfter: CalmDown
 ) {
     constructor(name: String, exercises: MutableList<Exercise>) : this(name, 10, 60, 10, 1, exercises, CalmDown(10))
+
+    fun deepCopy(): ExerciseGroup {
+        val copyExercises = exercises.map(Exercise::deepCopy).toMutableList()
+        return ExerciseGroup(name, warmUp, defaultTime, relaxTime, repeatsCount, copyExercises, relaxAfter.deepCopy())
+    }
 }

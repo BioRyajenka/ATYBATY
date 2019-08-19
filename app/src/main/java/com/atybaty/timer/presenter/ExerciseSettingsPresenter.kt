@@ -27,21 +27,26 @@ class ExerciseSettingsPresenter(val view: ExerciseSettingsContract.View) : Exerc
         val defaultIntervalWorkOptions = WorkWithIntervalsOptions(0, 0)
         val defaultAccelerationWorkOptions = WorkWithAccelerationOptions(0)
 
-        val work = CurrentWorkoutHolder.currentWork
+        val work = (CurrentWorkoutHolder.currentWorkout.exerciseGroups[CurrentWorkoutHolder.currenExerciseGroupPosition]
+            .exercises[CurrentWorkoutHolder.currentWorkPosition] as Work).deepCopy()
         when (work.options) {
             is SimpleWorkOptions -> {
-                intervalWork = work.copy(options = defaultIntervalWorkOptions)
-                accelerationWork = work.copy(options = defaultAccelerationWorkOptions)
+                intervalWork = work.deepCopy()
+                intervalWork.options = defaultIntervalWorkOptions
+                accelerationWork = work.deepCopy()
+                accelerationWork.options = defaultAccelerationWorkOptions
                 currentWorkType = WorkType.INTERVAL
             }
             is WorkWithIntervalsOptions -> {
-                intervalWork = work.copy()
-                accelerationWork = work.copy(options = defaultAccelerationWorkOptions)
+                intervalWork = work.deepCopy()
+                accelerationWork = work.deepCopy()
+                accelerationWork.options = defaultAccelerationWorkOptions
                 currentWorkType = WorkType.INTERVAL
             }
             is WorkWithAccelerationOptions -> {
-                intervalWork = work.copy(options = defaultIntervalWorkOptions)
-                accelerationWork = work.copy()
+                intervalWork = work.deepCopy()
+                intervalWork.options = defaultAccelerationWorkOptions
+                accelerationWork = work.deepCopy()
                 currentWorkType = WorkType.ACCELERATION
             }
         }
@@ -73,18 +78,16 @@ class ExerciseSettingsPresenter(val view: ExerciseSettingsContract.View) : Exerc
     }
 
     override fun saveButtonClicked() {
-        val currentExerciseIndex = CurrentWorkoutHolder.currentExerciseGroup.exercises
-            .indexOf(CurrentWorkoutHolder.currentWork)
         val resultingWork = getSelectedWork().let {
             if (it.options is WorkWithIntervalsOptions && (it.options as WorkWithIntervalsOptions).interval == 0
                 || it.options is WorkWithAccelerationOptions && (it.options as WorkWithAccelerationOptions).accelerationDuration == 0) {
-                it.copy(options = SimpleWorkOptions)
+                it.deepCopy()
             } else {
                 it
             }
         }
-        CurrentWorkoutHolder.currentExerciseGroup.exercises[currentExerciseIndex] = resultingWork
-        CurrentWorkoutHolder.currentWork = resultingWork
+        CurrentWorkoutHolder.currentWorkout.exerciseGroups[CurrentWorkoutHolder.currenExerciseGroupPosition]
+            .exercises.set(CurrentWorkoutHolder.currentWorkPosition, resultingWork)
         workoutRepository.saveWorkout(CurrentWorkoutHolder.currentWorkout)
         view.closeDialog()
     }

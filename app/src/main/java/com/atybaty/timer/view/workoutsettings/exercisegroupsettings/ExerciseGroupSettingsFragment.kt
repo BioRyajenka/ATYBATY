@@ -33,6 +33,7 @@ class ExerciseGroupSettingsFragment: Fragment(), ExerciseGroupSettingsContract.V
 
         iv_work_back.setOnClickListener { exerciseGroupSettingsPresenter.backButtonClicked() }
         iv_work_save.setOnClickListener { exerciseGroupSettingsPresenter.saveButtonClicked() }
+        tv_work_settings.setOnClickListener { exerciseGroupSettingsPresenter.changeWorkButtonClicked() }
 
         iv_work_starttime_add.setOnClickListener {
             exerciseGroup.warmUp++
@@ -147,6 +148,7 @@ class ExerciseGroupSettingsFragment: Fragment(), ExerciseGroupSettingsContract.V
 
     override fun showExerciseGroup(exerciseGroup: ExerciseGroup) {
         this.exerciseGroup = exerciseGroup
+        tv_work_title.text = exerciseGroup.name
         et_work_starttime_count.setText(exerciseGroup.warmUp.toString())
         et_work_time_count.setText(exerciseGroup.defaultTime.toString())
         et_work_relaxtime_count.setText(exerciseGroup.relaxTime.toString())
