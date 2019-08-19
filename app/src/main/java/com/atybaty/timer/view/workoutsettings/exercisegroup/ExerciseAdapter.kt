@@ -63,12 +63,14 @@ class ExerciseAdapter(
             .setOnClickListener(durationChangeOnClickListener(holder) { itemPosition, oldDuration ->
                 val newDuration = max(0, oldDuration - 1)
                 exercises[itemPosition].duration = newDuration
+                itemView.findViewById<EditText>(R.id.et_exercise_duration).setText(newDuration.toString())
                 presenter.exerciseDurationSet(itemPosition, newDuration)
             })
         itemView.findViewById<ImageView>(R.id.iv_exercise_plus)
             .setOnClickListener(durationChangeOnClickListener(holder) { itemPosition, oldDuration ->
                 val newDuration = min(MAX_DURATION, oldDuration + 1)
                 exercises[itemPosition].duration = newDuration
+                itemView.findViewById<EditText>(R.id.et_exercise_duration).setText(newDuration.toString())
                 presenter.exerciseDurationSet(itemPosition, newDuration)
             })
         itemView.findViewById<EditText>(R.id.et_exercise_duration).addTextChangedListener(object : TextWatcher {
