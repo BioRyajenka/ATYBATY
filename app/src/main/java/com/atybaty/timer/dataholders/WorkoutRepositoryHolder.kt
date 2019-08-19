@@ -1,10 +1,9 @@
 package com.atybaty.timer.dataholders
 
 import android.content.Context
+import androidx.room.Room
 import com.atybaty.timer.model.repository.WorkoutRepository
-import org.dizitart.kno2.nitrite
-import org.dizitart.no2.Nitrite
-import java.io.File
+import com.atybaty.timer.model.repository.room.AppDatabase
 
 private const val DB_FILE_NAME = "atybaty.db"
 
@@ -26,13 +25,12 @@ class WorkoutRepositoryHolder private constructor() {
         @Volatile
         private var singleton: WorkoutRepository? = null
 
-        private fun buildNitriteDB(context: Context): Nitrite {
-            return nitrite {
-                file = File(context.filesDir, DB_FILE_NAME)
-                autoCommitBufferSize = 2048
-                compress = true
-                autoCompact = false
-            }
+        private fun buildNitriteDB(context: Context): AppDatabase {
+            val db = Room.databaseBuilder(
+                context,
+                AppDatabase::class.java, DB_FILE_NAME
+            ).allowMainThreadQueries().build()
+            return db
         }
     }
 }
