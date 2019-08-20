@@ -80,7 +80,7 @@ class TimerExerciseActivity : AppCompatActivity(), TimerContract.View {
         timerExerciseAdapter.setSelectedExercise(exerciseGroupIndex, exerciseIndex)
         timerExerciseAdapter.notifyDataSetChanged()
         val exerciseGroup = workout.exerciseGroups[exerciseGroupIndex]
-        val exercise = exerciseGroup.exercises[exerciseIndex]
+        val exercise = exerciseGroup.extendedExercises[exerciseIndex]
 
         tv_timer_exercise_group_name.text =
             "Сет: ${exerciseGroupIndex + 1}/${workout.exerciseGroups.size} (${exerciseGroup.name})"

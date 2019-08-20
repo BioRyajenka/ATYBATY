@@ -35,7 +35,7 @@ class TimerExercisePresenter(val view: TimerContract.View) : TimerContract.Prese
     }
 
     private fun synchronizeExerciseSelection(exerciseGroupIndex: Int, exerciseIndex: Int) {
-        val exercise = workout.exerciseGroups[exerciseGroupIndex].exercises[exerciseIndex]
+        val exercise = workout.exerciseGroups[exerciseGroupIndex].extendedExercises[exerciseIndex]
 
         timer.pause()
         timer.setTime(exercise.duration)
