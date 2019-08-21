@@ -1,6 +1,7 @@
 package com.atybaty.timer.presenter
 
 import android.content.Context
+import android.util.Log
 import com.atybaty.timer.dataholders.CurrentWorkoutHolder
 import com.atybaty.timer.dataholders.WorkoutRepositoryHolder
 import com.atybaty.timer.contract.ExerciseGroupContract
@@ -44,12 +45,12 @@ class ExerciseGroupPresenter(val view: ExerciseGroupContract.View) : ExerciseGro
         for (i in 0 until exerciseGroup.exercises.size) {
             if (exerciseGroup.exercises[i] is Work) {
                 val work = exerciseGroup.exercises[i] as Work
-                work.duration = exerciseGroup.defaultTime
+                work.duration = exerciseGroup.defaultWorkDuration
                 work.options = SimpleWorkOptions
             }
             if (exerciseGroup.exercises[i] is Relaxation) {
                 val relax = exerciseGroup.exercises[i] as CalmDown
-                relax.duration = exerciseGroup.relaxTime
+                relax.duration = exerciseGroup.relaxDuration
             }
         }
         view.changeButtonState(false)

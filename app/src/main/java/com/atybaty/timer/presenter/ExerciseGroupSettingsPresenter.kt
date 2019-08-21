@@ -1,6 +1,7 @@
 package com.atybaty.timer.presenter
 
 import android.content.Context
+import android.util.Log
 import com.atybaty.timer.contract.ExerciseGroupSettingsContract
 import com.atybaty.timer.dataholders.CurrentWorkoutHolder
 import com.atybaty.timer.dataholders.WorkoutRepositoryHolder
@@ -35,11 +36,11 @@ class ExerciseGroupSettingsPresenter(val view: ExerciseGroupSettingsContract.Vie
     }
 
     override fun startTimeSet(time: Seconds) {
-        currentExerciseGroup.warmUp = time
+        currentExerciseGroup.runUpDuration = time
     }
 
     override fun defaultTimeSet(time: Seconds) {
-        currentExerciseGroup.defaultTime = time
+        currentExerciseGroup.defaultWorkDuration = time
         currentExerciseGroup.exercises.forEach {
             if (it is Work){
                 it.duration = time
@@ -48,7 +49,7 @@ class ExerciseGroupSettingsPresenter(val view: ExerciseGroupSettingsContract.Vie
     }
 
     override fun relaxTimeSet(time: Seconds) {
-        currentExerciseGroup.relaxTime = time
+        currentExerciseGroup.relaxDuration = time
         currentExerciseGroup.exercises.forEach {
             if (it is Relaxation){
                 it.duration = time
@@ -58,20 +59,20 @@ class ExerciseGroupSettingsPresenter(val view: ExerciseGroupSettingsContract.Vie
 
     override fun repeatsCountSet(count: Int) {
         currentExerciseGroup.repeatsCount = count
-        updateExercises()
+        refreshExercises()
     }
 
     override fun changeWorkButtonClicked() {
-        updateExercises()
+        refreshExercises()
         view.showExerciseSettings()
     }
 
     private fun hasChanges(): Boolean{
         currentExerciseGroup.exercises.forEach {
-            if (it is Work && it.duration != currentExerciseGroup.defaultTime){
+            if (it is Work && it.duration != currentExerciseGroup.defaultWorkDuration){
                 return true
             }
-            if (it is Relaxation && it.duration != currentExerciseGroup.relaxTime){
+            if (it is Relaxation && it.duration != currentExerciseGroup.relaxDuration){
                 return true
             }
         }
@@ -79,26 +80,27 @@ class ExerciseGroupSettingsPresenter(val view: ExerciseGroupSettingsContract.Vie
     }
 
     private fun saveExerciseWorkout(){
-        CurrentWorkoutHolder.currentWorkout.exerciseGroups
-            .set(CurrentWorkoutHolder.currentExerciseGroupPosition, currentExerciseGroup.deepCopy())
+        CurrentWorkoutHolder.currentWorkout.exerciseGroups[CurrentWorkoutHolder.currentExerciseGroupPosition] =
+            currentExerciseGroup.deepCopy()
         workoutRepository.saveWorkout(CurrentWorkoutHolder.currentWorkout)
     }
 
-    private fun updateExercises(){
+    private fun refreshExercises(){
         if (currentExerciseGroup.exercises.size > currentExerciseGroup.repeatsCount * 2){
             val deletingExercise = ArrayList<Exercise>()
             for (i in currentExerciseGroup.repeatsCount * 2 until currentExerciseGroup.exercises.size){
                 deletingExercise.add(currentExerciseGroup.exercises[i])
             }
             currentExerciseGroup.exercises.removeAll(deletingExercise)
+            saveExerciseWorkout()
         }
         if (currentExerciseGroup.exercises.size < currentExerciseGroup.repeatsCount * 2){
             val count = currentExerciseGroup.repeatsCount - currentExerciseGroup.exercises.size / 2
             for (i in 0 until count){
-                currentExerciseGroup.exercises.add(Work("Работа", currentExerciseGroup.defaultTime, SimpleWorkOptions))
-                currentExerciseGroup.exercises.add(CalmDown(currentExerciseGroup.relaxTime))
+                currentExerciseGroup.exercises.add(Work("Работа", currentExerciseGroup.defaultWorkDuration, SimpleWorkOptions))
+                currentExerciseGroup.exercises.add(CalmDown(currentExerciseGroup.relaxDuration))
             }
+            saveExerciseWorkout()
         }
-        saveExerciseWorkout()
     }
 }

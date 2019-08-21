@@ -36,13 +36,13 @@ class ExerciseGroupSettingsFragment: Fragment(), ExerciseGroupSettingsContract.V
         tv_work_settings.setOnClickListener { exerciseGroupSettingsPresenter.changeWorkButtonClicked() }
 
         iv_work_starttime_add.setOnClickListener {
-            exerciseGroup.warmUp++
-            exerciseGroupSettingsPresenter.startTimeSet(exerciseGroup.warmUp)
+            exerciseGroup.runUpDuration++
+            exerciseGroupSettingsPresenter.startTimeSet(exerciseGroup.runUpDuration)
             updateTimeInformation()
         }
         iv_work_starttime_minus.setOnClickListener {
-            exerciseGroup.warmUp--
-            exerciseGroupSettingsPresenter.startTimeSet(exerciseGroup.warmUp)
+            exerciseGroup.runUpDuration--
+            exerciseGroupSettingsPresenter.startTimeSet(exerciseGroup.runUpDuration)
             updateTimeInformation()
         }
         et_work_starttime_count.addTextChangedListener(object : TextWatcher {
@@ -57,19 +57,19 @@ class ExerciseGroupSettingsFragment: Fragment(), ExerciseGroupSettingsContract.V
                 } catch (_: Exception) {
                     0
                 }
-                exerciseGroup.warmUp = newDuration
+                exerciseGroup.runUpDuration = newDuration
                 exerciseGroupSettingsPresenter.startTimeSet(newDuration)
             }
         })
 
         iv_work_time_add.setOnClickListener {
-            exerciseGroup.defaultTime++
-            exerciseGroupSettingsPresenter.defaultTimeSet(exerciseGroup.defaultTime)
+            exerciseGroup.defaultWorkDuration++
+            exerciseGroupSettingsPresenter.defaultTimeSet(exerciseGroup.defaultWorkDuration)
             updateTimeInformation()
         }
         iv_work_time_minus.setOnClickListener {
-            exerciseGroup.defaultTime--
-            exerciseGroupSettingsPresenter.defaultTimeSet(exerciseGroup.defaultTime)
+            exerciseGroup.defaultWorkDuration--
+            exerciseGroupSettingsPresenter.defaultTimeSet(exerciseGroup.defaultWorkDuration)
             updateTimeInformation()
         }
         et_work_time_count.addTextChangedListener(object : TextWatcher {
@@ -84,19 +84,21 @@ class ExerciseGroupSettingsFragment: Fragment(), ExerciseGroupSettingsContract.V
                 } catch (_: Exception) {
                     0
                 }
-                exerciseGroup.defaultTime = newDuration
-                exerciseGroupSettingsPresenter.defaultTimeSet(newDuration)
+                if (exerciseGroup.defaultTime != newDuration) {
+                    exerciseGroup.defaultTime = newDuration
+                    exerciseGroupSettingsPresenter.defaultTimeSet(newDuration)
+                }
             }
         })
 
         iv_work_relaxtime_add.setOnClickListener {
-            exerciseGroup.relaxTime++
-            exerciseGroupSettingsPresenter.relaxTimeSet(exerciseGroup.relaxTime)
+            exerciseGroup.relaxDuration++
+            exerciseGroupSettingsPresenter.relaxTimeSet(exerciseGroup.relaxDuration)
             updateTimeInformation()
         }
         iv_work_relaxtime_minus.setOnClickListener {
-            exerciseGroup.relaxTime--
-            exerciseGroupSettingsPresenter.relaxTimeSet(exerciseGroup.relaxTime)
+            exerciseGroup.relaxDuration--
+            exerciseGroupSettingsPresenter.relaxTimeSet(exerciseGroup.relaxDuration)
             updateTimeInformation()
         }
         et_work_relaxtime_count.addTextChangedListener(object : TextWatcher {
@@ -111,8 +113,10 @@ class ExerciseGroupSettingsFragment: Fragment(), ExerciseGroupSettingsContract.V
                 } catch (_: Exception) {
                     0
                 }
-                exerciseGroup.relaxTime = newDuration
-                exerciseGroupSettingsPresenter.relaxTimeSet(newDuration)
+                if (exerciseGroup.relaxTime != newDuration) {
+                    exerciseGroup.relaxTime = newDuration
+                    exerciseGroupSettingsPresenter.relaxTimeSet(newDuration)
+                }
             }
         })
 
@@ -149,9 +153,9 @@ class ExerciseGroupSettingsFragment: Fragment(), ExerciseGroupSettingsContract.V
     override fun showExerciseGroup(exerciseGroup: ExerciseGroup) {
         this.exerciseGroup = exerciseGroup
         tv_work_title.text = exerciseGroup.name
-        et_work_starttime_count.setText(exerciseGroup.warmUp.toString())
-        et_work_time_count.setText(exerciseGroup.defaultTime.toString())
-        et_work_relaxtime_count.setText(exerciseGroup.relaxTime.toString())
+        et_work_starttime_count.setText(exerciseGroup.runUpDuration.toString())
+        et_work_time_count.setText(exerciseGroup.defaultWorkDuration.toString())
+        et_work_relaxtime_count.setText(exerciseGroup.relaxDuration.toString())
         et_work_repeats_count.setText(exerciseGroup.repeatsCount.toString())
     }
 
@@ -173,9 +177,9 @@ class ExerciseGroupSettingsFragment: Fragment(), ExerciseGroupSettingsContract.V
     }
 
     private fun updateTimeInformation(){
-        et_work_starttime_count.setText(exerciseGroup.warmUp.toString())
-        et_work_time_count.setText(exerciseGroup.defaultTime.toString())
-        et_work_relaxtime_count.setText(exerciseGroup.relaxTime.toString())
+        et_work_starttime_count.setText(exerciseGroup.runUpDuration.toString())
+        et_work_time_count.setText(exerciseGroup.defaultWorkDuration.toString())
+        et_work_relaxtime_count.setText(exerciseGroup.relaxDuration.toString())
         et_work_repeats_count.setText(exerciseGroup.repeatsCount.toString())
     }
 }
