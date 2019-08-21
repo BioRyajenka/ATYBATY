@@ -61,7 +61,7 @@ class ExerciseGroupFragment : Fragment(), ExerciseGroupContract.View {
         fragmentManager!!.popBackStack()
     }
 
-    override fun changeButtonState(enabled: Boolean) {
+    override fun changeSetUpDefaultButtonState(enabled: Boolean) {
         tv_set_default_btn.isEnabled = enabled
         tv_set_default_btn.alpha = 1 - (if (!enabled) 1f else 0f) / 2
     }

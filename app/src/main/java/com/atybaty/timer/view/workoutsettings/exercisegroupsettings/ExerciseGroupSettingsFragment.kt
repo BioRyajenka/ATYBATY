@@ -84,8 +84,8 @@ class ExerciseGroupSettingsFragment: Fragment(), ExerciseGroupSettingsContract.V
                 } catch (_: Exception) {
                     0
                 }
-                if (exerciseGroup.defaultTime != newDuration) {
-                    exerciseGroup.defaultTime = newDuration
+                if (exerciseGroup.defaultWorkDuration != newDuration) {
+                    exerciseGroup.defaultWorkDuration = newDuration
                     exerciseGroupSettingsPresenter.defaultTimeSet(newDuration)
                 }
             }
@@ -113,8 +113,8 @@ class ExerciseGroupSettingsFragment: Fragment(), ExerciseGroupSettingsContract.V
                 } catch (_: Exception) {
                     0
                 }
-                if (exerciseGroup.relaxTime != newDuration) {
-                    exerciseGroup.relaxTime = newDuration
+                if (exerciseGroup.relaxDuration != newDuration) {
+                    exerciseGroup.relaxDuration = newDuration
                     exerciseGroupSettingsPresenter.relaxTimeSet(newDuration)
                 }
             }

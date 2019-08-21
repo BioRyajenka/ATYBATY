@@ -1,14 +1,12 @@
 package com.atybaty.timer.presenter
 
 import android.content.Context
-import android.util.Log
 import com.atybaty.timer.dataholders.CurrentWorkoutHolder
 import com.atybaty.timer.dataholders.WorkoutRepositoryHolder
 import com.atybaty.timer.contract.ExerciseGroupContract
 import com.atybaty.timer.model.*
 import com.atybaty.timer.model.repository.WorkoutRepository
 import com.atybaty.timer.util.Seconds
-import kotlinx.android.synthetic.main.fragment_set.*
 
 class ExerciseGroupPresenter(val view: ExerciseGroupContract.View) : ExerciseGroupContract.Presenter {
     private lateinit var context: Context
@@ -23,7 +21,7 @@ class ExerciseGroupPresenter(val view: ExerciseGroupContract.View) : ExerciseGro
         this.workoutRepository = WorkoutRepositoryHolder.getWorkoutRepository(context)
 
         view.showExerciseGroup(exerciseGroup)
-        view.changeButtonState(checkDefaultButtonActive())
+        view.changeSetUpDefaultButtonState(checkDefaultButtonActive())
     }
 
     override fun fragmentDestroyed() {
@@ -53,7 +51,7 @@ class ExerciseGroupPresenter(val view: ExerciseGroupContract.View) : ExerciseGro
                 relax.duration = exerciseGroup.relaxDuration
             }
         }
-        view.changeButtonState(false)
+        view.changeSetUpDefaultButtonState(false)
         view.showExerciseGroup(exerciseGroup)
     }
 
@@ -62,11 +60,11 @@ class ExerciseGroupPresenter(val view: ExerciseGroupContract.View) : ExerciseGro
         for (i in 0 until exerciseGroup.exercises.size) {
             if (exerciseGroup.exercises[i] is Work) {
                 val work = exerciseGroup.exercises[i] as Work
-                isChanged = isChanged || work.duration != exerciseGroup.defaultTime || work.options !is SimpleWorkOptions
+                isChanged = isChanged || work.duration != exerciseGroup.defaultWorkDuration || work.options !is SimpleWorkOptions
             }
             if (exerciseGroup.exercises[i] is Relaxation) {
                 val relax = exerciseGroup.exercises[i] as CalmDown
-                isChanged = isChanged || (relax.duration != exerciseGroup.relaxTime)
+                isChanged = isChanged || (relax.duration != exerciseGroup.relaxDuration)
             }
         }
         return isChanged
@@ -80,11 +78,11 @@ class ExerciseGroupPresenter(val view: ExerciseGroupContract.View) : ExerciseGro
     override fun exerciseUpdated(exerciseItemPosition: Int, newExercise: Exercise) {
         exerciseGroup.exercises[exerciseItemPosition] = newExercise
         view.updateExercise(exerciseItemPosition, exerciseGroup)
-        view.changeButtonState(checkDefaultButtonActive())
+        view.changeSetUpDefaultButtonState(checkDefaultButtonActive())
     }
 
     override fun exerciseDurationSet(exerciseItemPosition: Int, newDuration: Seconds) {
-        view.changeButtonState(checkDefaultButtonActive())
+        view.changeSetUpDefaultButtonState(checkDefaultButtonActive())
         exerciseGroup.exercises[exerciseItemPosition].duration = newDuration
     }
 
