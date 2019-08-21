@@ -51,10 +51,27 @@ class ExerciseGroupAdapter(
             val itemPosition = holder.adapterPosition
             if (itemPosition != RecyclerView.NO_POSITION){
                 workout.exerciseGroups[itemPosition].relaxAfter.duration--
+                workout.exerciseGroups[itemPosition].relaxAfter.duration =
+                    max(0, workout.exerciseGroups[itemPosition].relaxAfter.duration)
                 presenter.timeAfterExererciseSet(itemPosition, workout.exerciseGroups[itemPosition].relaxAfter.duration)
                 notifyItemChanged(itemPosition)
             }
         }
+        itemView.et_train_set_relax_count.addTextChangedListener(object : TextWatcher {
+                override fun afterTextChanged(p0: Editable?) {
+                }
+
+                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                }
+
+                override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                    val itemPosition = holder.adapterPosition
+                    if (itemPosition != RecyclerView.NO_POSITION) {
+                        workout.exerciseGroups[itemPosition].relaxAfter.duration =
+                            max(0, workout.exerciseGroups[itemPosition].relaxAfter.duration)
+                    }
+                }
+            })
         itemView.iv_train_set_relax_add.setOnClickListener {
             val itemPosition = holder.adapterPosition
             if (itemPosition != RecyclerView.NO_POSITION){
