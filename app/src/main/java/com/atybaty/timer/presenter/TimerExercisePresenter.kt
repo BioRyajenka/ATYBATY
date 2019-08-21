@@ -7,6 +7,9 @@ import com.atybaty.timer.contract.TimerContract.Presenter.LockStatus
 import com.atybaty.timer.contract.TimerContract.Presenter.PauseStatus
 import com.atybaty.timer.dataholders.CurrentWorkoutHolder
 import com.atybaty.timer.dataholders.SelectedSoundsHolder
+import com.atybaty.timer.model.CalmDown
+import com.atybaty.timer.model.RestBetweenSets
+import com.atybaty.timer.model.RunUp
 import com.atybaty.timer.model.Work
 import com.atybaty.timer.util.AudioPlayer
 import com.atybaty.timer.util.Seconds
@@ -42,7 +45,14 @@ class TimerExercisePresenter(val view: TimerContract.View) : TimerContract.Prese
         synchronizeTimer(pauseStatus)
         view.updateCurrentExerciseSelection(exerciseGroupIndex, exerciseIndex)
 
-        view.updateScreenColor(if (exercise is Work) R.color.timerWork else R.color.timerRest)
+        val screenColor = when (exercise) {
+            is Work -> R.color.timerWork
+            is CalmDown -> R.color.timerRest
+            is RestBetweenSets -> R.color.timerRestAfterSet
+            is RunUp -> R.color.timerWarmUp
+            else -> error("Unexpected work type")
+        }
+        view.updateScreenColor(screenColor)
     }
 
     override fun activityCreated(context: Context) {
