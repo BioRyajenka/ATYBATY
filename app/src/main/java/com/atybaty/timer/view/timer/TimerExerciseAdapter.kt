@@ -21,8 +21,10 @@ private data class ListItemHolder(val exerciseOrGroup: Any, val exerciseGroupInd
     }
 }
 
-class TimerExerciseAdapter(private val context: Context,
-                           private val presenter: TimerContract.Presenter) :
+class TimerExerciseAdapter(
+    private val context: Context,
+    private val presenter: TimerContract.Presenter
+) :
     RecyclerView.Adapter<TimerExerciseHolder>() {
 
     private var itemsColorId: Int = R.color.colorPrimaryDark // just stub color. affects nothing
@@ -37,9 +39,8 @@ class TimerExerciseAdapter(private val context: Context,
 
     fun setWorkout(workout: Workout) {
         listItems = workout.exerciseGroups.withIndex().flatMap { (egIndex, eg) ->
-            listOf(ListItemHolder(eg, egIndex,-1)) + eg.exercises.mapIndexed { eIndex, e ->
-                ListItemHolder(e, egIndex, eIndex)
-            }
+            listOf(ListItemHolder(eg, egIndex, -1)) +
+                    eg.extendedExercises.mapIndexed { eIndex, e -> ListItemHolder(e, egIndex, eIndex) }
         }
     }
 

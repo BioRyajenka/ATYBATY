@@ -24,7 +24,7 @@ class WorkoutPresenter(private val view: WorkoutFragment, private val context: C
     }
 
     override fun timeAfterExererciseSet(itemPosition: Int, time: Seconds) {
-        workout.exerciseGroups[itemPosition].relaxAfter.duration = time
+        workout.exerciseGroups[itemPosition].restAfterSet.duration = time
     }
 
     override fun exerciseGroupClicked(itemPosition: Int) {

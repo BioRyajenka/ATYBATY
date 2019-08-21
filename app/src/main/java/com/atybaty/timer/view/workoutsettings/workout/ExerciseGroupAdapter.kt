@@ -50,16 +50,16 @@ class ExerciseGroupAdapter(
         itemView.iv_train_set_relax_minus.setOnClickListener {
             val itemPosition = holder.adapterPosition
             if (itemPosition != RecyclerView.NO_POSITION){
-                workout.exerciseGroups[itemPosition].relaxAfter.duration--
-                presenter.timeAfterExererciseSet(itemPosition, workout.exerciseGroups[itemPosition].relaxAfter.duration)
+                workout.exerciseGroups[itemPosition].restAfterSet.duration--
+                presenter.timeAfterExererciseSet(itemPosition, workout.exerciseGroups[itemPosition].restAfterSet.duration)
                 notifyItemChanged(itemPosition)
             }
         }
         itemView.iv_train_set_relax_add.setOnClickListener {
             val itemPosition = holder.adapterPosition
             if (itemPosition != RecyclerView.NO_POSITION){
-                workout.exerciseGroups[itemPosition].relaxAfter.duration++
-                presenter.timeAfterExererciseSet(itemPosition, workout.exerciseGroups[itemPosition].relaxAfter.duration)
+                workout.exerciseGroups[itemPosition].restAfterSet.duration++
+                presenter.timeAfterExererciseSet(itemPosition, workout.exerciseGroups[itemPosition].restAfterSet.duration)
                 notifyItemChanged(itemPosition)
             }
         }
@@ -78,7 +78,7 @@ class ExerciseGroupAdapter(
                     0
                 }
                 if (itemPosition != RecyclerView.NO_POSITION){
-                    workout.exerciseGroups[itemPosition].relaxAfter.duration = newDuration
+                    workout.exerciseGroups[itemPosition].restAfterSet.duration = newDuration
                     presenter.timeAfterExererciseSet(itemPosition, newDuration)
                     notifyItemChanged(itemPosition)
                 }
@@ -95,7 +95,7 @@ class ExerciseGroupAdapter(
     override fun onBindViewHolder(holder: ExerciseGroupHolder, position: Int) {
         val name = workout.exerciseGroups[position].name
         holder.setName(name)
-        holder.setRelaxTime(workout.exerciseGroups[position].relaxAfter.duration)
+        holder.setRelaxTime(workout.exerciseGroups[position].restAfterSet.duration)
     }
 
 }
