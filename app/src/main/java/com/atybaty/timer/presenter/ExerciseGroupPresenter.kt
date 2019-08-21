@@ -1,6 +1,7 @@
 package com.atybaty.timer.presenter
 
 import android.content.Context
+import android.util.Log
 import com.atybaty.timer.dataholders.CurrentWorkoutHolder
 import com.atybaty.timer.dataholders.WorkoutRepositoryHolder
 import com.atybaty.timer.contract.ExerciseGroupContract
