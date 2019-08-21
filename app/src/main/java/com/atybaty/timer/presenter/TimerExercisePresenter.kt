@@ -7,10 +7,7 @@ import com.atybaty.timer.contract.TimerContract.Presenter.LockStatus
 import com.atybaty.timer.contract.TimerContract.Presenter.PauseStatus
 import com.atybaty.timer.dataholders.CurrentWorkoutHolder
 import com.atybaty.timer.dataholders.SelectedSoundsHolder
-import com.atybaty.timer.model.CalmDown
-import com.atybaty.timer.model.RestBetweenSets
-import com.atybaty.timer.model.RunUp
-import com.atybaty.timer.model.Work
+import com.atybaty.timer.model.*
 import com.atybaty.timer.util.AudioPlayer
 import com.atybaty.timer.util.Seconds
 import com.atybaty.timer.util.SecondsTimer
@@ -20,7 +17,7 @@ class TimerExercisePresenter(val view: TimerContract.View) : TimerContract.Prese
 
     private val workout = CurrentWorkoutHolder.currentWorkout
 
-    private var pauseStatus = PauseStatus.NOT_STARTED
+    private var pauseStatus = PauseStatus.PLAYING
     private var lockStatus = LockStatus.UNLOCK
     private var currentExerciseGroupIndex = 0
     private var currentExerciseIndex = 0
@@ -37,14 +34,7 @@ class TimerExercisePresenter(val view: TimerContract.View) : TimerContract.Prese
         }
     }
 
-    private fun synchronizeExerciseSelection(exerciseGroupIndex: Int, exerciseIndex: Int) {
-        val exercise = workout.exerciseGroups[exerciseGroupIndex].extendedExercises[exerciseIndex]
-
-        timer.pause()
-        timer.setTime(exercise.duration)
-        synchronizeTimer(pauseStatus)
-        view.updateCurrentExerciseSelection(exerciseGroupIndex, exerciseIndex)
-
+    private fun synchronizeScreenColor(exercise: Exercise) {
         val screenColor = when (exercise) {
             is Work -> R.color.timerWork
             is CalmDown -> R.color.timerRest
@@ -55,13 +45,40 @@ class TimerExercisePresenter(val view: TimerContract.View) : TimerContract.Prese
         view.updateScreenColor(screenColor)
     }
 
+    private fun synchronizeExerciseSelectionAndInfoText(exerciseGroupIndex: Int, exerciseIndex: Int) {
+        val exercise = workout.exerciseGroups[exerciseGroupIndex].extendedExercises[exerciseIndex]
+
+        timer.pause()
+        timer.setTime(exercise.duration)
+        synchronizeTimer(pauseStatus)
+        view.updateCurrentExerciseSelection(exerciseGroupIndex, exerciseIndex)
+
+        synchronizeScreenColor(exercise)
+
+        if (exercise is Work) {
+            when (val options = exercise.options) {
+                is WorkWithIntervalsOptions -> {
+                    view.updateAdditionalInfo("Интервалы каждые ${options.interval} сек.")
+                }
+                is SimpleWorkOptions -> {
+                    view.updateAdditionalInfo("")
+                }
+                is WorkWithAccelerationOptions -> {
+                    // do nothing because text will be updated on tick
+                }
+            }
+        } else {
+            view.updateAdditionalInfo("")
+        }
+    }
+
     override fun activityCreated(context: Context) {
         this.context = context
         this.audioPlayer = AudioPlayer(context)
 
         view.showWorkout(workout)
         view.updatePauseButton(pauseStatus)
-        synchronizeExerciseSelection(currentExerciseGroupIndex, currentExerciseIndex)
+        synchronizeExerciseSelectionAndInfoText(currentExerciseGroupIndex, currentExerciseIndex)
     }
 
     override fun activityStopped() {
@@ -110,13 +127,54 @@ class TimerExercisePresenter(val view: TimerContract.View) : TimerContract.Prese
 
         this.currentExerciseGroupIndex = exerciseGroupIndex
         this.currentExerciseIndex = exerciseIndex
-        synchronizeExerciseSelection(currentExerciseGroupIndex, currentExerciseIndex)
-
+        synchronizeExerciseSelectionAndInfoText(currentExerciseGroupIndex, currentExerciseIndex)
     }
 
     override fun onTick(remainingTime: Seconds) {
-        if (remainingTime in (1..3)) {
-            audioPlayer.playSound(SelectedSoundsHolder.timerExerciseEndsTick)
+        val currentExercise = workout.exerciseGroups[currentExerciseGroupIndex].extendedExercises[currentExerciseIndex]
+        val elapsedTime = currentExercise.duration - remainingTime
+        var screenColorChanged = false
+
+        if (currentExercise is Work && currentExercise.options is WorkWithAccelerationOptions) {
+            val timeTillAcceleration = remainingTime -
+                    (currentExercise.options as WorkWithAccelerationOptions).accelerationDuration
+
+            if (timeTillAcceleration > 0) {
+                view.updateAdditionalInfo("Ускорение через $timeTillAcceleration сек.")
+            } else {
+                view.updateAdditionalInfo("Ускорение!", R.color.timerInfoColorWhenAcceleration)
+            }
+        }
+
+        if (elapsedTime != 0 && remainingTime != 0) {
+            if (remainingTime in (1..3)) {
+                audioPlayer.playSound(SelectedSoundsHolder.timerExerciseEndsTick)
+            } else {
+                if (currentExercise is Work) {
+                    when (val options = currentExercise.options) {
+                        is WorkWithIntervalsOptions -> if (elapsedTime % options.interval == 0) {
+                            audioPlayer.playSound(SelectedSoundsHolder.timerIntervalTick)
+                            view.updateScreenColor(R.color.timerIntervalTick)
+                            screenColorChanged = true
+                        }
+                        is WorkWithAccelerationOptions -> {
+                            when (remainingTime - options.accelerationDuration) {
+                                in (1..3) -> {
+                                    audioPlayer.playSound(SelectedSoundsHolder.timerAccelerationGetReadyTick)
+                                    view.updateScreenColor(R.color.timerIntervalTick)
+                                    screenColorChanged = true
+                                }
+                                0 -> {
+                                    audioPlayer.playSound(SelectedSoundsHolder.timerAccelerationStartedTick)
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        if (!screenColorChanged) {
+            synchronizeScreenColor(currentExercise)
         }
 
         view.updateTime(remainingTime)
@@ -124,7 +182,7 @@ class TimerExercisePresenter(val view: TimerContract.View) : TimerContract.Prese
 
     override fun onFinish() {
         currentExerciseIndex++
-        if (currentExerciseIndex == workout.exerciseGroups[currentExerciseGroupIndex].exercises.size) {
+        if (currentExerciseIndex == workout.exerciseGroups[currentExerciseGroupIndex].extendedExercises.size) {
             currentExerciseGroupIndex++
             currentExerciseIndex = 0
         }
@@ -138,7 +196,7 @@ class TimerExercisePresenter(val view: TimerContract.View) : TimerContract.Prese
         } else {
             audioPlayer.playSound(SelectedSoundsHolder.timerExerciseFinished)
 
-            synchronizeExerciseSelection(currentExerciseGroupIndex, currentExerciseIndex)
+            synchronizeExerciseSelectionAndInfoText(currentExerciseGroupIndex, currentExerciseIndex)
         }
     }
 }

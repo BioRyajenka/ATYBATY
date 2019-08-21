@@ -8,7 +8,7 @@ import com.atybaty.timer.R
 import com.atybaty.timer.contract.TimerContract
 import com.atybaty.timer.contract.TimerContract.Presenter.LockStatus
 import com.atybaty.timer.contract.TimerContract.Presenter.PauseStatus
-import com.atybaty.timer.model.Workout
+import com.atybaty.timer.model.*
 import com.atybaty.timer.presenter.TimerExercisePresenter
 import com.atybaty.timer.util.Seconds
 import kotlinx.android.synthetic.main.activity_timer.*
@@ -18,6 +18,7 @@ class TimerExerciseActivity : AppCompatActivity(), TimerContract.View {
     private lateinit var timerExerciseAdapter: TimerExerciseAdapter
 
     private lateinit var workout: Workout
+    private var currentScreenColorId: Int = -1 // uninitialized
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,6 +60,11 @@ class TimerExerciseActivity : AppCompatActivity(), TimerContract.View {
         tv_timer_time.text = time.toString()
     }
 
+    override fun updateAdditionalInfo(text: String, colorId: Int) {
+        tv_timer_additional_info.text = text
+        tv_timer_additional_info.setTextColor(resources.getColor(colorId))
+    }
+
     override fun updatePauseButton(status: PauseStatus) {
         tv_timer_pause.text = when (status) {
             PauseStatus.PLAYING -> "Остановить"
@@ -84,7 +90,15 @@ class TimerExerciseActivity : AppCompatActivity(), TimerContract.View {
 
         tv_timer_exercise_group_name.text =
             "Сет: ${exerciseGroupIndex + 1}/${workout.exerciseGroups.size} (${exerciseGroup.name})"
-        tv_timer_title.text = exercise.getName(this)
+        tv_timer_title.text = if (exercise is Work) {
+            when (exercise.options) {
+                is SimpleWorkOptions -> "Работа"
+                is WorkWithIntervalsOptions -> "Работа с интервалами"
+                is WorkWithAccelerationOptions -> "Работа с ускорениями"
+            }
+        } else {
+            "Отдых"
+        }
     }
 
     override fun clearCurrentExerciseSelection() {
@@ -94,8 +108,15 @@ class TimerExerciseActivity : AppCompatActivity(), TimerContract.View {
     }
 
     override fun updateScreenColor(colorId: Int) {
-        val color = resources.getColor(colorId)
-        ll_timer_background.setBackgroundColor(color)
-        timerExerciseAdapter.setItemsColor(colorId)
+        if (colorId != currentScreenColorId) {
+            currentScreenColorId = colorId
+            val color = resources.getColor(colorId)
+            ll_timer_background.setBackgroundColor(color)
+            timerExerciseAdapter.setItemsColor(colorId)
+
+            val recyclerViewState = rv_timer_workout.layoutManager!!.onSaveInstanceState()
+            rv_timer_workout.adapter = timerExerciseAdapter
+            rv_timer_workout.layoutManager!!.onRestoreInstanceState(recyclerViewState)
+        }
     }
 }

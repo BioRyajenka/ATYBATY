@@ -45,7 +45,7 @@ class ExerciseSettingsPresenter(val view: ExerciseSettingsContract.View) : Exerc
             }
             is WorkWithAccelerationOptions -> {
                 intervalWork = work.deepCopy()
-                intervalWork.options = defaultAccelerationWorkOptions
+                intervalWork.options = defaultIntervalWorkOptions
                 accelerationWork = work.deepCopy()
                 currentWorkType = WorkType.ACCELERATION
             }
