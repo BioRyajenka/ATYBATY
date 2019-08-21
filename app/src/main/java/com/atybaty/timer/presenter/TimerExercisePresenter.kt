@@ -182,7 +182,7 @@ class TimerExercisePresenter(val view: TimerContract.View) : TimerContract.Prese
 
     override fun onFinish() {
         currentExerciseIndex++
-        if (currentExerciseIndex == workout.exerciseGroups[currentExerciseGroupIndex].exercises.size) {
+        if (currentExerciseIndex == workout.exerciseGroups[currentExerciseGroupIndex].extendedExercises.size) {
             currentExerciseGroupIndex++
             currentExerciseIndex = 0
         }
