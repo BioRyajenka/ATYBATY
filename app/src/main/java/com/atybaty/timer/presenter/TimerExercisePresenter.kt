@@ -7,10 +7,7 @@ import com.atybaty.timer.contract.TimerContract.Presenter.LockStatus
 import com.atybaty.timer.contract.TimerContract.Presenter.PauseStatus
 import com.atybaty.timer.dataholders.CurrentWorkoutHolder
 import com.atybaty.timer.dataholders.SelectedSoundsHolder
-import com.atybaty.timer.model.CalmDown
-import com.atybaty.timer.model.RestBetweenSets
-import com.atybaty.timer.model.RunUp
-import com.atybaty.timer.model.Work
+import com.atybaty.timer.model.*
 import com.atybaty.timer.util.AudioPlayer
 import com.atybaty.timer.util.Seconds
 import com.atybaty.timer.util.SecondsTimer
@@ -20,7 +17,7 @@ class TimerExercisePresenter(val view: TimerContract.View) : TimerContract.Prese
 
     private val workout = CurrentWorkoutHolder.currentWorkout
 
-    private var pauseStatus = PauseStatus.NOT_STARTED
+    private var pauseStatus = PauseStatus.PLAYING
     private var lockStatus = LockStatus.UNLOCK
     private var currentExerciseGroupIndex = 0
     private var currentExerciseIndex = 0
@@ -37,14 +34,7 @@ class TimerExercisePresenter(val view: TimerContract.View) : TimerContract.Prese
         }
     }
 
-    private fun synchronizeExerciseSelection(exerciseGroupIndex: Int, exerciseIndex: Int) {
-        val exercise = workout.exerciseGroups[exerciseGroupIndex].extendedExercises[exerciseIndex]
-
-        timer.pause()
-        timer.setTime(exercise.duration)
-        synchronizeTimer(pauseStatus)
-        view.updateCurrentExerciseSelection(exerciseGroupIndex, exerciseIndex)
-
+    private fun synchronizeScreenColor(exercise: Exercise) {
         val screenColor = when (exercise) {
             is Work -> R.color.timerWork
             is CalmDown -> R.color.timerRest
@@ -53,6 +43,17 @@ class TimerExercisePresenter(val view: TimerContract.View) : TimerContract.Prese
             else -> error("Unexpected work type")
         }
         view.updateScreenColor(screenColor)
+    }
+
+    private fun synchronizeExerciseSelection(exerciseGroupIndex: Int, exerciseIndex: Int) {
+        val exercise = workout.exerciseGroups[exerciseGroupIndex].extendedExercises[exerciseIndex]
+
+        timer.pause()
+        timer.setTime(exercise.duration)
+        synchronizeTimer(pauseStatus)
+        view.updateCurrentExerciseSelection(exerciseGroupIndex, exerciseIndex)
+
+        synchronizeScreenColor(exercise)
     }
 
     override fun activityCreated(context: Context) {
@@ -115,8 +116,37 @@ class TimerExercisePresenter(val view: TimerContract.View) : TimerContract.Prese
     }
 
     override fun onTick(remainingTime: Seconds) {
-        if (remainingTime in (1..3)) {
-            audioPlayer.playSound(SelectedSoundsHolder.timerExerciseEndsTick)
+        val currentExercise = workout.exerciseGroups[currentExerciseGroupIndex].extendedExercises[currentExerciseIndex]
+        val elapsedTime = currentExercise.duration - remainingTime
+        var screenColorChanged = false
+
+        if (elapsedTime != 0 && remainingTime != 0) {
+            if (remainingTime in (1..3)) {
+                audioPlayer.playSound(SelectedSoundsHolder.timerExerciseEndsTick)
+            } else {
+                if (currentExercise is Work) {
+                    when (val options = currentExercise.options) {
+                        is WorkWithIntervalsOptions -> if (elapsedTime % options.interval == 0) {
+                            audioPlayer.playSound(SelectedSoundsHolder.timerIntervalTick)
+                            view.updateScreenColor(R.color.timerIntervalTick)
+                            screenColorChanged = true
+                        }
+                        is WorkWithAccelerationOptions -> {
+                            if (remainingTime - options.accelerationDuration in (1..3)) {
+                                audioPlayer.playSound(SelectedSoundsHolder.timerAccelerationGetReadyTick)
+                                view.updateScreenColor(R.color.timerIntervalTick)
+                                screenColorChanged = true
+                            }
+                            if (remainingTime == options.accelerationDuration) {
+                                audioPlayer.playSound(SelectedSoundsHolder.timerAccelerationStartedTick)
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        if (!screenColorChanged) {
+            synchronizeScreenColor(currentExercise)
         }
 
         view.updateTime(remainingTime)

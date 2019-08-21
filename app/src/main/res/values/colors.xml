@@ -11,6 +11,8 @@
     <color name="timerRest">#06376c</color>
     <color name="timerWarmUp">#1DA82B</color>
     <color name="timerRestAfterSet">#a000a0</color>
+    <color name="timerIntervalTick">#BB8933</color>
+    <color name="timerAccelerationTick">#BB8933</color>
 
     <color name="timerCounterColorDefault">#ffffff</color>
 </resources>

@@ -18,6 +18,7 @@ class TimerExerciseActivity : AppCompatActivity(), TimerContract.View {
     private lateinit var timerExerciseAdapter: TimerExerciseAdapter
 
     private lateinit var workout: Workout
+    private var currentScreenColorId: Int = -1 // uninitialized
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -94,8 +95,12 @@ class TimerExerciseActivity : AppCompatActivity(), TimerContract.View {
     }
 
     override fun updateScreenColor(colorId: Int) {
-        val color = resources.getColor(colorId)
-        ll_timer_background.setBackgroundColor(color)
-        timerExerciseAdapter.setItemsColor(colorId)
+        if (colorId != currentScreenColorId) {
+            currentScreenColorId = colorId
+            val color = resources.getColor(colorId)
+            ll_timer_background.setBackgroundColor(color)
+            timerExerciseAdapter.setItemsColor(colorId)
+            rv_timer_workout.adapter = timerExerciseAdapter
+        }
     }
 }
