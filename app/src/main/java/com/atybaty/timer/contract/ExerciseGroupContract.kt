@@ -25,5 +25,6 @@ interface ExerciseGroupContract {
         fun showExerciseSettings(exerciseItemPosition: Int, exercise: Exercise)
         fun updateExercise(exerciseItemPosition: Int, exerciseGroup: ExerciseGroup)
         fun returnToPreviousFragment()
+        fun changeSetUpDefaultButtonState(enabled: Boolean)
     }
 }
