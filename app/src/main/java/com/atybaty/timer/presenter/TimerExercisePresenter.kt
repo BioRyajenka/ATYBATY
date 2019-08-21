@@ -45,7 +45,7 @@ class TimerExercisePresenter(val view: TimerContract.View) : TimerContract.Prese
         view.updateScreenColor(screenColor)
     }
 
-    private fun synchronizeExerciseSelection(exerciseGroupIndex: Int, exerciseIndex: Int) {
+    private fun synchronizeExerciseSelectionAndInfoText(exerciseGroupIndex: Int, exerciseIndex: Int) {
         val exercise = workout.exerciseGroups[exerciseGroupIndex].extendedExercises[exerciseIndex]
 
         timer.pause()
@@ -54,6 +54,22 @@ class TimerExercisePresenter(val view: TimerContract.View) : TimerContract.Prese
         view.updateCurrentExerciseSelection(exerciseGroupIndex, exerciseIndex)
 
         synchronizeScreenColor(exercise)
+
+        if (exercise is Work) {
+            when (val options = exercise.options) {
+                is WorkWithIntervalsOptions -> {
+                    view.updateAdditionalInfo("Интервалы каждые ${options.interval} сек.")
+                }
+                is SimpleWorkOptions -> {
+                    view.updateAdditionalInfo("")
+                }
+                is WorkWithAccelerationOptions -> {
+                    // do nothing because text will be updated on tick
+                }
+            }
+        } else {
+            view.updateAdditionalInfo("")
+        }
     }
 
     override fun activityCreated(context: Context) {
@@ -62,7 +78,7 @@ class TimerExercisePresenter(val view: TimerContract.View) : TimerContract.Prese
 
         view.showWorkout(workout)
         view.updatePauseButton(pauseStatus)
-        synchronizeExerciseSelection(currentExerciseGroupIndex, currentExerciseIndex)
+        synchronizeExerciseSelectionAndInfoText(currentExerciseGroupIndex, currentExerciseIndex)
     }
 
     override fun activityStopped() {
@@ -111,14 +127,24 @@ class TimerExercisePresenter(val view: TimerContract.View) : TimerContract.Prese
 
         this.currentExerciseGroupIndex = exerciseGroupIndex
         this.currentExerciseIndex = exerciseIndex
-        synchronizeExerciseSelection(currentExerciseGroupIndex, currentExerciseIndex)
-
+        synchronizeExerciseSelectionAndInfoText(currentExerciseGroupIndex, currentExerciseIndex)
     }
 
     override fun onTick(remainingTime: Seconds) {
         val currentExercise = workout.exerciseGroups[currentExerciseGroupIndex].extendedExercises[currentExerciseIndex]
         val elapsedTime = currentExercise.duration - remainingTime
         var screenColorChanged = false
+
+        if (currentExercise is Work && currentExercise.options is WorkWithAccelerationOptions) {
+            val timeTillAcceleration = remainingTime -
+                    (currentExercise.options as WorkWithAccelerationOptions).accelerationDuration
+
+            if (timeTillAcceleration > 0) {
+                view.updateAdditionalInfo("Ускорение через $timeTillAcceleration сек.")
+            } else {
+                view.updateAdditionalInfo("Ускорение!", R.color.timerInfoColorWhenAcceleration)
+            }
+        }
 
         if (elapsedTime != 0 && remainingTime != 0) {
             if (remainingTime in (1..3)) {
@@ -132,13 +158,15 @@ class TimerExercisePresenter(val view: TimerContract.View) : TimerContract.Prese
                             screenColorChanged = true
                         }
                         is WorkWithAccelerationOptions -> {
-                            if (remainingTime - options.accelerationDuration in (1..3)) {
-                                audioPlayer.playSound(SelectedSoundsHolder.timerAccelerationGetReadyTick)
-                                view.updateScreenColor(R.color.timerIntervalTick)
-                                screenColorChanged = true
-                            }
-                            if (remainingTime == options.accelerationDuration) {
-                                audioPlayer.playSound(SelectedSoundsHolder.timerAccelerationStartedTick)
+                            when (remainingTime - options.accelerationDuration) {
+                                in (1..3) -> {
+                                    audioPlayer.playSound(SelectedSoundsHolder.timerAccelerationGetReadyTick)
+                                    view.updateScreenColor(R.color.timerIntervalTick)
+                                    screenColorChanged = true
+                                }
+                                0 -> {
+                                    audioPlayer.playSound(SelectedSoundsHolder.timerAccelerationStartedTick)
+                                }
                             }
                         }
                     }
@@ -168,7 +196,7 @@ class TimerExercisePresenter(val view: TimerContract.View) : TimerContract.Prese
         } else {
             audioPlayer.playSound(SelectedSoundsHolder.timerExerciseFinished)
 
-            synchronizeExerciseSelection(currentExerciseGroupIndex, currentExerciseIndex)
+            synchronizeExerciseSelectionAndInfoText(currentExerciseGroupIndex, currentExerciseIndex)
         }
     }
 }

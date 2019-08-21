@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/ll_timer_background"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -27,7 +28,10 @@
             android:layout_weight="0.8"
             android:gravity="center"
             android:textColor="@color/colorAccent"
-            android:textSize="26sp"
+            app:autoSizeTextType="uniform"
+            app:autoSizeMinTextSize="22sp"
+            app:autoSizeMaxTextSize="26sp"
+            app:autoSizeStepGranularity="1sp"
             android:textStyle="bold"
             tools:text="Работа" />
 
@@ -50,6 +54,18 @@
         android:textStyle="bold"
         tools:text="Сет: 1/8" />
 
+
+    <TextView
+        android:id="@+id/tv_timer_additional_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginLeft="30dp"
+        android:textColor="@color/timerInfoColor"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        tools:text="Ускорение через 5 сек." />
+
     <TextView
         android:id="@+id/tv_timer_time"
         android:layout_width="match_parent"
@@ -57,7 +73,7 @@
         android:layout_weight="0.5"
         android:gravity="center"
         android:textColor="@color/timerCounterColorDefault"
-        android:textSize="100dp"
+        android:textSize="120dp"
         android:textStyle="bold"
         tools:text="10" />
 
@@ -65,7 +81,7 @@
         android:id="@+id/rv_timer_workout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="0.5"
+        android:layout_weight="0.4"
         android:padding="8dp"
         tools:listitem="@layout/item_timer_exercise" />
 

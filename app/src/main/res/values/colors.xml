@@ -13,6 +13,8 @@
     <color name="timerRestAfterSet">#a000a0</color>
     <color name="timerIntervalTick">#BB8933</color>
     <color name="timerAccelerationTick">#BB8933</color>
+    <color name="timerInfoColor">#B8B8BD</color>
+    <color name="timerInfoColorWhenAcceleration">#BB8933</color>
 
     <color name="timerCounterColorDefault">#ffffff</color>
 </resources>
