@@ -87,7 +87,7 @@ class ExerciseSettingsPresenter(val view: ExerciseSettingsContract.View) : Exerc
             }
         }
         CurrentWorkoutHolder.currentWorkout.exerciseGroups[CurrentWorkoutHolder.currentExerciseGroupPosition]
-            .exercises[CurrentWorkoutHolder.currentWorkPosition] = resultingWork
+            .exercises[CurrentWorkoutHolder.currentWorkPosition] = resultingWork.copy()
         workoutRepository.saveWorkout(CurrentWorkoutHolder.currentWorkout)
         view.closeDialog()
     }

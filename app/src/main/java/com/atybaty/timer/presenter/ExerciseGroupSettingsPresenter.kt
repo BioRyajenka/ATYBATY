@@ -1,6 +1,7 @@
 package com.atybaty.timer.presenter
 
 import android.content.Context
+import android.util.Log
 import com.atybaty.timer.contract.ExerciseGroupSettingsContract
 import com.atybaty.timer.dataholders.CurrentWorkoutHolder
 import com.atybaty.timer.dataholders.WorkoutRepositoryHolder
@@ -91,6 +92,7 @@ class ExerciseGroupSettingsPresenter(val view: ExerciseGroupSettingsContract.Vie
                 deletingExercise.add(currentExerciseGroup.exercises[i])
             }
             currentExerciseGroup.exercises.removeAll(deletingExercise)
+            saveExerciseWorkout()
         }
         if (currentExerciseGroup.exercises.size < currentExerciseGroup.repeatsCount * 2){
             val count = currentExerciseGroup.repeatsCount - currentExerciseGroup.exercises.size / 2
@@ -98,7 +100,7 @@ class ExerciseGroupSettingsPresenter(val view: ExerciseGroupSettingsContract.Vie
                 currentExerciseGroup.exercises.add(Work("Работа", currentExerciseGroup.defaultTime, SimpleWorkOptions))
                 currentExerciseGroup.exercises.add(CalmDown(currentExerciseGroup.relaxTime))
             }
+            saveExerciseWorkout()
         }
-        saveExerciseWorkout()
     }
 }
